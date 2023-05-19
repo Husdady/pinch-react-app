@@ -1,0 +1,63 @@
+.new-job,
+.selected-appointment {
+  width: 35%;
+}
+
+.appointments {
+  width: 60%;
+}
+
+.new-job,
+.appointments {
+  margin-right: 0.75rem;
+}
+
+.new-job,
+.appointments,
+.selected-appointment {
+  height: 700px;
+}
+
+.cost,
+.total-rooms {
+  font-size: 10px;
+}
+
+.subtitle {
+  font-size: 12px;
+  font-style: normal;
+  line-height: 15px;
+  color: #4f4f4f;
+}
+
+@media screen and (min-width: 1201px) {
+  .jobs-form.d-flex {
+    flex-wrap: nowrap !important;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .selected-appointment {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  .new-job,
+  .appointments {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .appointments {
+    margin-top: 1.5rem;
+  }
+
+  .new-job,
+  .appointments,
+  .appointments-content,
+  .selected-appointment {
+    height: auto;
+  }
+}

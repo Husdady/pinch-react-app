@@ -17,9 +17,5 @@ export default function Profile() {
       <h4>Avatar URL: {message.userAvatar}</h4>
       <h4>Message: {message.personalData}</h4>
     </div>
-    // <div>
-    //   <h5 className="mb-4">React Axios HTTP GET Request Example</h5>
-    //   <h5 className="card-title">{profile.corsResponse}</h5>
-    // </div>
   )
 }

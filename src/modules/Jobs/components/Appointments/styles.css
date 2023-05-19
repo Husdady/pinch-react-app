@@ -1,0 +1,90 @@
+.appointments-header {
+  height: 41px;
+}
+
+.appointments-header > .appointments-wrapper {
+  background-color: #241d5d;
+  width: 77%;
+}
+
+.appointments-header > .appointments-wrapper > span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+}
+
+.appointments-header > .appointments-wrapper > .select {
+  margin-left: 1rem;
+}
+
+.appointments-header > .appointments-wrapper > .select > .select-value {
+  background-color: #fff;
+  border: none;
+  padding-top: 0.15rem !important;
+  padding-bottom: 0.15rem !important;
+  margin-top: 0 !important;
+}
+
+.appointments-header > .connect {
+  font-size: 12px;
+  width: 23%;
+  font-weight: 400;
+  line-height: 14.83px;
+  background-color: #dc6bbc;
+  color: #ffffff;
+  border: none;
+  min-width: 120px;
+}
+
+.appointments-content {
+  height: 658px;
+  overflow-y: auto;
+  border-left: 1px solid #BDBDBD;
+  border-right: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+.appointments-content > .appointments-fields > .appointments-list {
+  color: #ffffff;
+  background-color: #828282;
+}
+
+.appointments-content > .appointments-fields > .appointments-list > .appointment-field {
+  font-size: 12px;
+  line-height: 14.63px;
+}
+
+.appointments-content > .appointments-fields > .appointments-list > .appointment-field.field-status {
+  text-align: center;
+}
+
+.appointments-content > .appointments-registered > .appointments-list > .appointment {
+  font-size: 12px;
+  line-height: 15px;
+  color: #4F4F4F;
+  font-weight: 300;
+  font-style: normal;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+.field-client {
+  width: 30%;
+  min-width: 30%;
+}
+
+.field-status,
+.field-property {
+  width: 25%;
+  min-width: 25%;
+}
+
+.field-date {
+  width: 12%;
+  min-width: 12%;
+}
+
+.appointment:nth-last-child(-n+3) .select-options {
+  bottom: 100%;
+}

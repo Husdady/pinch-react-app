@@ -1,0 +1,23 @@
+.selected-appointment-header {
+  height: 41px;
+  border: 1px solid #BDBDBD;
+  font-size: 12px;
+  line-height: 14.63px;
+}
+
+.selected-appointment-content {
+  height: 658px;
+  border-left: 1px solid #BDBDBD;
+  border-right: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+.selected-appointment-content .empty-content {
+  font-size: 12px;
+  line-height: 14.63px;
+  text-align: center;
+  display: block;
+  height: 100%;
+  padding-top: 12rem;
+  color: #828282;
+}

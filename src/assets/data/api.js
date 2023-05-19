@@ -1,0 +1,5 @@
+// Constants
+export const WIX_APP_URL = "https://dev6345.editorx.io/react-test/_functions";
+
+export const API_KEY =
+  "N6nky4Pmxqx69AB6gWoM_sjU2GZy3UjcCrKv3U9Up5hh7GWlcLcEhCBzMigO-jqG0ORuzwEO0VYqg_ugJbEdW46Q1o_X4kNo7S9GeuM339Y4aPaB6sDNM_R_kknWdK9oYdO4fpHbJF2dnTWwMAKmhUby-szv79uRwOOFAMkwaDJ4s28VLqPd9ZnBorodborsDA8tqKPw97JSy022_0UL13HeAE3KWiSl68xCTryqob3m-IQjH53dJydNWyGLp7-ic6qokh_7DksX4OZu-cdZbIJFd5dF8DJ1S5Y5lZVnqaxadCXlO1wz2msxU5Tr0HwQPaOJ9tCK";

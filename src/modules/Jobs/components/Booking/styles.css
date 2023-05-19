@@ -1,0 +1,49 @@
+.one-time {
+  font-size: 12px;
+}
+
+.one-time .day {
+  color: #b2b2b2;
+  font-weight: 300;
+}
+
+.one-time .day-num {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid #bdbdbd;
+}
+
+.pick-day .select-value,
+.schedule .select-value {
+  margin-top: 0 !important;
+}
+
+.multiple-days #btn-calendar {
+  color: #ffffff;
+  background-color: #2f80ed;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.recurrent-jobs .day:last-of-type {
+  margin-right: 0 !important;
+}
+
+.recurrent-jobs .btn-day {
+  background-color: #d9d9d9;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #4F4F4F;
+  padding: 10px;
+}
+
+.multiple-days #btn-calendar,
+.recurrent-jobs .btn-day {
+  font-style: normal;
+  border: none;
+}

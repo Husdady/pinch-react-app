@@ -1,11 +1,13 @@
 // Utils
 import isObject from '../utils/isObject'
 
+// Constants
+import { WIX_APP_URL } from '../assets/data/api'
+
 export default class ApiProfile {
   constructor(apiKey) {
     this.apiKey = apiKey // Define the apiKey
-    this.appUrl = 'localhost:3000' // Define url of the app
-    this.apiUrl = 'https://pro.pinch.cleaning' // Url of the API
+    this.apiUrl = WIX_APP_URL // Url of the API
     this.headerApiKey = { 'pro-pinch-api-key': this.apiKey }  // Define header for the apiKey
 
     // Define init configuration for resolver cors problem

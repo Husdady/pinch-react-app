@@ -2,13 +2,16 @@
 import React from 'react'
 
 // Services
-import ApiProfile from '../services/ApiProfile'
+import ApiProfile from '../../services/ApiProfile'
+
+// Utils
+import isObject from '../../utils/isObject'
 
 // Constants
-import { APPLICATION_ID, CALLER_ID, WIX_APP_URL } from './constants'
-import isObject from '../utils/isObject'
+import { APPLICATION_ID, CALLER_ID } from './constants'
+import { API_KEY, WIX_APP_URL } from '../../assets/data/api'
 
-const apiProfile = new ApiProfile('MI_API_KEY')
+const apiProfile = new ApiProfile(API_KEY)
 
 /**
  * Hook that implemenents the requests of the Profile component

@@ -1,0 +1,32 @@
+.new-job {
+  border-left: 1px solid #BDBDBD;
+  border-right: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+.new-job > .job-header {
+  font-weight: 500;
+  color: #F5F5F5;
+  font-size: 12px;
+  line-height: 14.63px;
+  background-color: #2F80ED;
+}
+
+.new-job > .job-wrapper {
+  height: 658px;
+}
+
+.new-job > .job-wrapper > .job-footer {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  border-top: 1px solid #BDBDBD;
+  background-color: #F5F5F5;
+}
+
+.new-job > .job-wrapper .job-footer #generate-job {
+  color: #F8F8F8;
+  background-color: #BDBDBD;
+}
