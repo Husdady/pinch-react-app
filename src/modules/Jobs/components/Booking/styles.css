@@ -42,8 +42,30 @@
   padding: 10px;
 }
 
+.recurrent-jobs .btn-day.active {
+  color: #ffffff;
+  background-color: #241D5D;
+}
+
 .multiple-days #btn-calendar,
 .recurrent-jobs .btn-day {
   font-style: normal;
   border: none;
+}
+
+.days {
+  flex-wrap: wrap;
+  row-gap: 4px;
+  margin-top: 0.25rem;
+}
+
+/* Estilo para ocultar las flechas en el input number */
+#day-num::-webkit-inner-spin-button,
+#day-num::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#day-num {
+  -moz-appearance: textfield; /* Firefox */
 }

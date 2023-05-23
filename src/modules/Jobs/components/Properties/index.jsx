@@ -17,8 +17,9 @@ function Properties(props) {
       <Select
         options={options}
         isLoading={isFetching}
+        selectedValue={props.propertyId}
         onChange={handleOnChange}
-        arrayDeps={[properties]}
+        arrayDeps={properties}
         textLabel="Property"
       />
 
@@ -28,14 +29,14 @@ function Properties(props) {
 }
 
 Properties.propTypes = {
-  client: PropTypes.string.isRequired,
-  property: PropTypes.string.isRequired,
-  onChangeProperty: PropTypes.func.isRequired,
+  clientId: PropTypes.string.isRequired,
+  propertyId: PropTypes.string.isRequired,
+  onChangeProperty: PropTypes.func.isRequired
 };
 
 export default memo(Properties, (prevProps, nextProps) => {
   return (
-    prevProps.client === nextProps.client &&
-    prevProps.property === nextProps.property
+    prevProps.clientId === nextProps.clientId &&
+    prevProps.propertyId === nextProps.propertyId
   );
 });

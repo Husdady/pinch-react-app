@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
 import useClickOutside from "./useClickOutside";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 
 /**
  * Hook that implements the logic of the Select component
@@ -29,9 +29,8 @@ export default function useSelect({
     (option) => {
       setVisibleOptions(false); // Hide options
       if (!("value" in option)) return; // Value not exists in option
-      if (typeof onChange === "function") onChange(option); // Execute callback
-
       if (value === option.value) return; // Same value selected
+      if (typeof onChange === "function") onChange(option); // Execute callback
       setValue(option.value); // Update current value
     },
     [value, arrayDeps]
@@ -58,6 +57,19 @@ export default function useSelect({
     callback: hideOptions,
     isOpen: isVisibleOptions,
   });
+
+  useEffect(() => {
+    let mounted = true; // Component mounted
+
+    // Update selected value if component is mounted
+    if (mounted && value !== selectedValue) {
+      setValue(selectedValue) // Update value
+    }
+
+    return () => {
+      mounted = false;
+    }
+  }, [selectedValue])
 
   return {
     ref: ref,

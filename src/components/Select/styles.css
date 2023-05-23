@@ -17,7 +17,10 @@
 
 .select-options {
   z-index: 999;
+  max-height: 150px;
+  overflow-y: auto;
   border-top: none !important;
+  border-bottom: 1px solid;
   border-color: #bdbdbd !important;
 }
 
@@ -31,6 +34,10 @@
   font-size: 12px;
   line-height: 15px;
   color: #333333;
+}
+
+.select-options > ul > li:last-of-type {
+  border-bottom: none;
 }
 
 .select-options > ul > li.active,

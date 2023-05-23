@@ -9,13 +9,16 @@ import Select from "../../../../components/Select";
 import useClients from "./useClients";
 
 function Clients({ onChangeClient }) {
-  const { clients, isFetching } = useClients();
+  const { options, clients, isFetching, onChange } = useClients({
+    onChangeClient: onChangeClient
+  });
 
   return (
     <Select
-      options={clients}
+      options={options}
       isLoading={isFetching}
-      onChange={onChangeClient}
+      arrayDeps={clients}
+      onChange={onChange}
       textLabel="Client"
       className="mb-3"
     />

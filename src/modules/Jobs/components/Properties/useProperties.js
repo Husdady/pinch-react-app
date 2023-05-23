@@ -1,10 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 // Utils
 import fetchproperties from "./fetchProperties";
+import generateUniqueId from "../../../../utils/generateUniqueId";
+import isObject from "../../../../utils/isObject";
 
-export default function useProperties({ client, property, onChangeProperty }) {
+export default function useProperties({
+  clientId,
+  propertyId,
+  onChangeProperty,
+}) {
   const [options, setOptions] = useState([]);
   const [properties, setProperties] = useState([]);
   const [isFetching, setFetching] = useState(false);
@@ -14,38 +21,51 @@ export default function useProperties({ client, property, onChangeProperty }) {
 
   // Define the total rooms (bedrooms and bathrooms)
   const totalRooms = useMemo(() => {
-    const item = properties.find((item) => item._id === property); // Get current property
+    const item = properties.find((item) => item._id === propertyId); // Get current property
     if (typeof item === "undefined") return null; // Property not found
     return `${item.bedrooms} bedroom / ${item.bathrooms} bathroom`;
-  }, [property, properties]);
+  }, [propertyId, properties]);
 
   // Callback for update property
-  const handleOnChange = useCallback((items) => {
-    return (option) => {
+  const handleOnChange = useCallback(
+    (option) => {
+      if (properties.length === 0) return; // Empty properties
       if (!("value" in option)) return; // Value field not exists in option
 
       // Find property by id
-      const item = items.find((el) => el._id === option.value);
+      const property = properties.find((item) => item._id === option.value);
 
-      // Define services
-      const services = typeof item === "undefined" ? [] : item.services || [];
+      // Property not found
+      if (typeof property === "undefined") return;
+
+      // Get services of property
+      const services = property.services.map((service) => ({
+        ...service,
+        id: generateUniqueId(),
+      }));
+
+      // Get first service of first property
+      const firstService = services[0] || {};
 
       onChangeProperty({
-        property: option.value,
-        services: services.map(({ cost, time, serviceType }) => ({
-          value: serviceType.replace(/ /gim, "-") + "/" + cost + "/" + time,
-          label: serviceType,
-        })),
+        services: services,
+        serviceId: firstService.id,
+        serviceType: firstService.serviceType,
+        jobCost: firstService.cost,
+        jobDurationTime: firstService.time,
+        propertyId: property._id,
+        propertyName: property.propertyName,
       });
-    };
-  }, []);
+    },
+    [properties]
+  );
 
   useEffect(() => {
     let mounted = true; // Component mounted
 
-    if (client !== "") {
+    if (clientId !== "") {
       fetchproperties({
-        clientId: client,
+        clientId: clientId,
         onInit: () => {
           setFetching(true);
         },
@@ -66,8 +86,33 @@ export default function useProperties({ client, property, onChangeProperty }) {
               label: item.propertyAddress,
             }));
 
-            setProperties(result.data); // Update properties
             setOptions(apiProperties); // Update options
+            setProperties(result.data); // Update properties
+
+            const firstProperty = result.data[0]; // Get first property
+
+            // Validate first property
+            if (isObject(firstProperty)) {
+              // Get services of first property
+              const services = firstProperty.services.map((service) => ({
+                ...service,
+                id: generateUniqueId(),
+              }));
+
+              // Get first service of first property
+              const firstService = services[0] || {};
+
+              // Select first property
+              onChangeProperty({
+                services: services,
+                serviceId: firstService.id,
+                serviceType: firstService.serviceType,
+                jobCost: firstService.cost,
+                jobDurationTime: firstService.time,
+                propertyId: firstProperty._id,
+                propertyName: firstProperty.propertyName,
+              });
+            }
           }
         },
       });
@@ -76,7 +121,7 @@ export default function useProperties({ client, property, onChangeProperty }) {
     return () => {
       mounted = false; // Component unmounted
     };
-  }, [client]);
+  }, [clientId]);
 
   return {
     error: error,
@@ -86,6 +131,6 @@ export default function useProperties({ client, property, onChangeProperty }) {
     properties: properties,
     isFetching: isFetching,
     isSuccesfully: isSuccesfully,
-    handleOnChange: handleOnChange(properties),
+    handleOnChange: handleOnChange,
   };
 }

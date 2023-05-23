@@ -118,4 +118,11 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default memo(Select);
+export default memo(Select, (prevProps, nextProps) => {
+  return (
+    prevProps.options === nextProps.options &&
+    prevProps.isLoading === nextProps.isLoading &&
+    prevProps.arrayDeps === nextProps.arrayDeps &&
+    prevProps.selectedValue === nextProps.selectedValue
+  );
+});

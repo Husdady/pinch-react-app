@@ -1,0 +1,24 @@
+.appointment-created .message {
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 2.5rem;
+}
+
+.appointment-created .modal-content {
+  width: 268px;
+  height: 300px;
+}
+
+.appointment-created .modal-content .content {
+  padding: 2rem 1.5rem 0rem;
+}
+
+.appointment-created #btn-close-modal {
+  border: none;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  background-color: #dc6bbc;
+  padding: 0.5rem;
+  width: 103px;
+}

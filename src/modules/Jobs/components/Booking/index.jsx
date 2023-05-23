@@ -1,41 +1,104 @@
 // Librarys
-import { memo, Fragment } from "react";
 import PropTypes from "prop-types";
+import { memo, Fragment } from "react";
 
 // Components
-import OneTime from "./OneTime";
+import OneTime from "../OneTime";
 import MultipleDays from "./MultipleDays";
-import RecurrentJobs from "./RecurrentJobs";
+import RecurrentJobs from "../RecurrentJobs";
 import Select from "../../../../components/Select";
 
 // Constants
-import { options } from "./options";
+import { bookingOptions } from "./options";
 
 // Styles
-import './styles.css';
+import "./styles.css";
 
-function Booking({ booking, onChangeBooking }) {
+function Booking({
+  day,
+  days,
+  month,
+  repeat,
+  timeId,
+  booking,
+  forMonthly,
+  timeOptions,
+  register,
+  validateDay,
+  onToggleDay,
+  onChangeTime,
+  onChangeMonth,
+  onChangeBooking,
+  handleOnChange,
+}) {
   return (
     <Fragment>
       <Select
         textLabel="Booking"
         className="mb-3"
-        options={options}
+        selectedValue={booking}
+        options={bookingOptions}
         onChange={onChangeBooking}
       />
-      
-      {booking === 'one-time' && <OneTime />}
-      {booking === 'multiple-days' && <MultipleDays />}
-      {booking === 'recurrent-jobs' && <RecurrentJobs />}
+
+      {booking === "one-time" && (
+        <OneTime
+          day={day}
+          month={month}
+          timeId={timeId}
+          register={register}
+          timeOptions={timeOptions}
+          validateDay={validateDay}
+          onChangeTime={onChangeTime}
+          onChangeMonth={onChangeMonth}
+        />
+      )}
+
+      {booking === "multiple-days" && <MultipleDays />}
+
+      {booking === "recurrent-jobs" && (
+        <RecurrentJobs
+          days={days}
+          repeat={repeat}
+          timeId={timeId}
+          forMonthly={forMonthly}
+          timeOptions={timeOptions}
+          onToggleDay={onToggleDay}
+          onChangeTime={onChangeTime}
+          handleOnChange={handleOnChange}
+        />
+      )}
     </Fragment>
   );
 }
 
 Booking.propTypes = {
+  repeat: PropTypes.string.isRequired,
+  timeId: PropTypes.string.isRequired,
+  forMonthly: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
   booking: PropTypes.string.isRequired,
-  onChangeBooking: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  days: PropTypes.arrayOf(PropTypes.string).isRequired,
+  timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  day: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  onToggleDay: PropTypes.func.isRequired,
+  validateDay: PropTypes.func.isRequired,
+  onChangeTime: PropTypes.func.isRequired,
+  onChangeMonth: PropTypes.func.isRequired,
+  onChangeBooking: PropTypes.func.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
 };
 
 export default memo(Booking, (prevProps, nextProps) => {
-  return prevProps.booking === nextProps.booking
+  return (
+    prevProps.day === nextProps.day &&
+    prevProps.repeat === nextProps.repeat &&
+    prevProps.timeId === nextProps.timeId &&
+    prevProps.forMonthly === nextProps.forMonthly &&
+    prevProps.month === nextProps.month &&
+    prevProps.booking === nextProps.booking &&
+    JSON.stringify(prevProps.days) === JSON.stringify(nextProps.days) &&
+    JSON.stringify(prevProps.timeOptions) === JSON.stringify(nextProps.timeOptions)
+  );
 });

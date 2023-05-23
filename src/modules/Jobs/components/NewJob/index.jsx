@@ -10,8 +10,20 @@ import useNewJob from "./useNewJob";
 import "./styles.css";
 
 export default function NewJob() {
-  const { ref, watch, onTriggerWidth, handleOnChange, onChangeProperty } =
-    useNewJob();
+  const {
+    ref,
+    watch,
+    register,
+    onTriggerWidth,
+    handleOnChange,
+    validateDay,
+    onToggleDay,
+    onChangeTime,
+    onChangeMonth,
+    onChangeClient,
+    onChangeService,
+    onChangeProperty
+  } = useNewJob();
 
   return (
     <section ref={ref} className="new-job">
@@ -23,12 +35,15 @@ export default function NewJob() {
       {!watch("minimizeWidth") && (
         <div className="job-wrapper d-flex flex-column justify-content-between">
           <JobContent
-            client={watch("client")}
-            booking={watch("booking")}
-            service={watch("service")}
-            property={watch("property")}
-            services={watch("services")}
+            watch={watch}
+            register={register}
+            validateDay={validateDay}
+            onToggleDay={onToggleDay}
             handleOnChange={handleOnChange}
+            onChangeTime={onChangeTime}
+            onChangeMonth={onChangeMonth}
+            onChangeClient={onChangeClient}
+            onChangeService={onChangeService}
             onChangeProperty={onChangeProperty}
           />
 

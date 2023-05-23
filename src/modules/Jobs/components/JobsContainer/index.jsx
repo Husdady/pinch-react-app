@@ -6,7 +6,7 @@ import SelectedAppointment from '../SelectedAppointment'
 // Styles
 import './styles.css';
 
-export default function JobsForm() {
+export default function JobsContainer() {
   return (
     <form className="jobs-form d-flex flex-wrap">
       <NewJob />

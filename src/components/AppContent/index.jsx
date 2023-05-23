@@ -1,10 +1,10 @@
 // Components
-import JobsForm from '../../modules/Jobs/components/JobsForm'
+import JobsContainer from '../../modules/Jobs/components/JobsContainer'
 
 export default function AppContent() {
   return (
     <div className="app-content p-3 px-sm-5 py-sm-5">
-      <JobsForm />
+      <JobsContainer />
     </div>
   );
 }

@@ -1,28 +1,29 @@
+/* eslint-disable react/no-typos */
 // Librarys
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import PropTypes from "prop-types";
+
+// Hooks
+import useServices from "./useServices";
 
 // Components
 import Select from "../../../../components/Select";
 
-function Services({ service, options, onChangeService }) {
-  // Define item
-  const existsItem = useMemo(
-    () => options.some((option) => option.value === service),
-    [service, options]
-  );
+function Services({ jobCost, serviceId, ...props }) {
+  const { options, onChange } = useServices(props);
 
   return (
     <div className="mb-2">
       <Select
         options={options}
-        onChange={onChangeService}
+        onChange={onChange}
+        selectedValue={serviceId}
         textLabel="Service"
       />
 
-      {existsItem && service !== "" && (
+      {typeof jobCost === 'number' && (
         <span className="cost d-block mt-1 text-end">
-          $ {Number(service?.split("/").slice(-2, -1)[0])?.toFixed(2)}
+          $ {jobCost.toFixed(2)}
         </span>
       )}
     </div>
@@ -30,14 +31,16 @@ function Services({ service, options, onChangeService }) {
 }
 
 Services.propTypes = {
-  service: PropTypes.string.isRequired,
+  jobCost: PropTypes.number,
+  serviceId: PropTypes.string.isRequired,
+  services: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChangeService: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default memo(Services, (prevProps, nextProps) => {
   return (
-    prevProps.options === nextProps.options &&
-    prevProps.service === nextProps.service
+    prevProps.jobCost === nextProps.jobCost &&
+    prevProps.services === nextProps.services &&
+    prevProps.serviceId === nextProps.serviceId
   );
 });
