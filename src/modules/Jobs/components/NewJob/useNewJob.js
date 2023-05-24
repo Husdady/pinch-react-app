@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
 import { useForm } from "react-hook-form";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useMemo } from "react";
 
 // Utils
 import isObject from "../../../../utils/isObject";
@@ -12,8 +12,17 @@ import { createTimeOptions } from "../Time/utils";
 
 // Constants
 import { bookingOptions } from "../Booking/options";
-import { DEFAULT_VALUES, DEFAULT_FIRST_HOUR } from "./constants";
+import {
+  daysSorted,
+  DEFAULT_VALUES,
+  DEFAULT_FIRST_HOUR,
+  DEFAULT_TOTAL_MONTHS,
+  repeatValues,
+} from "./constants";
+import getCurrentDate from "../../../../utils/getCurrentDate";
 import validateHourRange from "../../../../utils/validateHourRange";
+import getMaxMonthInNextDates from "../../../../utils/getMaxMonthInNextDates";
+import { getSpecificWeekday } from "../../../../utils/getSpecificWeekday";
 
 /**
  * Hook that implemenets the logic of the NewJob component
@@ -32,8 +41,46 @@ export default function useNewJob() {
     return (option) => {
       if (!("value" in option)) return; // 'Value' field not exists in option
       setValue(field, option.value); // Update field
+
+      if (field === "repeat") {
+        onUpdateRecurrentJobs({ newRepeat: option.value });
+      }
+
+      if (field === "forMonthly") {
+        onUpdateRecurrentJobs({ newForMonthly: option.value });
+      }
     };
   }, []);
+
+  // Define appointment data
+  const appointment = useMemo(() => {
+    const {
+      clientId,
+      customerName,
+      jobCost,
+      jobDate,
+      jobTime,
+      dateTime,
+      propertyId,
+      propertyName,
+      serviceType,
+      jobDurationTime,
+    } = watch();
+
+    // Define appointment
+    return {
+      clientId: clientId,
+      customerName: customerName,
+      jobCost: jobCost,
+      jobDate: jobDate,
+      jobTime: jobTime,
+      dateTime: dateTime,
+      propertyId: propertyId,
+      propertyName: propertyName,
+      serviceType: serviceType,
+      jobDurationTime: jobDurationTime,
+    };
+  }, [watch()]);
 
   // Callback 'change' for update Client
   const onChangeClient = useCallback(
@@ -205,22 +252,22 @@ export default function useNewJob() {
   // Callback 'click' for toggle days
   const onToggleDay = useCallback(
     (dayId) => {
-      const daysId = watch("days"); // Get days
-      const existsDayId = daysId.includes(dayId); // Check if dayId has been included
+      let newDays = null;
+      const days = watch("days"); // Get form data
+      const existsDay = days.includes(dayId); // Check if dayId has been included
 
       // DayId already exists
-      if (existsDayId) {
-        // Update days
-        return setValue(
-          "days",
-          daysId.filter((item) => item !== dayId)
-        );
+      if (existsDay) {
+        newDays = days.filter((item) => item !== dayId); // Define new days
+        setValue("days", newDays); // Update days
+      } else {
+        newDays = [dayId, ...days]; // Define new days
+        setValue("days", newDays); // Update days
       }
 
-      // Update days
-      return setValue("days", [dayId, ...daysId]);
+      onUpdateRecurrentJobs();
     },
-    [watch("days")]
+    [watch(), appointment]
   );
 
   // Callback 'change' for update property and services
@@ -270,14 +317,12 @@ export default function useNewJob() {
     (option) => {
       if (!("value" in option)) return; // 'Value' field not exists in option
       const timeId = option.value; // Get time id
-      const day = watch("day"); // Get day
-      const month = watch("month"); // Get month
-      const timeOptions = watch("timeOptions"); // Get time options
-      const appointments = watch("appointments"); // Get appointments
+      const { day, month, booking, timeOptions, appointments } = watch(); // Get form state
 
       // Get time option
       const timeOption = timeOptions.find((item) => item.value === timeId);
-      if (typeof timeOption === "undefined") return;
+      if (typeof timeOption === "undefined") return; // Stop function
+      setValue("timeId", timeOption.value); // Update field 'timeId'
 
       const label = timeOption.label; // Define label
       const splitHours = label?.split(" - "); // Split hours
@@ -288,34 +333,192 @@ export default function useNewJob() {
         : DEFAULT_FIRST_HOUR;
 
       setValue("jobTime", jobTime); // Update field 'jobTime'
-      setValue("timeId", timeOption.value); // Update field 'timeId'
 
       // Define job date
       const jobDate = addZeroToNumber(day) + "/" + getMonthIndex(month);
-      setValue("jobDate", jobDate); // Update job date
 
-      // Define first hour
-      const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
-      const dateTime = `${jobDate}\n${firstHour}`;
-      setValue("dateTime", dateTime); // Update field 'dateTime'
+      if (booking === "one-time") {
+        setValue("jobDate", jobDate); // Update job date
 
-      // Update field 'appointments'
+        // Define first hour
+        const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
+        const dateTime = `${jobDate}\n${firstHour}`;
+        setValue("dateTime", dateTime); // Update field 'dateTime'
+
+        // Update field 'appointments'
+        setValue(
+          "appointments",
+          appointments.map((item) => ({
+            ...item,
+            jobTime: jobTime,
+            dateTime: dateTime,
+          }))
+        );
+      }
+
+      if (booking === "recurrent-jobs") {
+        if (validateHourRange(option.label)) {
+          const newAppointments = appointments.slice();
+
+          newAppointments.unshift({
+            ...appointment,
+            jobTime: jobTime,
+            jobDate: jobDate,
+            dateTime: `${jobDate}\n${jobTime}`,
+          });
+
+          return setValue("appointments", newAppointments);
+        }
+
+        // Update field 'appointments'
+        setValue(
+          "appointments",
+          appointments
+            .filter((item) => {
+              const jobDateSplit = item.jobDate.split("/");
+              const { today } = getCurrentDate();
+
+              const newDate = new Date(
+                today.getFullYear(),
+                jobDateSplit[1],
+                jobDateSplit[0]
+              );
+
+              const equalDate =
+                today.getFullYear() === newDate.getFullYear() &&
+                today.getMonth() + 1 === Number(jobDateSplit[1]) &&
+                today.getDate() === Number(jobDateSplit[0]);
+
+              if (equalDate) {
+                return validateHourRange(`${item.jobTime} - ${item.jobTime}`);
+              }
+
+              return true;
+            })
+            .map((item) => ({
+              ...item,
+              jobTime: jobTime,
+              dateTime: `${item.jobDate}\n${jobTime}`,
+            }))
+        );
+      }
+    },
+    [watch()]
+  );
+
+  // Callback for update recurrent jobs
+  const onUpdateRecurrentJobs = useCallback(
+    (params = {}) => {
+      const { newRepeat, newForMonthly } = params;
+      const { days, repeat, forMonthly, jobTime, timeId, timeOptions } =
+        watch();
+
+      if (days.length === 0) {
+        return setValue("appointments", []);
+      }
+
+      const newAppointments = []; // Define total appointments for create
+
+      // Get time option
+      const timeOption = timeOptions.find((item) => item.value === timeId);
+
+      // Time option not found
+      if (typeof timeOption === "undefined") return;
+
+      // Split total months
+      const splitTotalMonths =
+        typeof newForMonthly === "undefined"
+          ? forMonthly.split("-")
+          : newForMonthly.split("-");
+
+      // Define total months
+      const totalMonths = Array.isArray(splitTotalMonths)
+        ? splitTotalMonths[0]
+        : DEFAULT_TOTAL_MONTHS;
+
+      for (const day of days) {
+        const dayIndex = daysSorted.findIndex((item) => item.id === day); // Get day index
+        if (dayIndex === -1) continue;
+
+        let allowed = true;
+        const { date } = getSpecificWeekday(dayIndex);
+
+        // Get current date
+        let today = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        );
+
+        while (allowed) {
+          // Check if its allowed date
+          const allowedDate = getMaxMonthInNextDates({
+            date: today,
+            totalMonths: totalMonths,
+          });
+
+          // Its not allowed date
+          if (!allowedDate) {
+            allowed = false;
+            break;
+          }
+
+          const newJobDate =
+            addZeroToNumber(today.getDate()) +
+            "/" +
+            addZeroToNumber(today.getMonth() + 1);
+
+          // Add new appointment
+          newAppointments.push({
+            jobDate: newJobDate,
+            dateTime: `${newJobDate}\n${jobTime}`,
+          });
+
+          // Define weeks
+          const weeks =
+            typeof newRepeat === "undefined"
+              ? repeatValues[repeat]
+              : repeatValues[newRepeat];
+
+          // Update today
+          today.setDate(today.getDate() + weeks);
+        }
+      }
+
+      // Update appointments
       setValue(
         "appointments",
-        appointments.map((item) => ({
+        newAppointments.map((item) => ({
+          ...appointment,
           ...item,
-          jobTime: jobTime,
-          dateTime: dateTime,
         }))
       );
     },
-    [
-      watch("day"),
-      watch("month"),
-      watch("jobTime"),
-      watch("timeOptions"),
-      watch("appointments"),
-    ]
+    [watch(), appointment]
+  );
+
+  // Callback 'change' for update booking option
+  const onChangeBooking = useCallback(
+    (option) => {
+      if (!("value" in option)) return; // 'Value' field not exists in option
+
+      const clientId = watch("clientId"); // Get client id
+      const booking = option.value; // Get booking option
+      setValue("booking", booking); // Update booking
+
+      if (clientId === "") return; // Stop callback
+
+      // One time option selected
+      if (booking === "one-time") {
+        setValue("appointments", [appointment]);
+      }
+
+      // Recurrent jobs option select
+      if (booking === "recurrent-jobs") {
+        onUpdateRecurrentJobs();
+      }
+    },
+    [watch(), appointment]
   );
 
   // Callback 'change' for update the day of One Time
@@ -393,6 +596,7 @@ export default function useNewJob() {
     onChangeMonth: onChangeMonth,
     onChangeClient: onChangeClient,
     onChangeService: onChangeService,
+    onChangeBooking: onChangeBooking,
     onChangeProperty: onChangeProperty,
   };
 }

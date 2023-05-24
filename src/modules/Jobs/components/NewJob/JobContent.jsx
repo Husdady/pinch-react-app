@@ -17,6 +17,7 @@ function JobContent({
   onChangeTime,
   onChangeMonth,
   onChangeClient,
+  onChangeBooking,
   onChangeService,
   onChangeProperty
 }) {
@@ -52,7 +53,7 @@ function JobContent({
         onChangeTime={onChangeTime}
         onChangeMonth={onChangeMonth}
         handleOnChange={handleOnChange}
-        onChangeBooking={handleOnChange("booking")}
+        onChangeBooking={onChangeBooking}
       />
     </div>
   );
@@ -66,6 +67,7 @@ JobContent.propTypes = {
   validateDay: PropTypes.func.isRequired,
   onChangeMonth: PropTypes.func.isRequired,
   onChangeClient: PropTypes.func.isRequired,
+  onChangeBooking: PropTypes.func.isRequired,
   onChangeProperty: PropTypes.func.isRequired
 };
 

@@ -22,6 +22,7 @@ export default function NewJob() {
     onChangeMonth,
     onChangeClient,
     onChangeService,
+    onChangeBooking,
     onChangeProperty
   } = useNewJob();
 
@@ -44,6 +45,7 @@ export default function NewJob() {
             onChangeMonth={onChangeMonth}
             onChangeClient={onChangeClient}
             onChangeService={onChangeService}
+            onChangeBooking={onChangeBooking}
             onChangeProperty={onChangeProperty}
           />
 

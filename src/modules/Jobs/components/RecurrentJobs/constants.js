@@ -1,11 +1,11 @@
 export const daysOptions = [
-  { id: "mo", label: "Mo" },
-  { id: "tu", label: "Tu" },
-  { id: "we", label: "We" },
-  { id: "th", label: "Th" },
-  { id: "fr", label: "Fr" },
-  { id: "sa", label: "Sa" },
-  { id: "su", label: "Su" },
+  { id: "monday", label: "Mo" },
+  { id: "tuesday", label: "Tu" },
+  { id: "wednesday", label: "We" },
+  { id: "thursday", label: "Th" },
+  { id: "friday", label: "Fr" },
+  { id: "satudary", label: "Sa" },
+  { id: "sunday", label: "Su" },
 ];
 
 export const repeatOptions = [
