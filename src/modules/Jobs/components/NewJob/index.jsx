@@ -13,7 +13,9 @@ export default function NewJob() {
   const {
     ref,
     watch,
+    submit,
     register,
+    handleSubmit,
     onTriggerWidth,
     handleOnChange,
     validateDay,
@@ -23,11 +25,12 @@ export default function NewJob() {
     onChangeClient,
     onChangeService,
     onChangeBooking,
-    onChangeProperty
+    onChangeProperty,
+    isDisabledSubmitButton,
   } = useNewJob();
 
   return (
-    <section ref={ref} className="new-job">
+    <form ref={ref} className="new-job" noValidate onSubmit={handleSubmit(submit)}>
       <JobHeader
         active={watch("minimizeWidth")}
         onTriggerWidth={onTriggerWidth}
@@ -49,9 +52,9 @@ export default function NewJob() {
             onChangeProperty={onChangeProperty}
           />
 
-          <JobFooter />
+          <JobFooter isDisabledSubmitButton={isDisabledSubmitButton} />
         </div>
       )}
-    </section>
+    </form>
   );
 }

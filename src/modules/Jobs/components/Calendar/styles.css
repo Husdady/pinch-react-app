@@ -1,0 +1,81 @@
+.calendar {
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+}
+
+.calendar .day {
+  color: #241d5d;
+  font-size: 12px;
+}
+
+.calendar .calendar-month {
+  padding-top: 0.62rem;
+  padding-bottom: 0.62rem;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.calendar .days-list {
+  overflow: hidden;
+}
+
+.calendar .days-list .day {
+  color: #4f4f4f;
+  font-size: 11px;
+}
+
+.calendar .day,
+.calendar .days-list .day {
+  line-height: 14.63px;
+}
+
+.calendar .days-list,
+.calendar .days-num-list {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar .days-list .day,
+.calendar .days-num-list .day-num {
+  display: block;
+  text-align: center;
+}
+
+.calendar .days-num-list .day-num {
+  width: 33px;
+  height: 33px;
+  margin: auto;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #4f4f4f;
+  font-weight: 900;
+}
+
+.calendar .days-num-list .day-num-item {
+  padding-top: 0.31rem;
+  padding-bottom: 0.31rem;
+}
+
+.calendar .days-num-list .day-num.blocked {
+  color: #E0E0E0;
+  cursor: not-allowed;
+}
+
+.calendar .days-num-list .day-num.active {
+  color: #dc6bbc;
+}
+
+.calendar .days-num-list .day-num:not(.blocked) {
+  cursor: pointer;
+}
+
+.calendar .day-num-list .day-num.selected,
+.calendar .days-num-list .day-num:not(.blocked):hover {
+  color: #ffffff;
+  border-radius: 50%;
+  background-color: #241D5D;
+}
+
+.calendar .calendar-month .disable-chevron {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

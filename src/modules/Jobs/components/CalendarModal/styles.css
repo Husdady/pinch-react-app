@@ -1,0 +1,148 @@
+.calendar-modal .modal-dialog {
+  max-width: 650px;
+}
+
+.calendar-modal .modal-content {
+  width: 650px;
+  height: 365px;
+}
+
+.calendar-modal .content,
+.calendar-modal .calendar-content {
+  height: 100%;
+}
+
+.calendar-modal .calendar-content {
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
+}
+
+.calendar-container {
+  width: 65%;
+  margin-right: 0.6rem;
+}
+
+.calendar-appointments {
+  width: 35%;
+  height: 100%;
+}
+
+.calendar-appointments .select .select-value {
+  padding-right: 0.5rem !important;
+}
+
+.calendar-appointments-content {
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  height: calc(100% - 41px);
+  margin-bottom: 0.65rem;
+}
+
+.calendar-appointments-header {
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.no-appointments {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #828282;
+  height: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-appointments-content .appointments-list {
+  overflow-y: auto;
+  max-height: 228px;
+}
+
+.calendar-appointments-content .appointments-list::-webkit-scrollbar {
+  width: 16px;
+}
+
+.calendar-appointments-content .appointments-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.calendar-appointments-content .appointments-list::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  background-color: #bdbdbd;
+}
+
+.calendar-appointments-content
+  .appointments-list::-webkit-scrollbar-thumb:hover {
+  background-color: #9e9e9e;
+}
+
+.appointment-item {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.appointment-item.active {
+  border-left: 2px solid #241d5d;
+  background-color: #f9f9f9;
+}
+
+.appointment-item .customer-name {
+  font-size: 10px;
+  line-height: 11px;
+  margin-bottom: 0.1rem;
+}
+
+.appointment-item .job-schedule {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.appointment-item .job-schedule,
+.appointment-item .customer-name {
+  display: block;
+  color: #4f4f4f;
+}
+
+.modal-calendar-save {
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  background-color: #dc6bbc;
+  color: #ffffff;
+  font-size: 12px;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+@media only screen and (max-width: 685px) {
+  .calendar-modal .modal-dialog {
+    max-width: 98%;
+  }
+
+  .calendar-modal .modal-content {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .calendar-content {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
+
+  .calendar-container {
+    margin-right: 0;
+  }
+
+  .calendar-container,
+  .calendar-appointments {
+    width: 100%;
+  }
+}

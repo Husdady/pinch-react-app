@@ -1,13 +1,26 @@
 // Librarys
 import { memo } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
-function JobFooter() {
+function JobFooter({ isDisabledSubmitButton }) {
   return (
     <div className="job-footer px-4 py-4">
-      <button id="generate-job" type="submit" className="d-block w-100 border-0 py-2">Generate Job</button>
+      <button
+        type="submit"
+        id="generate-job"
+        className="d-block w-100 border-0"
+        disabled={isDisabledSubmitButton}
+      >
+        Generate Job
+      </button>
     </div>
   );
 }
 
-export default memo(JobFooter);
+JobFooter.propTypes = {
+  isDisabledSubmitButton: PropTypes.bool.isRequired,
+};
+
+export default memo(JobFooter, (prevProps, nextProps) => {
+  return prevProps.isDisabledSubmitButton === nextProps.isDisabledSubmitButton;
+});

@@ -4,7 +4,7 @@ export const daysOptions = [
   { id: "wednesday", label: "We" },
   { id: "thursday", label: "Th" },
   { id: "friday", label: "Fr" },
-  { id: "satudary", label: "Sa" },
+  { id: "saturday", label: "Sa" },
   { id: "sunday", label: "Su" },
 ];
 

@@ -9,9 +9,9 @@ import { CLOSE_ICON } from "./constants";
 // Styles
 import "./styles.css";
 
-function CustomModal({ show, onHide, children, className }) {
+function CustomModal({ show, onHide, children, centered, className }) {
   return (
-    <Modal show={show} onHide={onHide} className={className}>
+    <Modal show={show} onHide={onHide} centered={centered} className={className}>
       <div className="d-flex justify-content-end">
         <img
           role="button"
@@ -29,6 +29,7 @@ function CustomModal({ show, onHide, children, className }) {
 }
 
 CustomModal.propTypes = {
+  centered: PropTypes.bool,
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

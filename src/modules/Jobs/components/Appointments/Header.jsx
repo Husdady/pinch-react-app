@@ -1,6 +1,9 @@
 // Components
 import Select from "../../../../components/Select/index";
 
+// Constants
+import { CALENDAR_ICON } from "../../../../assets/data/constants";
+
 export default function Header() {
   return (
     <section className="appointments-header d-flex">
@@ -13,9 +16,9 @@ export default function Header() {
         <span className="me-1">Connect</span>
 
         <img
-          src="https://i.imgur.com/6HqmxDx.png"
           alt="calendar"
           className="object-fit-cover"
+          src={CALENDAR_ICON}
         />
       </button>
     </section>

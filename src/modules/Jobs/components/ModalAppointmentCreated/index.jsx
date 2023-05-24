@@ -2,7 +2,7 @@
 import Modal from "../../../../components/Modal";
 
 // Constants
-import { CALENDAR_CHECK_ICON } from "./constants";
+import { CALENDAR_CHECK_ICON } from "../../../../assets/data/constants";
 
 // Styles
 import "./styles.css";

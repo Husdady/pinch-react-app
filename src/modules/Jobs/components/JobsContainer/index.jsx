@@ -8,10 +8,10 @@ import './styles.css';
 
 export default function JobsContainer() {
   return (
-    <form className="jobs-form d-flex flex-wrap">
+    <section className="jobs-container d-flex flex-wrap">
       <NewJob />
       <Appointments />
       <SelectedAppointment />
-    </form>
+    </section>
   );
 }

@@ -27,6 +27,13 @@
 }
 
 .new-job > .job-wrapper .job-footer #generate-job {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  color: #FFFFFF;
+  background-color: #DC6BBC;;
+}
+
+.new-job > .job-wrapper .job-footer #generate-job:disabled {
   color: #F8F8F8;
   background-color: #BDBDBD;
 }

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import fetchClients from "./fetchClients";
 
 // Constants
-import { MEMBER_ID } from "./constants";
+import { MEMBER_ID } from "../../../../assets/data/constants";
 
 /**
  * Hook that get clients from the API

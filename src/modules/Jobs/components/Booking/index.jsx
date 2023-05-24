@@ -4,7 +4,7 @@ import { memo, Fragment } from "react";
 
 // Components
 import OneTime from "../OneTime";
-import MultipleDays from "./MultipleDays";
+import MultipleDays from "../MultipleDays";
 import RecurrentJobs from "../RecurrentJobs";
 import Select from "../../../../components/Select";
 
@@ -54,7 +54,13 @@ function Booking({
         />
       )}
 
-      {booking === "multiple-days" && <MultipleDays />}
+      {booking === "multiple-days" && (
+        <MultipleDays
+          timeId={timeId}
+          timeOptions={timeOptions}
+          onChangeTime={onChangeTime}
+        />
+      )}
 
       {booking === "recurrent-jobs" && (
         <RecurrentJobs
@@ -99,6 +105,7 @@ export default memo(Booking, (prevProps, nextProps) => {
     prevProps.month === nextProps.month &&
     prevProps.booking === nextProps.booking &&
     JSON.stringify(prevProps.days) === JSON.stringify(nextProps.days) &&
-    JSON.stringify(prevProps.timeOptions) === JSON.stringify(nextProps.timeOptions)
+    JSON.stringify(prevProps.timeOptions) ===
+      JSON.stringify(nextProps.timeOptions)
   );
 });

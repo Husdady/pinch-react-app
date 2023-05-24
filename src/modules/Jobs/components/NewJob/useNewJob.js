@@ -32,25 +32,21 @@ export default function useNewJob() {
   const ref = useRef(null);
 
   // Define form state
-  const { watch, register, setValue } = useForm({
+  const { watch, register, setValue, handleSubmit } = useForm({
     defaultValues: DEFAULT_VALUES,
   });
 
-  // Callback 'change' for update Select field
-  const handleOnChange = useCallback((field) => {
-    return (option) => {
-      if (!("value" in option)) return; // 'Value' field not exists in option
-      setValue(field, option.value); // Update field
+  const isDisabledSubmitButton = useMemo(() => {
+    const { timeId, booking, clientId, serviceId, propertyId } = watch();
 
-      if (field === "repeat") {
-        onUpdateRecurrentJobs({ newRepeat: option.value });
-      }
-
-      if (field === "forMonthly") {
-        onUpdateRecurrentJobs({ newForMonthly: option.value });
-      }
-    };
-  }, []);
+    return (
+      timeId === "" &&
+      booking === "" &&
+      clientId === "" &&
+      propertyId === "" &&
+      serviceId === ""
+    );
+  }, [watch()]);
 
   // Define appointment data
   const appointment = useMemo(() => {
@@ -81,6 +77,22 @@ export default function useNewJob() {
       jobDurationTime: jobDurationTime,
     };
   }, [watch()]);
+
+  // Callback 'change' for update Select field
+  const handleOnChange = useCallback((field) => {
+    return (option) => {
+      if (!("value" in option)) return; // 'Value' field not exists in option
+      setValue(field, option.value); // Update field
+
+      if (field === "repeat") {
+        onUpdateRecurrentJobs({ newRepeat: option.value });
+      }
+
+      if (field === "forMonthly") {
+        onUpdateRecurrentJobs({ newForMonthly: option.value });
+      }
+    };
+  }, []);
 
   // Callback 'change' for update Client
   const onChangeClient = useCallback(
@@ -316,6 +328,7 @@ export default function useNewJob() {
   const onChangeTime = useCallback(
     (option) => {
       if (!("value" in option)) return; // 'Value' field not exists in option
+      
       const timeId = option.value; // Get time id
       const { day, month, booking, timeOptions, appointments } = watch(); // Get form state
 
@@ -582,12 +595,19 @@ export default function useNewJob() {
     }
   }, []);
 
+  // Callback 'submit' form
+  const submit = useCallback((formState) => {
+    console.log("[formState]", formState);
+  }, [])
+
   console.log("[WATCH]", watch());
 
   return {
     ref: ref,
     watch: watch,
+    submit: submit,
     register: register,
+    handleSubmit: handleSubmit,
     handleOnChange: handleOnChange,
     onTriggerWidth: onTriggerWidth,
     validateDay: validateDay,
@@ -598,5 +618,6 @@ export default function useNewJob() {
     onChangeService: onChangeService,
     onChangeBooking: onChangeBooking,
     onChangeProperty: onChangeProperty,
+    isDisabledSubmitButton: isDisabledSubmitButton
   };
 }

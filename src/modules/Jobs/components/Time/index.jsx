@@ -21,9 +21,9 @@ function Time({ style, options, selectedTime, onChangeTime }) {
 
 Time.propTypes = {
   style: PropTypes.object,
+  onChangeTime: PropTypes.func.isRequired,
   selectedTime: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onChangeTime: PropTypes.func.isRequired,
 };
 
 export default memo(Time, (prevProps, nextProps) => {
