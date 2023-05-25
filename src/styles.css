@@ -9,3 +9,18 @@ button {
 button:disabled {
   cursor: not-allowed;
 }
+
+.skeleton-animation {
+  pointer-events: none;
+  background-color: #eee;
+  animation: loading-skeleton 1s infinite alternate;
+}
+
+@keyframes loading-skeleton {
+  from {
+    opacity: .4;
+  }
+  to {
+    opacity: 1;
+  }
+}

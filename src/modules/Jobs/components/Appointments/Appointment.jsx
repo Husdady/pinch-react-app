@@ -16,7 +16,7 @@ export default function Appointment({
       <span className="field-property">{propertyName}</span>
       <span className="field-date">{dateTime}</span>
 
-      <div className="ms-4" style={{ width: "50%" }}>
+      <div className="ms-4 field-status" style={{ width: "50%" }}>
         <Select options={appointmentStatus} selectedValue={status} />
       </div>
     </div>

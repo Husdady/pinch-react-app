@@ -11,7 +11,9 @@ import Properties from "../Properties";
 function JobContent({
   watch,
   register,
+  updateDate,
   onToggleDay,
+  appointment,
   handleOnChange,
   validateDay,
   onChangeTime,
@@ -23,7 +25,7 @@ function JobContent({
 }) {
   return (
     <div className="job-content px-4 py-2">
-      <Clients onChangeClient={onChangeClient} />
+      <Clients clientId={watch('clientId')} onChangeClient={onChangeClient} />
 
       <Properties
         clientId={watch('clientId')}
@@ -48,6 +50,8 @@ function JobContent({
         forMonthly={watch('forMonthly')}
         timeOptions={watch('timeOptions')}
         register={register}
+        updateDate={updateDate}
+        appointment={appointment}
         validateDay={validateDay}
         onToggleDay={onToggleDay}
         onChangeTime={onChangeTime}
@@ -62,7 +66,9 @@ function JobContent({
 JobContent.propTypes = {
   watch: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  updateDate: PropTypes.func.isRequired,
   onToggleDay: PropTypes.func.isRequired,
+  appointment: PropTypes.object.isRequired,
   handleOnChange: PropTypes.func.isRequired,
   validateDay: PropTypes.func.isRequired,
   onChangeMonth: PropTypes.func.isRequired,

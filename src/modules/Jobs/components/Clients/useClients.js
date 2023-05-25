@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 // Utils
 import fetchClients from "./fetchClients";
+import isObject from "../../../../utils/isObject";
 
 // Constants
 import { MEMBER_ID } from "../../../../assets/data/constants";
@@ -29,7 +30,7 @@ export default function useClients({ onChangeClient }) {
 
       // Get client by id
       const client = clients.find((item) => item.clientId === option.value);
-      
+
       // Client not exists
       if (typeof client === "undefined") return;
 
@@ -66,8 +67,18 @@ export default function useClients({ onChangeClient }) {
             label: client.clientName,
           }));
 
-          setClients(result.data) // Update clients
+          setClients(result.data); // Update clients
           setOptions(apiClients); // Update options
+
+          const firstClient = result.data[0]; // Get first client
+
+          // Validate first client
+          if (isObject(firstClient)) {
+            onChangeClient({
+              clientId: firstClient.clientId,
+              customerName: firstClient.clientName,
+            });
+          }
         }
       },
     });

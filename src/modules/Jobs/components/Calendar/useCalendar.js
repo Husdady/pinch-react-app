@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 
 // Utils
-import calculateMonthDays from "./utils";
 import isObject from "../../../../utils/isObject";
+import { pickCurrentDay, calculateMonthDays } from "./utils";
 
 // Constants
 import { months } from "./constants";
@@ -12,14 +13,18 @@ export const currentMonth = months[0];
 
 /**
  * Hook for implements logic of the Calendar
+ * @param {object} params Callback 'onSelectDay'
  * @returns {object} Data
  */
-export default function useCalendar() {
-  const [activeDay, setActiveDay] = useState(null);
+export default function useCalendar({ onSelectDay, onLoadActiveDay }) {
   const [month, setMonth] = useState(currentMonth); // Define first month
 
   const [daysNum, setDaysNum] = useState(() => {
     return calculateMonthDays({ month: currentMonth.value });
+  });
+
+  const [activeDay, setActiveDay] = useState(() => {
+    return pickCurrentDay({ daysNum: daysNum })
   });
 
   // Disable prev chevron icon
@@ -33,6 +38,18 @@ export default function useCalendar() {
     const { index } = month; // Get month index
     return index === months.length - 1;
   }, [month]);
+
+  // Callback for select day
+  const handleSelectDay = useCallback((day) => {
+    if (day === null) return // Day not exists
+    if (day.blocked) return // Day blocked
+
+    // The same day has been selected
+    if (activeDay !== null && activeDay.id === day.id) return
+
+    setActiveDay(day) // Update active day
+    onSelectDay(day) // Execute callback 'onSelectDay'
+  }, [activeDay])
 
   // Callback for get prev month
   const changeMonth = useCallback(
@@ -61,11 +78,15 @@ export default function useCalendar() {
     [month]
   );
 
+  useEffect(() => {
+    onLoadActiveDay(activeDay)
+  }, [])
+
   return {
     month: month,
     daysNum: daysNum,
     activeDay: activeDay,
-    setActiveDay: setActiveDay,
+    handleSelectDay: handleSelectDay,
     disablePrevChevronIcon: disablePrevChevronIcon,
     disableNextChevronIcon: disableNextChevronIcon,
     prevMonth: changeMonth({ actionType: "decrement" }),

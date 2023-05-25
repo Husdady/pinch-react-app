@@ -18,17 +18,20 @@ import { CHEVRON_LEFT, CHEVRON_RIGHT } from "../../../../assets/data/constants";
 // Styles
 import "./styles.css";
 
-function Calendar() {
+function Calendar({ schedule, onSelectDay, onLoadActiveDay }) {
   const {
     month,
     daysNum,
     prevMonth,
     nextMonth,
     activeDay,
-    setActiveDay,
+    handleSelectDay,
     disablePrevChevronIcon,
     disableNextChevronIcon,
-  } = useCalendar();
+  } = useCalendar({
+    onSelectDay: onSelectDay,
+    onLoadActiveDay: onLoadActiveDay,
+  });
 
   return (
     <div className="calendar">
@@ -71,12 +74,22 @@ function Calendar() {
 
         <DaysNum
           daysNum={daysNum}
+          schedule={schedule}
           activeDay={activeDay}
-          setActiveDay={setActiveDay}
+          handleSelectDay={handleSelectDay}
         />
       </div>
     </div>
   );
 }
 
-export default memo(Calendar);
+Calendar.propTypes = {
+  schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelectDay: PropTypes.func.isRequired,
+};
+
+export default memo(Calendar, (prevProps, nextProps) => {
+  return (
+    JSON.stringify(prevProps.schedule) === JSON.stringify(nextProps.schedule)
+  );
+});

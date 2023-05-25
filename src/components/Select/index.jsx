@@ -101,7 +101,9 @@ function Select({
           </div>
         )}
 
-      {isLoading && <div className="select-loader mt-1"></div>}
+      {isLoading && (
+        <div className="select-loader skeleton-animation mt-1"></div>
+      )}
     </div>
   );
 }

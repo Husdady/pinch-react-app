@@ -40,6 +40,7 @@
 .appointments-content {
   height: 658px;
   overflow-y: auto;
+  overflow-x: auto;
   border-left: 1px solid #BDBDBD;
   border-right: 1px solid #BDBDBD;
   border-bottom: 1px solid #BDBDBD;
@@ -70,20 +71,62 @@
 
 .field-client {
   width: 30%;
-  min-width: 30%;
 }
 
 .field-status,
 .field-property {
   width: 25%;
-  min-width: 25%;
 }
 
 .field-date {
   width: 12%;
-  min-width: 12%;
+}
+
+.field-client,
+.field-property,
+.appointment .field-status {
+  min-width: 150px;
+}
+
+.field-date {
+  min-width: 100px;
+}
+
+.appointments-content > .appointments-fields > .appointments-list > .appointment-field.field-status {
+  min-width: 174px;
 }
 
 .appointment:nth-last-child(-n+3) .select-options {
   bottom: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .appointments-fields,
+  .appointments-registered,
+  .appointments-content > .appointments-fields > .appointments-list > .appointment-field,
+  .appointments-content > .appointments-registered > .appointments-list > .appointment {
+    display: table;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .appointments-header {
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .appointments-header .connect,
+  .appointments-header .appointments-wrapper {
+    width: 100%;
+  }
+
+  .appointments-header .appointments-wrapper {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .appointments-header .connect {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }

@@ -94,6 +94,52 @@ export default function useNewJob() {
     };
   }, []);
 
+  // Update date of Appointments
+  const updateDate = useCallback(
+    ({ day, month }) => {
+      const formData = watch();
+
+      // Define job date
+      const jobDate =
+        getMonthIndex(month || formData.month) +
+        "/" +
+        addZeroToNumber(day || formData.day);
+
+      setValue("jobDate", jobDate); // Update job date
+
+      // Define first hour
+      const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
+      const dateTime = `${jobDate}\n${firstHour}`;
+      setValue("dateTime", `${jobDate}\n${firstHour}`); // Update field 'dateTime'
+
+      return {
+        jobDate: jobDate,
+        dateTime: dateTime,
+      };
+    },
+    [watch()]
+  );
+
+  // Update jobTime
+  const updateJobTime = useCallback(({ timeId, timeOptions }) => {
+    // Get time option
+    const timeOption = timeOptions.find((item) => item.value === timeId);
+    if (typeof timeOption === "undefined") return; // Stop function
+    setValue("timeId", timeOption.value); // Update field 'timeId'
+
+    const label = timeOption.label; // Define label
+    const splitHours = label?.split(" - "); // Split hours
+
+    // Define job time
+    const jobTime = Array.isArray(splitHours)
+      ? splitHours[0]
+      : DEFAULT_FIRST_HOUR;
+
+    setValue("jobTime", jobTime); // Update field 'jobTime'
+
+    return jobTime;
+  }, []);
+
   // Callback 'change' for update Client
   const onChangeClient = useCallback(
     ({ clientId, customerName }) => {
@@ -149,7 +195,7 @@ export default function useNewJob() {
       const appointments = watch("appointments"); // Get appointments
 
       // Define job date
-      const jobDate = addZeroToNumber(day) + "/" + getMonthIndex(month);
+      const jobDate = getMonthIndex(month) + "/" + addZeroToNumber(day);
       setValue("jobDate", jobDate); // Update job date
 
       // Define time options
@@ -302,14 +348,8 @@ export default function useNewJob() {
 
       setValue("month", month); // Update field
 
-      // Define job date
-      const jobDate = addZeroToNumber(day) + "/" + getMonthIndex(month);
-      setValue("jobDate", jobDate); // Update job date
-
-      // Define first hour
-      const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
-      const dateTime = `${jobDate}\n${firstHour}`;
-      setValue("dateTime", dateTime); // Update field 'dateTime'
+      // Update dates
+      const { jobDate, dateTime } = updateDate({ day: day, month: month });
 
       // Update field 'appointments'
       setValue(
@@ -328,46 +368,18 @@ export default function useNewJob() {
   const onChangeTime = useCallback(
     (option) => {
       if (!("value" in option)) return; // 'Value' field not exists in option
-      
+
       const timeId = option.value; // Get time id
       const { day, month, booking, timeOptions, appointments } = watch(); // Get form state
 
-      // Get time option
-      const timeOption = timeOptions.find((item) => item.value === timeId);
-      if (typeof timeOption === "undefined") return; // Stop function
-      setValue("timeId", timeOption.value); // Update field 'timeId'
-
-      const label = timeOption.label; // Define label
-      const splitHours = label?.split(" - "); // Split hours
-
-      // Define job time
-      const jobTime = Array.isArray(splitHours)
-        ? splitHours[0]
-        : DEFAULT_FIRST_HOUR;
-
-      setValue("jobTime", jobTime); // Update field 'jobTime'
+      // Update job time
+      const jobTime = updateJobTime({
+        timeId: timeId,
+        timeOptions: timeOptions,
+      });
 
       // Define job date
-      const jobDate = addZeroToNumber(day) + "/" + getMonthIndex(month);
-
-      if (booking === "one-time") {
-        setValue("jobDate", jobDate); // Update job date
-
-        // Define first hour
-        const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
-        const dateTime = `${jobDate}\n${firstHour}`;
-        setValue("dateTime", dateTime); // Update field 'dateTime'
-
-        // Update field 'appointments'
-        setValue(
-          "appointments",
-          appointments.map((item) => ({
-            ...item,
-            jobTime: jobTime,
-            dateTime: dateTime,
-          }))
-        );
-      }
+      const jobDate = getMonthIndex(month) + "/" + addZeroToNumber(day);
 
       if (booking === "recurrent-jobs") {
         if (validateHourRange(option.label)) {
@@ -414,6 +426,23 @@ export default function useNewJob() {
               dateTime: `${item.jobDate}\n${jobTime}`,
             }))
         );
+      }
+
+      if (booking === "one-time" || booking === "multiple-days") {
+        // Update dates
+        const { dateTime } = updateDate({ day: day, month: month });
+
+        if (booking === "one-time") {
+          // Update field 'appointments'
+          setValue(
+            "appointments",
+            appointments.map((item) => ({
+              ...item,
+              jobTime: jobTime,
+              dateTime: dateTime,
+            }))
+          );
+        }
       }
     },
     [watch()]
@@ -477,9 +506,9 @@ export default function useNewJob() {
           }
 
           const newJobDate =
-            addZeroToNumber(today.getDate()) +
+            addZeroToNumber(today.getMonth() + 1) +
             "/" +
-            addZeroToNumber(today.getMonth() + 1);
+            addZeroToNumber(today.getDate());
 
           // Add new appointment
           newAppointments.push({
@@ -526,9 +555,14 @@ export default function useNewJob() {
         setValue("appointments", [appointment]);
       }
 
-      // Recurrent jobs option select
+      // Recurrent jobs option selected
       if (booking === "recurrent-jobs") {
         onUpdateRecurrentJobs();
+      }
+
+      // Multiple days option selected
+      if (booking === "multiple-days") {
+        setValue("appointments", DEFAULT_VALUES.appointments);
       }
     },
     [watch(), appointment]
@@ -554,14 +588,8 @@ export default function useNewJob() {
       // Update day
       setValue("day", day);
 
-      // Define job date
-      const jobDate = addZeroToNumber(day) + "/" + getMonthIndex(month);
-      setValue("jobDate", jobDate); // Update job date
-
-      // Define first hour
-      const firstHour = watch("jobTime") || DEFAULT_FIRST_HOUR;
-      const dateTime = `${jobDate}\n${firstHour}`;
-      setValue("dateTime", `${jobDate}\n${firstHour}`); // Update field 'dateTime'
+      // Update dates
+      const { jobDate, dateTime } = updateDate({ day: day, month: month });
 
       // Update field 'appointments'
       setValue(
@@ -573,7 +601,7 @@ export default function useNewJob() {
         }))
       );
     },
-    [watch("month"), watch("appointments")]
+    [watch()]
   );
 
   // Callback for trigger with of the component
@@ -598,15 +626,17 @@ export default function useNewJob() {
   // Callback 'submit' form
   const submit = useCallback((formState) => {
     console.log("[formState]", formState);
-  }, [])
+  }, []);
 
-  console.log("[WATCH]", watch());
+  // console.log("[WATCH]", watch());
 
   return {
     ref: ref,
     watch: watch,
     submit: submit,
     register: register,
+    updateDate: updateDate,
+    appointment: appointment,
     handleSubmit: handleSubmit,
     handleOnChange: handleOnChange,
     onTriggerWidth: onTriggerWidth,
@@ -618,6 +648,6 @@ export default function useNewJob() {
     onChangeService: onChangeService,
     onChangeBooking: onChangeBooking,
     onChangeProperty: onChangeProperty,
-    isDisabledSubmitButton: isDisabledSubmitButton
+    isDisabledSubmitButton: isDisabledSubmitButton,
   };
 }

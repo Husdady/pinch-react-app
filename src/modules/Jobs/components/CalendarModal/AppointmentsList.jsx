@@ -4,27 +4,41 @@ import PropTypes from "prop-types";
 import classnames from "../../../../utils/classnames";
 import { CLOSE_CIRCLE_ICON } from "../../../../assets/data/constants";
 
-function AppointmentsList({ appointments }) {
+function AppointmentsList({
+  appointments,
+  activeAppointment,
+  onSelectAppointment,
+  onRemoveAppointment,
+}) {
   if (appointments.length === 0) {
     return <span className="no-appointments">No appointments added</span>;
   }
 
   return (
-    <ul className="appointments-list list-unstyled">
+    <ul className="appointments-list m-0 w-100 list-unstyled">
       {appointments.map((item) => (
         <li
-          key={item._id}
+          key={item.id}
+          role={item.isNew ? "button" : "listitem"}
+          onClick={item.isNew ? onSelectAppointment(item.id) : undefined}
           className={classnames([
-            item.active ? "active" : null,
+            activeAppointment === item.id ? "active" : null,
             "appointment-item d-flex align-items-center justify-content-between",
           ])}
         >
           <div>
-            <b className="customer-name">{item.customerName}</b>
+            <b className="customer-name">{item.clientName}</b>
             <span className="job-schedule">{item.jobSchedule}</span>
           </div>
 
-          {item.active && <img src={CLOSE_CIRCLE_ICON} alt="close-circle-icon" />}
+          {activeAppointment === item.id && (
+            <img
+              role="button"
+              alt="close-circle-icon"
+              src={CLOSE_CIRCLE_ICON}
+              onClick={onRemoveAppointment}
+            />
+          )}
         </li>
       ))}
     </ul>
@@ -32,12 +46,16 @@ function AppointmentsList({ appointments }) {
 }
 
 AppointmentsList.propTypes = {
+  activeAppointment: PropTypes.string.isRequired,
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelectAppointment: PropTypes.func.isRequired,
+  onRemoveAppointment: PropTypes.func.isRequired,
 };
 
 export default memo(AppointmentsList, (prevProps, nextProps) => {
   return (
+    prevProps.activeAppointment === nextProps.activeAppointment &&
     JSON.stringify(prevProps.appointments) ===
-    JSON.stringify(nextProps.appointments)
+      JSON.stringify(nextProps.appointments)
   );
 });

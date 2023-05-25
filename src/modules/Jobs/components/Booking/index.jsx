@@ -24,6 +24,8 @@ function Booking({
   forMonthly,
   timeOptions,
   register,
+  appointment,
+  updateDate,
   validateDay,
   onToggleDay,
   onChangeTime,
@@ -59,6 +61,8 @@ function Booking({
           timeId={timeId}
           timeOptions={timeOptions}
           onChangeTime={onChangeTime}
+          updateDate={updateDate}
+          appointment={appointment}
         />
       )}
 
@@ -85,9 +89,11 @@ Booking.propTypes = {
   month: PropTypes.string.isRequired,
   booking: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
+  appointment: PropTypes.object.isRequired,
   days: PropTypes.arrayOf(PropTypes.string).isRequired,
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   day: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  updateDate: PropTypes.func.isRequired,
   onToggleDay: PropTypes.func.isRequired,
   validateDay: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,
@@ -101,6 +107,7 @@ export default memo(Booking, (prevProps, nextProps) => {
     prevProps.day === nextProps.day &&
     prevProps.repeat === nextProps.repeat &&
     prevProps.timeId === nextProps.timeId &&
+    prevProps.appointment === nextProps.appointment &&
     prevProps.forMonthly === nextProps.forMonthly &&
     prevProps.month === nextProps.month &&
     prevProps.booking === nextProps.booking &&

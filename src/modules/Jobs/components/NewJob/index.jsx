@@ -15,6 +15,8 @@ export default function NewJob() {
     watch,
     submit,
     register,
+    updateDate,
+    appointment,
     handleSubmit,
     onTriggerWidth,
     handleOnChange,
@@ -30,7 +32,12 @@ export default function NewJob() {
   } = useNewJob();
 
   return (
-    <form ref={ref} className="new-job" noValidate onSubmit={handleSubmit(submit)}>
+    <form
+      ref={ref}
+      className="new-job"
+      noValidate
+      onSubmit={handleSubmit(submit)}
+    >
       <JobHeader
         active={watch("minimizeWidth")}
         onTriggerWidth={onTriggerWidth}
@@ -44,6 +51,8 @@ export default function NewJob() {
             validateDay={validateDay}
             onToggleDay={onToggleDay}
             handleOnChange={handleOnChange}
+            updateDate={updateDate}
+            appointment={appointment}
             onChangeTime={onChangeTime}
             onChangeMonth={onChangeMonth}
             onChangeClient={onChangeClient}

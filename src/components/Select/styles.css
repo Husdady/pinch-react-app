@@ -59,16 +59,4 @@
 
 .select-loader {
   height: 32.33px;
-  background-color: #eee;
-  pointer-events: none;
-  animation: loading-skeleton 1s infinite alternate;
-}
-
-@keyframes loading-skeleton {
-  from {
-    opacity: .4;
-  }
-  to {
-    opacity: 1;
-  }
 }

@@ -81,15 +81,24 @@
 }
 
 .appointment-item {
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.appointment-item:last-of-type {
+  border-bottom: none;
+}
+
+.appointment-item.active,
+.appointment-item[role="button"]:hover {
+  background-color: #f9f9f9;
 }
 
 .appointment-item.active {
   border-left: 2px solid #241d5d;
-  background-color: #f9f9f9;
 }
 
 .appointment-item .customer-name {
@@ -132,17 +141,38 @@
 }
 
 @media only screen and (max-width: 650px) {
+  .no-appointments {
+    height: 300px;
+  }
+
+  .calendar-modal .modal-content {
+    height: auto;
+  }
+
   .calendar-content {
     flex-wrap: wrap;
-    flex-direction: column-reverse;
   }
 
   .calendar-container {
     margin-right: 0;
   }
 
+  .modal-calendar-save {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .calendar-appointments {
+    margin-top: 1rem;
+  }
+
   .calendar-container,
   .calendar-appointments {
     width: 100%;
+  }
+
+  .calendar-appointments-content .appointments-list {
+    min-height: 300px;
+    max-height: initial;
   }
 }

@@ -11,24 +11,48 @@ import useMultipleDays from "./useMultipleDays";
 // Constants
 import { CALENDAR_ICON } from "../../../../assets/data/constants";
 
-function MultipleDays({ timeId, timeOptions, onChangeTime }) {
-  const { show, showModal, hideModal } = useMultipleDays();
+// Styles
+import "./styles.css";
+
+function MultipleDays({
+  timeId,
+  timeOptions,
+  appointment,
+  updateDate,
+  onChangeTime,
+}) {
+  const { show, showModal, hideModal, schedule, isFetching, isSuccesfully } =
+    useMultipleDays();
 
   return (
     <Fragment>
       <div className="multiple-days">
-        <button type="button" id="btn-calendar" className="py-2 px-3" onClick={showModal}>
-          <img src={CALENDAR_ICON} alt="calendar-icon" />
-          <span className="ms-2">Calendar</span>
-        </button>
+        {isFetching && (
+          <div className="skeleton-animation btn-calendar-animation"></div>
+        )}
+
+        {!isFetching && isSuccesfully && (
+          <button
+            type="button"
+            id="btn-calendar"
+            className="py-2 px-3"
+            onClick={showModal}
+          >
+            <img src={CALENDAR_ICON} alt="calendar-icon" />
+            <span className="ms-2">Calendar</span>
+          </button>
+        )}
       </div>
 
       <CalendarModal
         show={show}
         onHide={hideModal}
         timeId={timeId}
+        schedule={schedule}
+        appointment={appointment}
         timeOptions={timeOptions}
         onChangeTime={onChangeTime}
+        updateDate={updateDate}
       />
     </Fragment>
   );
@@ -37,12 +61,16 @@ function MultipleDays({ timeId, timeOptions, onChangeTime }) {
 MultipleDays.propTypes = {
   timeId: PropTypes.string.isRequired,
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  appointment: PropTypes.object.isRequired,
+  updateDate: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,
 };
 
 export default memo(MultipleDays, (prevProps, nextProps) => {
   return (
     prevProps.timeId === nextProps.timeId &&
-    JSON.stringify(prevProps.timeOptions) === JSON.stringify(nextProps.timeOptions)
+    prevProps.appointment === nextProps.appointment &&
+    JSON.stringify(prevProps.timeOptions) ===
+      JSON.stringify(nextProps.timeOptions)
   );
 });

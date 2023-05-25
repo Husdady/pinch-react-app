@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import fetchAppointments from "./fetchAppointments";
 
 // Constants
-import { MEMBER_ID } from "./constants";
+import { MEMBER_ID } from "../../../../assets/data/constants";
 
 export default function useAppointments() {
   const [appointments, setAppointments] = useState([]);

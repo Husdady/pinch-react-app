@@ -1,6 +1,4 @@
 // Constants
-export const MEMBER_ID = 'b32875ec-bf96-4164-ad89-c0fa38d47975'
-
 export const fields = [
   { id: "0001", name: "Client", className: "field-client" },
   { id: "0002", name: "Property", className: "field-property" },

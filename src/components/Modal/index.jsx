@@ -11,7 +11,12 @@ import "./styles.css";
 
 function CustomModal({ show, onHide, children, centered, className }) {
   return (
-    <Modal show={show} onHide={onHide} centered={centered} className={className}>
+    <Modal
+      show={show}
+      onHide={onHide}
+      centered={centered}
+      className={className}
+    >
       <div className="d-flex justify-content-end">
         <img
           role="button"
@@ -37,5 +42,8 @@ CustomModal.propTypes = {
 };
 
 export default memo(CustomModal, (prevProps, nextProps) => {
-  return prevProps.show === nextProps.show;
+  return (
+    prevProps.show === nextProps.show &&
+    prevProps.children === nextProps.children
+  );
 });

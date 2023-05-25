@@ -1,22 +1,56 @@
 // Utils
 import { getMonthIndex } from "../Months/utils";
 import createList from "../../../../utils/createList";
-import { getDayName, getMaxDayOfMonth } from "../OneTime/utils";
 import getCurrentDate from "../../../../utils/getCurrentDate";
 import addZeroToNumber from "../../../../utils/addZeroToNumber";
+import generateUniqueId from "../../../../utils/generateUniqueId";
+import { getCurrentDay, getDayName, getMaxDayOfMonth } from "../OneTime/utils";
 
 // Constants
-import { maxItemsInCalendar } from "./constants";
+import { months, maxItemsInCalendar } from "./constants";
 import { daysOptions } from "../RecurrentJobs/constants";
+import isObject from "../../../../utils/isObject";
 
 export const { today } = getCurrentDate();
+
+/**
+ * Pick the current day in the calendar
+ * @param {object} params Receive a daysNum of the calendar
+ * @param {object} Object Returns a day
+ */
+export function pickCurrentDay({ daysNum }) {
+  if (!Array.isArray(daysNum)) return; // Stop function
+  if (daysNum.length === 0) return; // Stop function
+
+  const firstMonth = months[0]; // Get first month
+  const dayNum = getCurrentDay(); // Get current day
+
+  if (!isObject(firstMonth)) return; // Stop function
+
+  // Get day name of the current day
+  const day = getDayName({ day: dayNum, month: firstMonth.value });
+
+  // Found current day
+  const dayFound = daysNum.find(
+    (item) =>
+      item !== null &&
+      !item.blocked &&
+      item.day === day &&
+      item.month === firstMonth.value
+  );
+
+  // Day not found
+  if (typeof dayFound === "undefined") return null;
+
+  return dayFound;
+}
 
 /**
  * Calculate the total days of a month
  * @param {object} params Receive a month
  * @param {Array<object>} Array Returns a days
  */
-export default function calculateMonthDays({ month }) {
+export function calculateMonthDays({ month }) {
   const calculatedDays = maxItemsInCalendar.slice(); // Create copy of max calendar items
   const monthIndex = getMonthIndex(month); // Get month index: 04, 05, 06
   const daysOfMonth = createList(getMaxDayOfMonth(month)); // Get total days of month
@@ -26,15 +60,18 @@ export default function calculateMonthDays({ month }) {
     const year = today.getFullYear(); // Get current year
     const day = getDayName({ day: i, month: month }); // Get day of calendar
     const jobDate = `${addZeroToNumber(i)}/${monthIndex}`; // Define the job date
-    const date = `${jobDate}/${year}`; // Define complete date 24/05/2023
+    const date = `${monthIndex}/${addZeroToNumber(i)}/${year}`; // Define complete date 24/05/2023
+    const dateObject = new Date(year, Number(monthIndex) - 1, i + 1); // Get date object
 
     return {
+      id: generateUniqueId(),
       index: i,
       day: day,
       date: date,
       month: month,
       jobDate: jobDate,
-      dateObject: new Date(year, Number(monthIndex) - 1, i + 1),
+      dateObject: dateObject,
+      blocked: dateObject < today,
       shortDay: day.toLowerCase(),
     };
   });

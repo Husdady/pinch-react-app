@@ -1,7 +1,7 @@
 // Utils
 import addZeroToNumber from "../../../../utils/addZeroToNumber";
 
-export const MONTHS_LIMIT = 20;
+export const MONTHS_LIMIT = 2;
 
 export const monthsList = [
   "Jan",
