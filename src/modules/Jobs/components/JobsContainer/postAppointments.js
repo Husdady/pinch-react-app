@@ -13,7 +13,7 @@ const apiProfile = new ApiProfile(API_KEY);
  */
 export default async function postAppointments({
   onInit,
-  onFinish,
+  onSuccesfully,
   onError,
   onFinally,
   appointments,
@@ -23,10 +23,10 @@ export default async function postAppointments({
 
     const result = await apiProfile.post({
       url: `/appointments`,
-      body: { appointments: appointments }
+      body: { appointments: appointments },
     });
 
-    if (typeof onFinish === "function") onFinish(result); // Execute 'onFinish' callback
+    if (typeof onSuccesfully === "function") onSuccesfully(result); // Execute 'onSuccesfully' callback
 
     return result;
   } catch (error) {

@@ -17,8 +17,31 @@
 }
 
 .disconnect-calendar-modal #btn-confirm-disconnect-calendar {
-  background: #ffffff;
   border: 1px solid #bdbdbd;
+  background: #ffffff !important;
+}
+
+.disconnect-calendar-modal #btn-confirm-disconnect-calendar .btn-spinner-loader {
+  background-color: #000000;
+  box-shadow: 16px 0 #000000, -16px 0 #000000;
+  animation: flashBlack 0.5s ease-out infinite alternate;
+}
+
+@keyframes flashBlack {
+  0% {
+    background-color: #FFF2;
+    box-shadow: 16px 0 #FFF2, -16px 0 #000000;
+  }
+
+  50% {
+    background-color: #000000;
+    box-shadow: 16px 0 #FFF2, -16px 0 #FFF2;
+  }
+
+  100% {
+    background-color: #FFF2;
+    box-shadow: 16px 0 #000000, -16px 0 #FFF2;
+  }
 }
 
 .disconnect-calendar-modal #btn-cancel-disconnect-calendar {

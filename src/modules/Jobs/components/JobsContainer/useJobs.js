@@ -16,52 +16,60 @@ export default function useJobs() {
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
   const [isSuccesfully, setSuccesfully] = useState(false);
+  const [reloadSchedule, setReloadSchedule] = useState(true);
   const [reloadAppointments, setReloadAppointments] = useState(true);
 
   // Event 'close' modal
   const hideAppointmentCreatedModal = useCallback(() => {
-    setSuccesfully(false)
-  }, [])
+    setSuccesfully(false);
+  }, []);
 
   // Event 'submit' in the form for create job
-  const createJob = useCallback(({ appointments, onHideModal }) => {
-    return async (formState) => {
-      // Parse appointments
-      const parsedAppointments = parseAppointments({
-        appointments: appointments,
-        notifications: formState.notifications,
-        confirmation: formState.confirmation,
-        confirmationBy: formState.confirmationBy,
-      });
+  const createJob = useCallback(
+    ({ appointments, onHideModal, clearAppointments }) => {
+      return async (formState) => {
+        // Parse appointments
+        const parsedAppointments = parseAppointments({
+          appointments: appointments,
+          notifications: formState.notifications,
+          confirmation: formState.confirmation,
+          confirmationBy: formState.confirmationBy,
+        });
 
-      // Make request for create new job
-      await postAppointments({
-        appointments: parsedAppointments,
-        onInit: () => {
-          setFetching(true);
-        },
-        onFinally: () => {
-          setFetching(false);
-        },
-        onError: (err) => {
-          setError(err);
-          setIsError(true);
-          setSuccesfully(false);
-        },
-        onFinish: () => {
-          onHideModal();
-          setSuccesfully(true);
-          setReloadAppointments(true);
-        },
-      });
-    };
-  }, []);
+        // Make request for create new job
+        await postAppointments({
+          appointments: parsedAppointments,
+          onInit: () => {
+            setFetching(true);
+          },
+          onFinally: () => {
+            setFetching(false);
+          },
+          onError: (err) => {
+            setError(err);
+            setIsError(true);
+            setSuccesfully(false);
+          },
+          onSuccesfully: () => {
+            onHideModal();
+            setSuccesfully(true);
+            clearAppointments();
+            setReloadSchedule(true);
+            setReloadAppointments(true);
+          },
+        });
+      };
+    },
+    []
+  );
 
   return {
     error: error,
     isError: isError,
     isFetching: isFetching,
     isSuccesfully: isSuccesfully,
+    reloadSchedule: reloadSchedule,
+    setReloadSchedule: setReloadSchedule,
     setReloadAppointments: setReloadAppointments,
     hideAppointmentCreatedModal: hideAppointmentCreatedModal,
     reloadAppointments: reloadAppointments,

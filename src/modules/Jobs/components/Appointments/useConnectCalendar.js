@@ -56,7 +56,7 @@ export default function useConnectCalendar() {
         setError(err);
         setIsError(true);
       },
-      onFinish: () => {
+      onSuccesfully: () => {
         setConnected(true);
         hideConnectCalendarModal();
       },
@@ -76,7 +76,7 @@ export default function useConnectCalendar() {
         setError(err);
         setIsError(true);
       },
-      onFinish: () => {
+      onSuccesfully: () => {
         setConnected(false);
         hideDisconnectCalendarModal();
       },
@@ -98,7 +98,7 @@ export default function useConnectCalendar() {
         setIsError(true);
         setSuccesfully(false);
       },
-      onFinish: (result) => {
+      onSuccesfully: (result) => {
         if (mounted && isObject(result)) {
           setSuccesfully(true);
           setConnected(result.status);

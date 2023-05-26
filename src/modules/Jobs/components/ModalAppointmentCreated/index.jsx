@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Modal from "../../../../components/Modal";
 
 // Constants
-import { CALENDAR_CHECK_ICON } from "../../../../assets/data/constants";
+import { CHECK_CALENDAR_ICON } from "../../../../assets/data/constants";
 
 // Styles
 import "./styles.css";
@@ -15,7 +15,7 @@ function ModalAppointmentCreated({ show, onHideModal }) {
   return (
     <Modal show={show} onHide={onHideModal} className="appointment-created">
       <img
-        src={CALENDAR_CHECK_ICON}
+        src={CHECK_CALENDAR_ICON}
         alt="calendar-check-icon"
         className="d-block mx-auto mb-3"
       />

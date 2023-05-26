@@ -28,6 +28,8 @@ function Booking({
   appointment,
   updateDate,
   setAppointments,
+  reloadSchedule,
+  setReloadSchedule,
   removeAppointmentById,
   validateDay,
   onToggleDay,
@@ -68,6 +70,8 @@ function Booking({
           appointment={appointment}
           appointments={appointments}
           setAppointments={setAppointments}
+          reloadSchedule={reloadSchedule}
+          setReloadSchedule={setReloadSchedule}
           removeAppointmentById={removeAppointmentById}
         />
       )}

@@ -14,14 +14,21 @@ export default function JobsContainer() {
     isFetching,
     isSuccesfully,
     createJob,
+    reloadSchedule,
     reloadAppointments,
+    setReloadSchedule,
     setReloadAppointments,
-    hideAppointmentCreatedModal
+    hideAppointmentCreatedModal,
   } = useJobs();
 
   return (
     <section className="jobs-container d-flex flex-wrap">
-      <NewJob createJob={createJob} isCreatingJob={isFetching} />
+      <NewJob
+        createJob={createJob}
+        isCreatingJob={isFetching}
+        reloadSchedule={reloadSchedule}
+        setReloadSchedule={setReloadSchedule}
+      />
 
       <AppointmentsForm
         reloadAppointments={reloadAppointments}

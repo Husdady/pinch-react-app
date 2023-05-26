@@ -1,6 +1,6 @@
 // Librarys
 import { memo } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 // Components
 import JobHeader from "./JobHeader";
@@ -17,7 +17,12 @@ import classnames from "../../../../utils/classnames";
 // Styles
 import "./styles.css";
 
-function NewJob({ createJob, isCreatingJob }) {
+function NewJob({
+  createJob,
+  isCreatingJob,
+  reloadSchedule,
+  setReloadSchedule,
+}) {
   const {
     ref,
     watch,
@@ -39,6 +44,7 @@ function NewJob({ createJob, isCreatingJob }) {
     onChangeService,
     onChangeBooking,
     onChangeProperty,
+    clearAppointments,
     isDisabledSubmitButton,
   } = useNewJob();
 
@@ -70,6 +76,8 @@ function NewJob({ createJob, isCreatingJob }) {
             updateDate={updateDate}
             appointment={appointment}
             setAppointments={setAppointments}
+            reloadSchedule={reloadSchedule}
+            setReloadSchedule={setReloadSchedule}
             removeAppointmentById={removeAppointmentById}
             onChangeTime={onChangeTime}
             onChangeMonth={onChangeMonth}
@@ -91,6 +99,7 @@ function NewJob({ createJob, isCreatingJob }) {
         appointments={watch("appointments")}
         serviceType={watch("serviceType")}
         customerName={watch("customerName")}
+        clearAppointments={clearAppointments}
       />
     </>
   );
@@ -98,9 +107,9 @@ function NewJob({ createJob, isCreatingJob }) {
 
 NewJob.propTypes = {
   createJob: PropTypes.func.isRequired,
-  isCreatingJob: PropTypes.bool.isRequired
-}
+  isCreatingJob: PropTypes.bool.isRequired,
+};
 
 export default memo(NewJob, (prevProps, nextProps) => {
-  return prevProps.isCreatingJob === nextProps.isCreatingJob
-})
+  return prevProps.isCreatingJob === nextProps.isCreatingJob;
+});

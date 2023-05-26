@@ -7,7 +7,7 @@ import fetchCalendar from "./fetchCalendar";
 /**
  * Hook for implements the logic of the MultipleDays component
  */
-export default function useMultipleDays() {
+export default function useMultipleDays({ reloadSchedule, setReloadSchedule }) {
   const [show, setShow] = useState(false); // Hook for show/hide modal
   const [schedule, setSchedule] = useState([]); // Define schedule
   const [isFetching, setFetching] = useState(false); // Bool fetching
@@ -24,31 +24,34 @@ export default function useMultipleDays() {
   useEffect(() => {
     let mounted = true; // Component mounted
 
-    fetchCalendar({
-      onInit: () => {
-        setFetching(true);
-      },
-      onFinally: () => {
-        setFetching(false);
-      },
-      onError: (err) => {
-        setError(err);
-        setIsError(true);
-        setSuccesfully(false);
-      },
-      onFinish: (result) => {
-        setSuccesfully(true);
+    if (reloadSchedule) {
+      fetchCalendar({
+        onInit: () => {
+          setFetching(true);
+        },
+        onFinally: () => {
+          setFetching(false);
+          setReloadSchedule(false);
+        },
+        onError: (err) => {
+          setError(err);
+          setIsError(true);
+          setSuccesfully(false);
+        },
+        onSuccesfully: (result) => {
+          setSuccesfully(true);
 
-        if (mounted && "data" in result && Array.isArray(result.data)) {
-          setSchedule(result.data); // Update calendar data
-        }
-      },
-    });
+          if (mounted && "data" in result && Array.isArray(result.data)) {
+            setSchedule(result.data); // Update calendar data
+          }
+        },
+      });
+    }
 
     return () => {
       mounted = false; // Component unmounted
     };
-  }, []);
+  }, [reloadSchedule]);
 
   return {
     show: show && !isFetching,

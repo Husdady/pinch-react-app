@@ -13,17 +13,17 @@
 @keyframes flash {
   0% {
     background-color: #FFF2;
-    box-shadow: 16px 0 #FFF2, -16px 0 #FFF;
+    box-shadow: 16px 0 #FFF2, -16px 0 #ffffff;
   }
 
   50% {
-    background-color: #FFF;
+    background-color: #ffffff;
     box-shadow: 16px 0 #FFF2, -16px 0 #FFF2;
   }
 
   100% {
     background-color: #FFF2;
-    box-shadow: 16px 0 #FFF, -16px 0 #FFF2;
+    box-shadow: 16px 0 #ffffff, -16px 0 #FFF2;
   }
 }
       

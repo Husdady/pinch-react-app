@@ -3,11 +3,14 @@ import { memo } from "react";
 import PropTypes from "prop-types";
 
 // Components
+import Info from "../../../../components/Info";
 import Select from "../../../../components/Select";
 
-// Constants
-import { options, optionalStyle } from "./constants";
+// Utils
 import classnames from "../../../../utils/classnames";
+
+// Constants
+import { options, optionalStyle, imageStyle } from "./constants";
 
 function Optional({
   notifications,
@@ -32,9 +35,18 @@ function Optional({
               onChange={onToggleCheckboxOption}
             />
 
-            <label role="button" htmlFor="request-confirmation" className="ps-2">
+            <label
+              role="button"
+              htmlFor="request-confirmation"
+              className="ps-2"
+            >
               Request Confirmation
             </label>
+
+            <Info imageStyle={imageStyle}>
+              Check to receive confirmation when the customer accepts the
+              service appointment you created
+            </Info>
           </li>
 
           <li className="d-flex align-items-center">
@@ -47,9 +59,18 @@ function Optional({
               onChange={onToggleCheckboxOption}
             />
 
-            <label role="button" htmlFor="enable-notifications" className="ps-2">
+            <label
+              role="button"
+              htmlFor="enable-notifications"
+              className="ps-2"
+            >
               Enable Notifications
             </label>
+
+            <Info imageStyle={imageStyle}>
+              Check to receive notifications about the cleaning service
+              appointment you created: reminders, changes, etc.
+            </Info>
           </li>
         </ul>
       </div>

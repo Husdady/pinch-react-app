@@ -1,5 +1,5 @@
 // Constants
-export const MAX_LOADING_ITEMS = 20
+export const MAX_LOADING_ITEMS = 20;
 
 export const fields = [
   { id: "0001", name: "Client", className: "field-client" },
@@ -12,11 +12,11 @@ export const appointmentStatus = [
   { value: "pending", label: "Pending" },
   { value: "completed", label: "Completed" },
   { value: "scheduled", label: "Scheduled" },
-  { value: "cancelled", label: "Canceled" },
-  { value: "rebook", label: "In Progress" }
-]
+  { value: "cancelled", label: "Cancelled" },
+  { value: "rebook", label: "In Progress" },
+];
 
 export const filterAppointmentStatus = [
   { value: "all", label: "All" },
   ...appointmentStatus,
-]
+];

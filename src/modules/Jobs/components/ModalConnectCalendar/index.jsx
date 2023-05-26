@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Modal from "../../../../components/Modal";
 
 // Constants
-import { BIG_GOOGLE_CALENDAR_ICON } from "../../../../assets/data/constants";
+import { GOOGLE_CALENDAR_ICON } from "../../../../assets/data/constants";
 
 // Styles
 import "./styles.css";
@@ -26,7 +26,7 @@ function ModalConnectCalendar({
         <img
           alt="calendar-check-icon"
           className="d-block mx-auto mb-2"
-          src={BIG_GOOGLE_CALENDAR_ICON}
+          src={GOOGLE_CALENDAR_ICON}
         />
 
         <b className="d-block google-calendar-title">Google Calendar</b>

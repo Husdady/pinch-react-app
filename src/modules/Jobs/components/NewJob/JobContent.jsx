@@ -17,6 +17,8 @@ function JobContent({
   handleOnChange,
   validateDay,
   setAppointments,
+  reloadSchedule,
+  setReloadSchedule,
   removeAppointmentById,
   onChangeTime,
   onChangeMonth,
@@ -57,6 +59,8 @@ function JobContent({
         appointment={appointment}
         validateDay={validateDay}
         setAppointments={setAppointments}
+        reloadSchedule={reloadSchedule}
+        setReloadSchedule={setReloadSchedule}
         removeAppointmentById={removeAppointmentById}
         onToggleDay={onToggleDay}
         onChangeTime={onChangeTime}

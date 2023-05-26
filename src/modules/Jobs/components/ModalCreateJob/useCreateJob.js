@@ -11,7 +11,12 @@ import { DEFAULT_VALUES } from "./constants";
  * @param {object} params Receive callbacks 'createJob' and 'onHideModal'
  * @returns {object} Data
  */
-export default function useCreateJob({ createJob, appointments, onHideModal }) {
+export default function useCreateJob({
+  createJob,
+  appointments,
+  onHideModal,
+  clearAppointments,
+}) {
   // Define form state
   const { watch, register, setValue, handleSubmit } = useForm({
     defaultValues: DEFAULT_VALUES,
@@ -33,9 +38,8 @@ export default function useCreateJob({ createJob, appointments, onHideModal }) {
     const callback = createJob({
       appointments: appointments,
       onHideModal: onHideModal,
+      clearAppointments: clearAppointments,
     });
-
-    console.log('[createJob]', createJob)
 
     handleSubmit(callback)();
   }, []);

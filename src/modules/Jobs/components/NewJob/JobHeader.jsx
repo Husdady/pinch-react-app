@@ -1,9 +1,12 @@
 // Librarys
 import { memo } from "react";
 import PropTypes from "prop-types";
-import { LEFT_ARROW, RIGHT_ARROW } from "../../../../assets/data/constants";
 
 // Constants
+import {
+  LEFT_ARROW_JOBS_FORM_ICON,
+  RIGHT_ARROW_JOBS_FORM_ICON,
+} from "../../../../assets/data/constants";
 
 function JobHeader({ active, onTriggerWidth }) {
   return (
@@ -12,7 +15,7 @@ function JobHeader({ active, onTriggerWidth }) {
 
       <img
         onClick={onTriggerWidth}
-        src={active ? RIGHT_ARROW : LEFT_ARROW}
+        src={active ? RIGHT_ARROW_JOBS_FORM_ICON : LEFT_ARROW_JOBS_FORM_ICON}
         alt="arrow-trigger"
         role="button"
       />
@@ -22,7 +25,7 @@ function JobHeader({ active, onTriggerWidth }) {
 
 JobHeader.propTypes = {
   active: PropTypes.bool.isRequired,
-  onTriggerWidth: PropTypes.func.isRequired
+  onTriggerWidth: PropTypes.func.isRequired,
 };
 
 export default memo(JobHeader, (prevProps, nextProps) => {

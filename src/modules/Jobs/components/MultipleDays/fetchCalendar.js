@@ -12,14 +12,14 @@ const apiProfile = new ApiProfile(API_KEY);
  */
 export default async function fetchCalendar({
   onInit,
-  onFinish,
+  onSuccesfully,
   onError,
   onFinally,
 }) {
   try {
     if (typeof onInit === "function") onInit(); // Execute 'onInit' callback
     const result = await apiProfile.get({ url: "/schedule" });
-    if (typeof onFinish === "function") onFinish(result); // Execute 'onFinish' callback
+    if (typeof onSuccesfully === "function") onSuccesfully(result); // Execute 'onSuccesfully' callback
     return result;
   } catch (error) {
     if (typeof onError === "function") onError(error); // Execute 'onError' callback

@@ -1,8 +1,12 @@
 // Librarys
 import { memo } from "react";
 import PropTypes from "prop-types";
+
+// Utils
 import classnames from "../../../../utils/classnames";
-import { CLOSE_CIRCLE_ICON } from "../../../../assets/data/constants";
+
+// Constants
+import { TIMES_CIRCLE_ICON } from "../../../../assets/data/constants";
 
 function AppointmentsList({
   appointments,
@@ -36,7 +40,7 @@ function AppointmentsList({
               role="button"
               alt="close-circle-icon"
               className="remove-appointment-item"
-              src={CLOSE_CIRCLE_ICON}
+              src={TIMES_CIRCLE_ICON}
               onClick={onRemoveAppointment}
             />
           )}

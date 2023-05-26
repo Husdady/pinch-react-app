@@ -23,12 +23,14 @@ function ModalCreateJob({
   customerName,
   appointments,
   isCreatingJob,
+  clearAppointments,
 }) {
   const { watch, onSubmit, onToggleCheckboxOption, onChangeConfirmationBy } =
     useCreateJob({
       createJob: createJob,
       appointments: appointments,
       onHideModal: onHideModal,
+      clearAppointments: clearAppointments,
     });
 
   return (
@@ -66,6 +68,7 @@ ModalCreateJob.propTypes = {
   customerName: PropTypes.string.isRequired,
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
   onHideModal: PropTypes.func.isRequired,
+  clearAppointments: PropTypes.func.isRequired,
 };
 
 export default memo(ModalCreateJob, (prevProps, nextProps) => {

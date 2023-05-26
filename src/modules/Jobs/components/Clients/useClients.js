@@ -54,7 +54,7 @@ export default function useClients({ onChangeClient }) {
         setIsError(true);
         setSuccesfully(false);
       },
-      onFinish: (result) => {
+      onSuccesfully: (result) => {
         setSuccesfully(true);
 
         if (mounted && "data" in result && Array.isArray(result.data)) {

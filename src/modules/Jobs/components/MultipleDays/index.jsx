@@ -23,10 +23,15 @@ function MultipleDays({
   updateDate,
   onChangeTime,
   setAppointments,
+  reloadSchedule,
+  setReloadSchedule,
   removeAppointmentById,
 }) {
   const { show, showModal, hideModal, schedule, isFetching, isSuccesfully } =
-    useMultipleDays();
+    useMultipleDays({
+      reloadSchedule: reloadSchedule,
+      setReloadSchedule: setReloadSchedule,
+    });
 
   return (
     <Fragment>

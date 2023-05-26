@@ -13,7 +13,7 @@ const apiProfile = new ApiProfile(API_KEY);
  */
 export default async function postConnectCalendar({
   onInit,
-  onFinish,
+  onSuccesfully,
   onError,
   onFinally,
 }) {
@@ -29,7 +29,7 @@ export default async function postConnectCalendar({
       },
     });
 
-    if (typeof onFinish === "function") onFinish(result); // Execute 'onFinish' callback
+    if (typeof onSuccesfully === "function") onSuccesfully(result); // Execute 'onSuccesfully' callback
     return result;
   } catch (error) {
     if (typeof onError === "function") onError(error); // Execute 'onError' callback

@@ -43,6 +43,7 @@ export default function useNewJob() {
     defaultValues: DEFAULT_VALUES,
   });
 
+  // Validate if the submit button has been disabled
   const isDisabledSubmitButton = useMemo(() => {
     const { timeId, booking, clientId, serviceId, propertyId, appointments } =
       watch();
@@ -110,6 +111,13 @@ export default function useNewJob() {
     // Update appointments
     setValue("appointments", items);
   }, []);
+
+  // Clear appointments
+  const clearAppointments = useCallback(() => {
+    const booking = watch("booking"); // Get booking option
+    if (booking !== "multiple-days") return; // Clear appointments when 'multiple-days' is active
+    setValue("appointments", DEFAULT_VALUES.appointments); // Clear appointments
+  }, [watch("booking")]);
 
   // Callback 'change' for update Select field
   const handleOnChange = useCallback((field) => {
@@ -562,12 +570,11 @@ export default function useNewJob() {
         }
       }
 
-
       // Filter appointments time greater than current date
       const filterItems = newAppointments.filter((item) => {
-        const splitDate = item.jobDate.split('/')
-        const d = Number(splitDate[1]) // Get day
-        const m = Number(splitDate[0]) // Get month
+        const splitDate = item.jobDate.split("/");
+        const d = Number(splitDate[1]); // Get day
+        const m = Number(splitDate[0]); // Get month
 
         if (m === currentDate.getMonth() + 1) {
           return d >= currentDate.getDate();
@@ -701,6 +708,7 @@ export default function useNewJob() {
     onChangeService: onChangeService,
     onChangeBooking: onChangeBooking,
     onChangeProperty: onChangeProperty,
+    clearAppointments: clearAppointments,
     isDisabledSubmitButton: isDisabledSubmitButton,
   };
 }

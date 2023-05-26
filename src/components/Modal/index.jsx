@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 
 // Constants
-import { CLOSE_ICON } from "./constants";
+import { TIMES_ICON } from "../../assets/data/constants";
 
 // Styles
 import "./styles.css";
@@ -22,7 +22,7 @@ function CustomModal({ show, onHide, children, centered, className }) {
           role="button"
           width={8}
           height={8}
-          src={CLOSE_ICON}
+          src={TIMES_ICON}
           alt="modal-close-icon"
           onClick={onHide}
         />

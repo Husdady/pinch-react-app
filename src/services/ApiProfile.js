@@ -10,12 +10,6 @@ export default class ApiProfile {
     // this.apiKey = apiKey; // Define the apiKey
     this.apiUrl = WIX_APP_URL; // Url of the API
     this.headerApiKey = { "pro-pinch-api-key": TOKEN }; // Define header for the apiKey
-
-    // Define init configuration for resolver cors problem
-    this.defaultInit = {
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Headers": "*",
-    };
   }
 
   /**

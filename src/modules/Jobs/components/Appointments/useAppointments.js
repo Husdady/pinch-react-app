@@ -30,7 +30,7 @@ export default function useAppointments({
     (option) => {
       if (option.value === null) return; // Value not exists
 
-      setFilterActivated(option.value) // Update filter
+      setFilterActivated(option.value); // Update filter
 
       // Reset filters
       if (option.value === filterAppointmentStatus[0].value) {
@@ -65,7 +65,7 @@ export default function useAppointments({
           setIsError(true);
           setSuccesfully(false);
         },
-        onFinish: (result) => {
+        onSuccesfully: (result) => {
           setSuccesfully(true);
 
           if (mounted && "data" in result && Array.isArray(result.data)) {
