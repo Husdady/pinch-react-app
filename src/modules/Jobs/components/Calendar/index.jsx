@@ -37,6 +37,7 @@ function Calendar({ schedule, onSelectDay, onLoadActiveDay }) {
     <div className="calendar">
       <div className="calendar-month px-4 d-flex align-items-center justify-content-between">
         <button
+          type="button"
           onClick={prevMonth}
           className={classnames([
             "bg-transparent",
@@ -54,6 +55,7 @@ function Calendar({ schedule, onSelectDay, onLoadActiveDay }) {
         <span className="day">{month.name}</span>
 
         <button
+          type="button"
           onClick={nextMonth}
           className={classnames([
             "bg-transparent",
@@ -86,10 +88,9 @@ function Calendar({ schedule, onSelectDay, onLoadActiveDay }) {
 Calendar.propTypes = {
   schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelectDay: PropTypes.func.isRequired,
+  onLoadActiveDay: PropTypes.func.isRequired,
 };
 
 export default memo(Calendar, (prevProps, nextProps) => {
-  return (
-    JSON.stringify(prevProps.schedule) === JSON.stringify(nextProps.schedule)
-  );
+  return prevProps.schedule === nextProps.schedule;
 });

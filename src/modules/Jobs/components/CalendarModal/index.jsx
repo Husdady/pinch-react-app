@@ -11,11 +11,11 @@ import Modal from "../../../../components/Modal";
 import useCalendarModal from "./useCalendarModal";
 
 // Constants
+import { timeStyle } from "./constants";
 import { PINK_PLUS_ICON } from "../../../../assets/data/constants";
 
 // Styles
 import "./styles.css";
-import { timeStyle } from "./constants";
 
 function CalendarModal({
   show,
@@ -24,40 +24,49 @@ function CalendarModal({
   timeId,
   timeOptions,
   appointment,
+  appointmentsForm,
   updateDate,
   onChangeTime,
+  setAppointments,
+  removeAppointmentById,
 }) {
   const {
     watch,
     submit,
     handleSubmit,
     appointments,
+    disableSubmitBtn,
     addNewAppointment,
     onSelectDay,
     onLoadActiveDay,
+    handleHideModal,
     handleChangeTime,
     onSelectAppointment,
     onRemoveAppointment,
   } = useCalendarModal({
-    show: show,
     schedule: schedule,
     timeId: timeId,
     timeOptions: timeOptions,
     appointment: appointment,
+    appointmentsForm: appointmentsForm,
     updateDate: updateDate,
+    onHideModal: onHide,
     onChangeTime: onChangeTime,
+    setAppointments: setAppointments,
+    removeAppointmentById: removeAppointmentById,
   });
 
   return (
-    <Modal centered show={show} onHide={onHide} className="calendar-modal">
-      <form
-        noValidate
-        onSubmit={handleSubmit(submit)}
-        className="calendar-content d-flex pt-2 pb-3"
-      >
+    <Modal
+      centered
+      show={show}
+      onHide={handleHideModal}
+      className="calendar-modal"
+    >
+      <form noValidate className="calendar-content d-flex pt-2 pb-3">
         <section className="calendar-container">
           <Calendar
-            schedule={schedule}
+            schedule={watch("schedule")}
             onSelectDay={onSelectDay}
             onLoadActiveDay={onLoadActiveDay}
           />
@@ -90,7 +99,12 @@ function CalendarModal({
             />
           </div>
 
-          <button type="submit" className="modal-calendar-save">
+          <button
+            type="button"
+            className="modal-calendar-save"
+            disabled={disableSubmitBtn}
+            onClick={() => handleSubmit(submit)()}
+          >
             Save
           </button>
         </section>
@@ -106,8 +120,11 @@ CalendarModal.propTypes = {
   appointment: PropTypes.object.isRequired,
   schedule: PropTypes.arrayOf(PropTypes.object).isRequired,
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  appointmentsForm: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateDate: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,
+  setAppointments: PropTypes.func.isRequired,
+  removeAppointmentById: PropTypes.func.isRequired,
 };
 
 export default memo(CalendarModal, (prevProps, nextProps) => {
@@ -115,8 +132,8 @@ export default memo(CalendarModal, (prevProps, nextProps) => {
     prevProps.show === nextProps.show &&
     prevProps.timeId === nextProps.timeId &&
     prevProps.appointment === nextProps.appointment &&
-    JSON.stringify(prevProps.schedule) === JSON.stringify(nextProps.schedule) &&
-    JSON.stringify(prevProps.timeOptions) ===
-      JSON.stringify(nextProps.timeOptions)
+    prevProps.appointmentsForm === nextProps.appointmentsForm &&
+    prevProps.schedule === nextProps.schedule &&
+    prevProps.timeOptions === nextProps.timeOptions
   );
 });

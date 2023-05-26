@@ -47,8 +47,8 @@ export default function useCalendar({ onSelectDay, onLoadActiveDay }) {
     // The same day has been selected
     if (activeDay !== null && activeDay.id === day.id) return
 
-    setActiveDay(day) // Update active day
     onSelectDay(day) // Execute callback 'onSelectDay'
+    setActiveDay(day) // Update active day
   }, [activeDay])
 
   // Callback for get prev month

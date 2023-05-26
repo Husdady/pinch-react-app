@@ -1,0 +1,85 @@
+.create-job-modal .modal-content {
+  height: 397px;
+  width: 344px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.create-job-modal .top-content {
+  padding-left: 0.65rem;
+}
+
+.create-job-modal .close-modal,
+.create-job-modal .top-content {
+  padding-right: 0.65rem;
+}
+
+.create-job-modal .buttons,
+.create-job-modal .top-content,
+.create-job-modal .optional-form,
+.create-job-modal .appointments-costs {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+.create-job-modal .appointments-costs {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  padding-right: 1rem;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+  min-height: 112px;
+  max-height: 112px;
+  overflow-y: auto;
+}
+
+.create-job-modal .appointments-costs .cost-item {
+  margin-bottom: 0.6rem;
+}
+
+.create-job-modal .appointments-costs .cost-item:last-of-type {
+  margin-bottom: 0;
+}
+
+.create-job-modal .appointments-costs .cost-item .item-date {
+  margin-right: 0.65rem;
+}
+
+.create-job-modal .appointments-costs .cost-item .item-cost {
+  color: #4f4f4f;
+}
+
+.create-job-modal .buttons,
+.create-job-modal .optional-form,
+.create-job-modal .appointments-costs {
+  padding-left: 1.75rem;
+}
+
+.create-job-modal .buttons,
+.create-job-modal .optional-form {
+  padding-right: 1.85rem;
+}
+
+.create-job-modal .buttons #edit-job {
+  background-color: #2f80ed;
+}
+
+.create-job-modal .buttons #confirm-job {
+  background-color: #DC6BBC !important;
+}
+
+.create-job-modal .buttons #confirm-job:disabled {
+  opacity: 0.6;
+}
+
+.create-job-modal .buttons #edit-job,
+.create-job-modal .buttons #confirm-job {
+  color: #ffffff;
+  width: 103px;
+  height: 30px;
+}
+
+.create-job-modal .optional-form .optional-list {
+  margin-top: 0.65rem;
+}

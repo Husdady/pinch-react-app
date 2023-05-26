@@ -14,7 +14,7 @@ export default function AppointmentsList() {
     <div className="appointments-registered">
       <ul className="appointments-list list-unstyled mb-0">
         {appointments.map((appointment) => (
-          <li key={appointment._id} className="appointment py-2 px-3">
+          <li key={appointment._id} className="appointment px-3">
             <Appointment {...appointment} />
           </li>
         ))}

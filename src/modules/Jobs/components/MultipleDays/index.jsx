@@ -4,6 +4,7 @@ import { memo, Fragment } from "react";
 
 // Components
 import CalendarModal from "../CalendarModal";
+import AppointmentsScheduled from "./AppointmentsScheduled";
 
 // Hooks
 import useMultipleDays from "./useMultipleDays";
@@ -18,8 +19,11 @@ function MultipleDays({
   timeId,
   timeOptions,
   appointment,
+  appointments,
   updateDate,
   onChangeTime,
+  setAppointments,
+  removeAppointmentById,
 }) {
   const { show, showModal, hideModal, schedule, isFetching, isSuccesfully } =
     useMultipleDays();
@@ -44,6 +48,10 @@ function MultipleDays({
         )}
       </div>
 
+      {!isFetching && isSuccesfully && appointments.length > 0 && (
+        <AppointmentsScheduled appointments={appointments} />
+      )}
+
       <CalendarModal
         show={show}
         onHide={hideModal}
@@ -51,7 +59,10 @@ function MultipleDays({
         schedule={schedule}
         appointment={appointment}
         timeOptions={timeOptions}
+        appointmentsForm={appointments}
         onChangeTime={onChangeTime}
+        setAppointments={setAppointments}
+        removeAppointmentById={removeAppointmentById}
         updateDate={updateDate}
       />
     </Fragment>
@@ -61,8 +72,11 @@ function MultipleDays({
 MultipleDays.propTypes = {
   timeId: PropTypes.string.isRequired,
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
   appointment: PropTypes.object.isRequired,
   updateDate: PropTypes.func.isRequired,
+  setAppointments: PropTypes.func.isRequired,
+  removeAppointmentById: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,
 };
 
@@ -70,7 +84,7 @@ export default memo(MultipleDays, (prevProps, nextProps) => {
   return (
     prevProps.timeId === nextProps.timeId &&
     prevProps.appointment === nextProps.appointment &&
-    JSON.stringify(prevProps.timeOptions) ===
-      JSON.stringify(nextProps.timeOptions)
+    prevProps.appointments === nextProps.appointments &&
+    prevProps.timeOptions === nextProps.timeOptions
   );
 });

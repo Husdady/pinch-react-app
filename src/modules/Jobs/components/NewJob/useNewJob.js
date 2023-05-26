@@ -12,17 +12,19 @@ import { createTimeOptions } from "../Time/utils";
 
 // Constants
 import { bookingOptions } from "../Booking/options";
+import getCurrentDate from "../../../../utils/getCurrentDate";
+import validateHourRange from "../../../../utils/validateHourRange";
+import getMaxMonthInNextDates from "../../../../utils/getMaxMonthInNextDates";
+import { getSpecificWeekday } from "../../../../utils/getSpecificWeekday";
 import {
-  daysSorted,
+  // daysSorted,
   DEFAULT_VALUES,
   DEFAULT_FIRST_HOUR,
   DEFAULT_TOTAL_MONTHS,
   repeatValues,
 } from "./constants";
-import getCurrentDate from "../../../../utils/getCurrentDate";
-import validateHourRange from "../../../../utils/validateHourRange";
-import getMaxMonthInNextDates from "../../../../utils/getMaxMonthInNextDates";
-import { getSpecificWeekday } from "../../../../utils/getSpecificWeekday";
+import { daysOptions } from "../RecurrentJobs/constants";
+import sortDateString from "../../../../utils/sortDateString";
 
 /**
  * Hook that implemenets the logic of the NewJob component
@@ -32,19 +34,26 @@ export default function useNewJob() {
   const ref = useRef(null);
 
   // Define form state
-  const { watch, register, setValue, handleSubmit } = useForm({
+  const {
+    watch,
+    register,
+    setValue,
+    handleSubmit: handleParentSubmit,
+  } = useForm({
     defaultValues: DEFAULT_VALUES,
   });
 
   const isDisabledSubmitButton = useMemo(() => {
-    const { timeId, booking, clientId, serviceId, propertyId } = watch();
+    const { timeId, booking, clientId, serviceId, propertyId, appointments } =
+      watch();
 
     return (
-      timeId === "" &&
-      booking === "" &&
-      clientId === "" &&
-      propertyId === "" &&
-      serviceId === ""
+      (timeId === "" &&
+        booking === "" &&
+        clientId === "" &&
+        propertyId === "" &&
+        serviceId === "") ||
+      appointments.length === 0
     );
   }, [watch()]);
 
@@ -77,6 +86,30 @@ export default function useNewJob() {
       jobDurationTime: jobDurationTime,
     };
   }, [watch()]);
+
+  // Remove appointment by id
+  const removeAppointmentById = useCallback(
+    (itemId) => {
+      const appoinments = watch("appointments");
+      if (appoinments.length === 0) return;
+
+      // Update appointments
+      setValue(
+        "appointments",
+        appoinments.filter((item) => item.id !== itemId)
+      );
+    },
+    [watch("appointments")]
+  );
+
+  // Set new appointments
+  const setAppointments = useCallback((items) => {
+    if (!Array.isArray(items)) return;
+    if (items.length === 0) return;
+
+    // Update appointments
+    setValue("appointments", items);
+  }, []);
 
   // Callback 'change' for update Select field
   const handleOnChange = useCallback((field) => {
@@ -319,7 +352,7 @@ export default function useNewJob() {
         newDays = days.filter((item) => item !== dayId); // Define new days
         setValue("days", newDays); // Update days
       } else {
-        newDays = [dayId, ...days]; // Define new days
+        newDays = [...days, dayId]; // Define new days
         setValue("days", newDays); // Update days
       }
 
@@ -451,6 +484,7 @@ export default function useNewJob() {
   // Callback for update recurrent jobs
   const onUpdateRecurrentJobs = useCallback(
     (params = {}) => {
+      const currentDate = new Date();
       const { newRepeat, newForMonthly } = params;
       const { days, repeat, forMonthly, jobTime, timeId, timeOptions } =
         watch();
@@ -475,11 +509,11 @@ export default function useNewJob() {
 
       // Define total months
       const totalMonths = Array.isArray(splitTotalMonths)
-        ? splitTotalMonths[0]
+        ? Number(splitTotalMonths[0])
         : DEFAULT_TOTAL_MONTHS;
 
       for (const day of days) {
-        const dayIndex = daysSorted.findIndex((item) => item.id === day); // Get day index
+        const dayIndex = daysOptions.findIndex((item) => item.id === day); // Get day index
         if (dayIndex === -1) continue;
 
         let allowed = true;
@@ -489,7 +523,7 @@ export default function useNewJob() {
         let today = new Date(
           date.getFullYear(),
           date.getMonth(),
-          date.getDate()
+          date.getDate() + 1
         );
 
         while (allowed) {
@@ -505,6 +539,7 @@ export default function useNewJob() {
             break;
           }
 
+          // Define new job date
           const newJobDate =
             addZeroToNumber(today.getMonth() + 1) +
             "/" +
@@ -527,10 +562,27 @@ export default function useNewJob() {
         }
       }
 
+
+      // Filter appointments time greater than current date
+      const filterItems = newAppointments.filter((item) => {
+        const splitDate = item.jobDate.split('/')
+        const d = Number(splitDate[1]) // Get day
+        const m = Number(splitDate[0]) // Get month
+
+        if (m === currentDate.getMonth() + 1) {
+          return d >= currentDate.getDate();
+        }
+
+        return true;
+      });
+
+      // Sort appointments date by ascendent date
+      const sortedAppointments = sortDateString(filterItems);
+
       // Update appointments
       setValue(
         "appointments",
-        newAppointments.map((item) => ({
+        sortedAppointments.map((item) => ({
           ...appointment,
           ...item,
         }))
@@ -614,21 +666,19 @@ export default function useNewJob() {
       jobContainer.style.width = "150px";
     } else {
       jobContainer.style = {};
-
-      const keys = Object.keys(DEFAULT_VALUES);
-
-      for (const key of keys) {
-        setValue(key, DEFAULT_VALUES[key]);
-      }
+      setValue("minimizeWidth", false);
     }
   }, []);
 
   // Callback 'submit' form
-  const submit = useCallback((formState) => {
-    console.log("[formState]", formState);
+  const onHideModal = useCallback(() => {
+    setValue("showCreateJobModal", false);
   }, []);
 
-  // console.log("[WATCH]", watch());
+  // Callback 'submit' form
+  const submit = useCallback(() => {
+    setValue("showCreateJobModal", true);
+  }, []);
 
   return {
     ref: ref,
@@ -637,11 +687,14 @@ export default function useNewJob() {
     register: register,
     updateDate: updateDate,
     appointment: appointment,
-    handleSubmit: handleSubmit,
+    handleSubmit: handleParentSubmit,
     handleOnChange: handleOnChange,
     onTriggerWidth: onTriggerWidth,
     validateDay: validateDay,
+    setAppointments: setAppointments,
+    removeAppointmentById: removeAppointmentById,
     onToggleDay: onToggleDay,
+    onHideModal: onHideModal,
     onChangeTime: onChangeTime,
     onChangeMonth: onChangeMonth,
     onChangeClient: onChangeClient,

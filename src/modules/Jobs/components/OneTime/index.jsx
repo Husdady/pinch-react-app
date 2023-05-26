@@ -59,7 +59,6 @@ export default memo(OneTime, (prevProps, nextProps) => {
     prevProps.day === nextProps.day &&
     prevProps.month === nextProps.month &&
     prevProps.timeId === nextProps.timeId &&
-    JSON.stringify(prevProps.timeOptions) ===
-      JSON.stringify(nextProps.timeOptions)
+    prevProps.timeOptions === nextProps.timeOptions
   );
 });

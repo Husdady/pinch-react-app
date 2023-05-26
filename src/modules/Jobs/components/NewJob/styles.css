@@ -16,6 +16,10 @@
   height: 658px;
 }
 
+.new-job > .job-wrapper.hidden {
+  display: none !important;
+}
+
 .new-job > .job-wrapper > .job-footer {
   font-style: normal;
   font-weight: 400;
@@ -31,9 +35,4 @@
   padding-bottom: 0.6rem;
   color: #FFFFFF;
   background-color: #DC6BBC;;
-}
-
-.new-job > .job-wrapper .job-footer #generate-job:disabled {
-  color: #F8F8F8;
-  background-color: #BDBDBD;
 }

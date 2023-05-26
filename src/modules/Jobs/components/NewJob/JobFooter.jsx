@@ -2,17 +2,19 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 
+// Components
+import Button from "../../../../components/Button";
+
 function JobFooter({ isDisabledSubmitButton }) {
   return (
     <div className="job-footer px-4 py-4">
-      <button
+      <Button
         type="submit"
         id="generate-job"
         className="d-block w-100 border-0"
+        title="Generate Job"
         disabled={isDisabledSubmitButton}
-      >
-        Generate Job
-      </button>
+      />
     </div>
   );
 }

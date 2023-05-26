@@ -15,7 +15,7 @@ function AppointmentsList({
   }
 
   return (
-    <ul className="appointments-list m-0 w-100 list-unstyled">
+    <ul className="appointments-list little-scrollbar m-0 w-100 list-unstyled">
       {appointments.map((item) => (
         <li
           key={item.id}
@@ -35,6 +35,7 @@ function AppointmentsList({
             <img
               role="button"
               alt="close-circle-icon"
+              className="remove-appointment-item"
               src={CLOSE_CIRCLE_ICON}
               onClick={onRemoveAppointment}
             />
@@ -54,8 +55,7 @@ AppointmentsList.propTypes = {
 
 export default memo(AppointmentsList, (prevProps, nextProps) => {
   return (
-    prevProps.activeAppointment === nextProps.activeAppointment &&
-    JSON.stringify(prevProps.appointments) ===
-      JSON.stringify(nextProps.appointments)
+    prevProps.appointments === nextProps.appointments &&
+    prevProps.activeAppointment === nextProps.activeAppointment
   );
 });

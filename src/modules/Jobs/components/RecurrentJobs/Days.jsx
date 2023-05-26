@@ -35,5 +35,5 @@ Days.propTypes = {
 }
 
 export default memo(Days, (prevProps, nextProps) => {
-  return JSON.stringify(prevProps.days) === JSON.stringify(nextProps.days)
+  return prevProps.days === nextProps.days
 });

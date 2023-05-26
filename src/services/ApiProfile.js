@@ -1,22 +1,21 @@
 // Utils
-import isObject from '../utils/isObject'
+import isObject from "../utils/isObject";
 
 // Constants
-import { WIX_APP_URL } from '../assets/data/api'
+import { WIX_APP_URL } from "../assets/data/api";
+import { TOKEN } from "../assets/data/constants";
 
 export default class ApiProfile {
   constructor(apiKey) {
-    this.apiKey = apiKey // Define the apiKey
-    this.apiUrl = WIX_APP_URL // Url of the API
-    this.headerApiKey = { 'pro-pinch-api-key': this.apiKey }  // Define header for the apiKey
+    // this.apiKey = apiKey; // Define the apiKey
+    this.apiUrl = WIX_APP_URL; // Url of the API
+    this.headerApiKey = { "pro-pinch-api-key": TOKEN }; // Define header for the apiKey
 
     // Define init configuration for resolver cors problem
     this.defaultInit = {
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      'Access-Control-Allow-Origin': "*",
-      'Access-Control-Allow-Headers': "*"
-    }
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Headers": "*",
+    };
   }
 
   /**
@@ -25,18 +24,17 @@ export default class ApiProfile {
    * @returns {Promise<Response>} // API Response
    */
   async get(params) {
-    const { url, headers, ...paramsObject } = params // Get url from params
+    const { url, headers, ...paramsObject } = params; // Get url from params
 
     // Fetch to the API for get a response
-    const data = await fetch(this.apiUrl + url || '', {
+    const data = await fetch(this.apiUrl + url || "", {
+      ...paramsObject,
       method: "GET",
-      headers: { ...this.headerApiKey, ...headers },
-      ...this.defaultInit,
-      ...paramsObject
-    })
+      headers: this.headerApiKey,
+    });
 
-    const dataToJson = await data.json() // Convert data to json
-    return dataToJson // Return API response
+    const dataToJson = await data.json(); // Convert data to json
+    return dataToJson; // Return API response
   }
 
   /**
@@ -45,18 +43,25 @@ export default class ApiProfile {
    * @returns {Promise<Response>} // API Response
    */
   async post(params) {
-    const { url, headers, ...paramsObject } = params // Get url and headers from params
+    const { url, body, headers, ...paramsObject } = params; // Get url and headers from params
+
+    // Define params
+    const fetchParams = {
+      ...paramsObject,
+      method: "POST",
+      body: isObject(body) ? JSON.stringify(body) : JSON.stringify({}),
+      headers: {
+        ...headers,
+        ...this.headerApiKey,
+        "Content-Type": "application/json",
+      },
+    };
 
     // Fetch to the API for make a response
-    const data = await fetch(this.apiUrl + url || '', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json', ...this.headerApiKey, ...headers },
-      ...this.defaultInit,
-      ...paramsObject
-    })
+    const data = await fetch(this.apiUrl + url || "", fetchParams);
+    const dataToJson = await data.json(); // Convert data to json
 
-    const dataToJson = await data.json() // Convert data to json
-    return dataToJson // Return API response
+    return dataToJson; // Return API response
   }
 
   /**
@@ -65,18 +70,21 @@ export default class ApiProfile {
    * @returns {Promise<Response>} // API Response
    */
   async put(params) {
-    const { url, headers, ...paramsObject } = params // Get url and headers from params
+    const { url, headers, ...paramsObject } = params; // Get url and headers from params
 
     // Fetch to the API for make a response
-    const data = await fetch(this.apiUrl + url || '', {
+    const data = await fetch(this.apiUrl + url || "", {
       method: "PUT",
-      headers: { 'Content-Type': 'application/json', ...this.headerApiKey, ...headers },
-      ...this.defaultInit,
-      ...paramsObject
-    })
+      headers: {
+        ...headers,
+        ...this.headerApiKey,
+        "Content-Type": "application/json",
+      },
+      ...paramsObject,
+    });
 
-    const dataToJson = await data.json() // Convert data to json
-    return dataToJson // Return API response
+    const dataToJson = await data.json(); // Convert data to json
+    return dataToJson; // Return API response
   }
 
   /**
@@ -85,18 +93,17 @@ export default class ApiProfile {
    * @returns {Promise<Response>} // API Response
    */
   async delete(params) {
-    const { url, headers, ...paramsObject } = params // Get url and headers from params
+    const { url, headers, ...paramsObject } = params; // Get url and headers from params
 
     // Fetch to the API for delete a resource
-    const data = await fetch(this.apiUrl + url || '', {
+    const data = await fetch(this.apiUrl + url || "", {
       method: "DELETE",
       headers: { ...this.headerApiKey, ...headers },
-      ...this.defaultInit,
-      ...paramsObject
-    })
+      ...paramsObject,
+    });
 
-    const dataToJson = await data.json() // Convert data to json
-    return dataToJson // Return API response
+    const dataToJson = await data.json(); // Convert data to json
+    return dataToJson; // Return API response
   }
 
   /**
@@ -107,22 +114,22 @@ export default class ApiProfile {
   validateParams(params) {
     // Validate params
     if (!isObject(params)) {
-      console.warn("Debes asignar como parámetro un objeto")
-      return false
+      console.warn("Debes asignar como parámetro un objeto");
+      return false;
     }
 
     // Validate 'method' property
-    if ('method' in params) {
-      console.warn("La propiedad 'method' no debe estar establecida")
-      return false
+    if ("method" in params) {
+      console.warn("La propiedad 'method' no debe estar establecida");
+      return false;
     }
 
     // Validate 'headers' property
-    if ('headers' in params && !isObject(params.headers)) {
-      console.warn("La propiedad 'headers' debe ser un objeto")
-      return false
+    if ("headers" in params && !isObject(params.headers)) {
+      console.warn("La propiedad 'headers' debe ser un objeto");
+      return false;
     }
 
-    return true
+    return true;
   }
 }

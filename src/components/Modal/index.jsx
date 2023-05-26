@@ -17,7 +17,7 @@ function CustomModal({ show, onHide, children, centered, className }) {
       centered={centered}
       className={className}
     >
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end close-modal">
         <img
           role="button"
           width={8}

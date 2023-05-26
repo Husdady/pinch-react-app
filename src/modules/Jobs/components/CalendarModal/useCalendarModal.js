@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { useMemo, useCallback, useEffect } from "react";
 
 // Utils
+import isObject from "../../../../utils/isObject";
+import generateUniqueId from "../../../../utils/generateUniqueId";
+
 // Constants
 import { DEFAULT_VALUES } from "./constants";
-import generateUniqueId from "../../../../utils/generateUniqueId";
 
 /**
  * Hook that implemenets the logic of the CalendarModal component
@@ -14,18 +16,30 @@ import generateUniqueId from "../../../../utils/generateUniqueId";
  * @returns {object} Object
  */
 export default function useCalendarModal({
-  show,
   timeId,
   timeOptions,
   schedule,
   appointment,
+  appointmentsForm,
   updateDate,
+  onHideModal,
   onChangeTime,
+  setAppointments,
+  removeAppointmentById,
 }) {
   // Define form state
-  const { watch, setValue, handleSubmit } = useForm({
+  const {
+    watch,
+    setValue,
+    handleSubmit: handleChildSubmit,
+  } = useForm({
     defaultValues: DEFAULT_VALUES,
   });
+
+  // Disable 'Save' button
+  const disableSubmitBtn = useMemo(() => {
+    return watch("newAppointments").length === 0;
+  }, [watch("newAppointments")]);
 
   // Callback 'pick' a day of the Calendar
   const appointments = useMemo(() => {
@@ -46,12 +60,61 @@ export default function useCalendarModal({
     }));
   }, [watch("schedule"), watch("activeDay")]);
 
+  // Callback for select default appointment
+  const selectDefaultAppointment = useCallback(
+    (params = {}) => {
+      const activeId = watch("selectedAppointment"); // Get selected appointment
+      const copyAppointments = [...appointments]; // Create appointments copy
+
+      // New appointment added
+      if (isObject(params.newAppointment)) {
+        copyAppointments.push(params.newAppointment);
+      }
+
+      // Filter new appointments
+      const filterAppointments = copyAppointments.filter((item) => {
+        if (typeof params.itemId === "string") {
+          return item.id !== params.itemId && item.isNew;
+        }
+        return item.isNew;
+      });
+
+      if (filterAppointments.length === 0) return; // Stop function when are empty items
+
+      const firstItem = filterAppointments[0]; // Get first appointment
+      if (typeof firstItem === "undefined") return; // Appointment not exists
+
+      // Same id
+      if (activeId === firstItem.id) return;
+      setValue("selectedAppointment", firstItem.id); // Update selected appointment
+    },
+    [appointments, watch("selectedAppointment")]
+  );
+
+  // Callback 'hide' modal
+  const handleHideModal = useCallback(() => {
+    onHideModal(); // Hide modal
+
+    // Check if button not its disabled
+    if (!watch("isSaved") && !disableSubmitBtn) {
+      const keys = Object.keys(DEFAULT_VALUES); // Get properties of default values
+
+      // Reset values
+      for (const key of keys) {
+        setValue(key, DEFAULT_VALUES[key]);
+      }
+    }
+  }, [watch("isSaved"), disableSubmitBtn]);
+
   // Callback 'pick' a day of the Calendar
-  const onSelectDay = useCallback((day) => {
-    if (day === null) return;
-    setValue("activeDay", day); // Update activeDay
-    updateDate({ day: day.index, month: day.month }); // Update dates
-  }, []);
+  const onSelectDay = useCallback(
+    (day) => {
+      if (day === null) return;
+      setValue("activeDay", day); // Update activeDay
+      updateDate({ day: day.index, month: day.month }); // Update dates
+    },
+    [appointments, watch("selectedAppointment")]
+  );
 
   // Callback 'select' appointment
   const onSelectAppointment = useCallback((id) => {
@@ -61,36 +124,94 @@ export default function useCalendarModal({
   }, []);
 
   // Callback 'remove' appointment
-  const onRemoveAppointment = useCallback(() => {
-    const formData = watch(); // Get form data
+  const removeNewAppointmentById = useCallback(
+    (appointmentId) => {
+      const formData = watch();
+      const scheduleData = formData.schedule;
+      const { activeDay, newAppointments } = formData;
+      console.log("[newAppointments]", newAppointments);
+      if (scheduleData.length === 0) return;
+      if (newAppointments.length === 0) return;
 
-    const scheduleData = formData.schedule; // Get schedule
-    const { activeDay, newAppointments, selectedAppointment } = formData; // Get schedule
+      // Define new items
+      const newItems = newAppointments.filter(
+        (item) => item.id !== appointmentId
+      );
 
-    if (selectedAppointment === "") return;
+      // Update new appointments
+      setValue("newAppointments", newItems);
+      selectDefaultAppointment({ itemId: appointmentId }); // Select default appointment
 
-    setValue(
-      "newAppointments",
-      newAppointments.filter((item) => item.id !== selectedAppointment)
-    );
+      // Find item by date
+      const index = scheduleData.findIndex(
+        (item) => item.date === activeDay.date
+      );
 
-    // Find item by date
-    const index = scheduleData.findIndex(
-      (item) => item.date === activeDay.date
-    );
-    if (index === -1) return;
+      // Index not found
+      if (index === -1) return;
 
-    // Get updated appointments
-    const updatedAppointments = scheduleData[index].appoinments;
+      // Get updated appointments
+      const items = scheduleData[index].appoinments;
 
-    // Remove appointment
-    scheduleData[index].appoinments = updatedAppointments.filter(
-      (item) => item.id !== selectedAppointment
-    );
+      // Remove appointment
+      scheduleData[index].appoinments = items.filter(
+        (item) => item.id !== appointmentId
+      );
 
-    setValue("schedule", scheduleData); // Update schedule
-    setValue("selectedAppointment", DEFAULT_VALUES.selectedAppointment);
-  }, [watch()]);
+      setValue("schedule", scheduleData); // Update schedule
+      removeAppointmentById(appointmentId); // Remove appointment from job state
+    },
+    [watch()]
+  );
+
+  // Callback 'remove' appointment
+  const onRemoveAppointment = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const formData = watch(); // Get form data
+
+      const scheduleData = formData.schedule; // Get schedule
+      const { isSaved, activeDay, newAppointments, selectedAppointment } =
+        formData; // Get schedule
+
+      if (selectedAppointment === "") return;
+
+      // Define new items
+      const newItems = newAppointments.filter(
+        (item) => item.id !== selectedAppointment
+      );
+
+      // Update new appointments
+      setValue("newAppointments", newItems);
+      selectDefaultAppointment({ itemId: selectedAppointment }); // Select default appointment
+
+      // Find item by date
+      const index = scheduleData.findIndex(
+        (item) => item.date === activeDay.date
+      );
+
+      // Index not found
+      if (index === -1) return;
+
+      // Get updated appointments
+      const items = scheduleData[index].appoinments;
+
+      // Remove appointment
+      scheduleData[index].appoinments = items.filter(
+        (item) => item.id !== selectedAppointment
+      );
+
+      setValue("schedule", scheduleData); // Update schedule
+
+      if (isSaved && newAppointments.length === 0) {
+        setValue("isSaved", false);
+      }
+
+      // Remove appointment from job state
+      removeAppointmentById(selectedAppointment);
+    },
+    [watch(), appointments]
+  );
 
   // Callback 'load' the active day in the Calendar
   const onLoadActiveDay = useCallback(
@@ -137,11 +258,11 @@ export default function useCalendarModal({
   const addNewAppointment = useCallback(() => {
     const formData = watch(); // Get form data
 
-    const scheduleData = formData.schedule;
-    const newSchedule = scheduleData.slice();
+    const scheduleData = formData.schedule; // Get schedule from the form data
+    const newSchedule = scheduleData.slice(); // Create copy of the schedule
 
-    const { activeDay, timeLabel, newAppointments, selectedAppointment } =
-      formData;
+    // Destructure form data
+    const { activeDay, timeLabel, newAppointments } = formData;
 
     // Find item by date
     const item = newSchedule.find((item) => item.date === activeDay.date);
@@ -157,6 +278,9 @@ export default function useCalendarModal({
       clientName: appointment.customerName,
       jobSchedule: timeLabel,
     };
+
+    // Select default appointment
+    selectDefaultAppointment({ newAppointment: newAppointment });
 
     // Add new schedule
     if (typeof item === "undefined") {
@@ -175,60 +299,64 @@ export default function useCalendarModal({
         (item) => item.date === activeDay.date
       );
 
+      // Active appointment
+      if (newSchedule[index].active === false) {
+        newSchedule[index].active = true;
+      }
+
       // Add new appointment
       newSchedule[index].appoinments.push(newAppointment);
     }
 
     setValue("schedule", newSchedule); // Update schedule
 
-    if (selectedAppointment === "") {
-      setValue("selectedAppointment", appointmentId);
-    }
-
     // Update new appointments
     setValue("newAppointments", [
       ...newAppointments,
-      { id: appointmentId, ...appointment },
+      { id: appointmentId, timeLabel: timeLabel, ...appointment },
     ]);
-  }, [watch(), appointment]);
+  }, [watch(), appointment, appointments]);
 
   // Callback 'submit' form
-  const submit = useCallback(() => {
-    //
-  }, []);
+  const submit = useCallback(
+    (formState) => {
+      onHideModal();
+      setValue("isSaved", true);
+
+      // Define new appointments
+      const newAppoinments = formState.newAppointments.map((item) => ({
+        ...item,
+        removeThis: () => removeNewAppointmentById(item.id),
+      }));
+
+      // Set new appointments to Job state
+      setAppointments(newAppoinments);
+    },
+    [watch()]
+  );
 
   useEffect(() => {
     let mounted = true;
 
-    if (mounted) {
-      const newAppointments = watch("newAppointments");
-
-      if (!show && newAppointments.length > 0) {
-        const keys = Object.keys(DEFAULT_VALUES);
-
-        for (const key of keys) {
-          setValue(key, DEFAULT_VALUES[key]);
-        }
-      }
-    }
+    if (mounted) selectDefaultAppointment();
 
     return () => {
       mounted = false;
     };
-  }, [show, watch("newAppointments")]);
-
-  console.log("[CALENDAR_MODAL]", watch());
+  }, [watch("activeDay")]);
 
   return {
     watch: watch,
     submit: submit,
-    handleSubmit: handleSubmit,
+    handleSubmit: handleChildSubmit,
     appointments: appointments,
+    disableSubmitBtn: disableSubmitBtn,
     addNewAppointment: addNewAppointment,
     onSelectDay: onSelectDay,
     onLoadActiveDay: onLoadActiveDay,
     onSelectAppointment: onSelectAppointment,
     onRemoveAppointment: onRemoveAppointment,
+    handleHideModal: handleHideModal,
     handleChangeTime: handleChangeTime,
   };
 }

@@ -28,7 +28,7 @@ Time.propTypes = {
 
 export default memo(Time, (prevProps, nextProps) => {
   return (
-    prevProps.selectedTime === nextProps.selectedTime &&
-    JSON.stringify(prevProps.options) === JSON.stringify(nextProps.options)
+    prevProps.options === nextProps.options &&
+    prevProps.selectedTime === nextProps.selectedTime
   );
 });

@@ -13,7 +13,7 @@ const apiProfile = new ApiProfile(API_KEY)
 export default async function fetchClients({ memberId, onInit, onFinish, onError, onFinally }) {
   try {
     if (typeof onInit === 'function') onInit() // Execute 'onInit' callback
-    const result = await apiProfile.get({ url: `/clients?memberId=${memberId}` })
+    const result = await apiProfile.get({ url: '/clients' })
     if (typeof onFinish === 'function') onFinish(result) // Execute 'onFinish' callback
     return result
   } catch (error) {

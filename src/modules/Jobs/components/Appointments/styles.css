@@ -41,9 +41,9 @@
   height: 658px;
   overflow-y: auto;
   overflow-x: auto;
-  border-left: 1px solid #BDBDBD;
-  border-right: 1px solid #BDBDBD;
-  border-bottom: 1px solid #BDBDBD;
+  border-left: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
 }
 
 .appointments-content > .appointments-fields > .appointments-list {
@@ -51,60 +51,89 @@
   background-color: #828282;
 }
 
-.appointments-content > .appointments-fields > .appointments-list > .appointment-field {
+.appointments-content
+  > .appointments-fields
+  > .appointments-list
+  > .appointment-field {
   font-size: 12px;
   line-height: 14.63px;
 }
 
-.appointments-content > .appointments-fields > .appointments-list > .appointment-field.field-status {
+.appointments-content
+  > .appointments-fields
+  > .appointments-list
+  > .appointment-field.field-status {
   text-align: center;
 }
 
-.appointments-content > .appointments-registered > .appointments-list > .appointment {
+.appointments-content
+  > .appointments-registered
+  > .appointments-list
+  > .appointment {
   font-size: 12px;
   line-height: 15px;
-  color: #4F4F4F;
+  color: #4f4f4f;
   font-weight: 300;
   font-style: normal;
-  border-bottom: 1px solid #BDBDBD;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #bdbdbd;
 }
 
-.field-client {
-  width: 30%;
-}
-
+.field-date,
 .field-status,
+.field-client,
 .field-property {
   width: 25%;
 }
 
-.field-date {
-  width: 12%;
+.field-client {
+  min-width: 150px;
 }
 
-.field-client,
-.field-property,
-.appointment .field-status {
-  min-width: 150px;
+.field-status,
+.field-property {
+  min-width: 120px;
+}
+
+.field-status {
+  max-width: 120px;
+  margin: auto;
+}
+
+.appointment .field-status .select .select-value {
+  margin-top: 0 !important;
 }
 
 .field-date {
   min-width: 100px;
+  max-width: 100px;
+  margin: auto;
 }
 
-.appointments-content > .appointments-fields > .appointments-list > .appointment-field.field-status {
-  min-width: 174px;
+.appointments-content
+  > .appointments-fields
+  > .appointments-list
+  > .appointment-field.field-status {
+  margin-left: 1.5rem;
 }
 
-.appointment:nth-last-child(-n+3) .select-options {
+.appointment:nth-last-child(-n + 3) .select-options {
   bottom: 100%;
 }
 
 @media screen and (max-width: 1024px) {
   .appointments-fields,
   .appointments-registered,
-  .appointments-content > .appointments-fields > .appointments-list > .appointment-field,
-  .appointments-content > .appointments-registered > .appointments-list > .appointment {
+  .appointments-registered .appointments-list,
+  .appointments-content
+    > .appointments-fields
+    > .appointments-list
+    > .appointment-field,
+  .appointments-content
+    > .appointments-registered
+    > .appointments-list
+    > .appointment {
     display: table;
   }
 }

@@ -1,10 +1,11 @@
 // Constants
-export const timeStyle = { width: "100%" }
+export const timeStyle = { width: "100%" };
 
 export const DEFAULT_VALUES = {
-  timeLabel: '',
+  timeLabel: "",
   activeDay: null,
-  selectedAppointment: '',
+  isSaved: false,
+  selectedAppointment: "",
   schedule: [],
   newAppointments: [],
 };

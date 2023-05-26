@@ -2,9 +2,13 @@
 import JobHeader from "./JobHeader";
 import JobContent from "./JobContent";
 import JobFooter from "./JobFooter";
+import ModalCreateJob from "../ModalCreateJob";
 
 // Hooks
 import useNewJob from "./useNewJob";
+
+// Utils
+import classnames from "../../../../utils/classnames";
 
 // Styles
 import "./styles.css";
@@ -21,7 +25,10 @@ export default function NewJob() {
     onTriggerWidth,
     handleOnChange,
     validateDay,
+    setAppointments,
+    removeAppointmentById,
     onToggleDay,
+    onHideModal,
     onChangeTime,
     onChangeMonth,
     onChangeClient,
@@ -32,19 +39,24 @@ export default function NewJob() {
   } = useNewJob();
 
   return (
-    <form
-      ref={ref}
-      className="new-job"
-      noValidate
-      onSubmit={handleSubmit(submit)}
-    >
-      <JobHeader
-        active={watch("minimizeWidth")}
-        onTriggerWidth={onTriggerWidth}
-      />
+    <>
+      <form
+        ref={ref}
+        noValidate
+        className="new-job"
+        onSubmit={handleSubmit(submit)}
+      >
+        <JobHeader
+          active={watch("minimizeWidth")}
+          onTriggerWidth={onTriggerWidth}
+        />
 
-      {!watch("minimizeWidth") && (
-        <div className="job-wrapper d-flex flex-column justify-content-between">
+        <div
+          className={classnames([
+            watch("minimizeWidth") ? "hidden" : null,
+            "job-wrapper d-flex flex-column justify-content-between",
+          ])}
+        >
           <JobContent
             watch={watch}
             register={register}
@@ -53,6 +65,8 @@ export default function NewJob() {
             handleOnChange={handleOnChange}
             updateDate={updateDate}
             appointment={appointment}
+            setAppointments={setAppointments}
+            removeAppointmentById={removeAppointmentById}
             onChangeTime={onChangeTime}
             onChangeMonth={onChangeMonth}
             onChangeClient={onChangeClient}
@@ -63,7 +77,15 @@ export default function NewJob() {
 
           <JobFooter isDisabledSubmitButton={isDisabledSubmitButton} />
         </div>
-      )}
-    </form>
+      </form>
+
+      <ModalCreateJob
+        onHideModal={onHideModal}
+        show={watch("showCreateJobModal")}
+        appointments={watch("appointments")}
+        serviceType={watch("serviceType")}
+        customerName={watch("customerName")}
+      />
+    </>
   );
 }

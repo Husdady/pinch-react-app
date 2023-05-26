@@ -1,14 +1,9 @@
 // Utils
-import { getSortedDays } from "./utils";
 import { getDayName } from "../OneTime/utils";
 import { getCurrentMonth } from "../Months/utils";
 
 // Constants
-export const LEFT_ARROW = "https://i.imgur.com/IckyjBc.png";
-export const RIGHT_ARROW = "https://i.imgur.com/oPf0hob.png";
-
 export const today = new Date() // Get current date
-export const daysSorted = getSortedDays() // Get days sorted
 export const DEFAULT_TOTAL_MONTHS = 1 // Define default total months
 export const DEFAULT_FIRST_HOUR = '00:00 AM' // Define default first hour of day
 export const day = today.getDate() // Get current day
@@ -25,6 +20,7 @@ export const DEFAULT_VALUES = {
   minimizeWidth: false,
   clientId: '',
   customerName: '',
+  showCreateJobModal: false,
   propertyId: '',
   jobDate: '',
   jobTime: '',

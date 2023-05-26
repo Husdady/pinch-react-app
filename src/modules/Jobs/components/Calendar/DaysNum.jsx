@@ -1,22 +1,19 @@
 // Librarys
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import PropTypes from "prop-types";
+
+// Hooks
+import useDaysNum from "./useDaysNum";
 
 // Constants
 import classnames from "../../../../utils/classnames";
 
 function CalendarDaysNum({ daysNum, schedule, activeDay, handleSelectDay }) {
-  // Check if day its active
-  const isActive = useCallback(
-    (day) => schedule.some((item) => item.active && item.date === day.date),
-    [schedule]
-  );
-
-  // Check if day its selected
-  const isSelected = useCallback(
-    (day) => activeDay !== null && activeDay.id === day.id,
-    [activeDay]
-  );
+  // Execute hook for get flags
+  const { isActive, isSelected } = useDaysNum({
+    schedule: schedule,
+    activeDay: activeDay,
+  });
 
   return (
     <ul className="days-num-list m-0 list-unstyled d-grid justify-content-center py-1 px-3">
@@ -54,8 +51,8 @@ CalendarDaysNum.propTypes = {
 
 export default memo(CalendarDaysNum, (prevProps, nextProps) => {
   return (
-    prevProps.activeDay === nextProps.activeDay &&
-    JSON.stringify(prevProps.daysNum) === JSON.stringify(nextProps.daysNum) &&
-    JSON.stringify(prevProps.schedule) === JSON.stringify(nextProps.schedule)
+    prevProps.daysNum === nextProps.daysNum &&
+    prevProps.schedule === nextProps.schedule &&
+    prevProps.activeDay === nextProps.activeDay
   );
 });

@@ -38,13 +38,13 @@
   display: flex;
   align-items: center;
   text-align: center;
-  color: #4F4F4F;
-  padding: 10px;
+  color: #4f4f4f;
+  padding: 8px;
 }
 
 .recurrent-jobs .btn-day.active {
   color: #ffffff;
-  background-color: #241D5D;
+  background-color: #241d5d;
 }
 
 .multiple-days #btn-calendar,
@@ -67,4 +67,10 @@
 
 #day-num {
   -moz-appearance: textfield; /* Firefox */
+}
+
+@media screen and (min-width: 1400px) {
+  .recurrent-jobs .btn-day {
+    padding: 10px;
+  }
 }

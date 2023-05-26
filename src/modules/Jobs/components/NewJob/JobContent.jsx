@@ -16,43 +16,48 @@ function JobContent({
   appointment,
   handleOnChange,
   validateDay,
+  setAppointments,
+  removeAppointmentById,
   onChangeTime,
   onChangeMonth,
   onChangeClient,
   onChangeBooking,
   onChangeService,
-  onChangeProperty
+  onChangeProperty,
 }) {
   return (
     <div className="job-content px-4 py-2">
-      <Clients clientId={watch('clientId')} onChangeClient={onChangeClient} />
+      <Clients clientId={watch("clientId")} onChangeClient={onChangeClient} />
 
       <Properties
-        clientId={watch('clientId')}
-        propertyId={watch('propertyId')}
+        clientId={watch("clientId")}
+        propertyId={watch("propertyId")}
         onChangeProperty={onChangeProperty}
       />
 
       <Services
-        jobCost={watch('jobCost')}
-        services={watch('services')}
-        serviceId={watch('serviceId')}
+        jobCost={watch("jobCost")}
+        services={watch("services")}
+        serviceId={watch("serviceId")}
         onChangeService={onChangeService}
       />
 
       <Booking
-        day={watch('day')}
-        days={watch('days')}
-        month={watch('month')}
-        repeat={watch('repeat')}
-        timeId={watch('timeId')}
-        booking={watch('booking')}
-        forMonthly={watch('forMonthly')}
-        timeOptions={watch('timeOptions')}
+        day={watch("day")}
+        days={watch("days")}
+        month={watch("month")}
+        repeat={watch("repeat")}
+        timeId={watch("timeId")}
+        booking={watch("booking")}
+        forMonthly={watch("forMonthly")}
+        timeOptions={watch("timeOptions")}
+        appointments={watch("appointments")}
         register={register}
         updateDate={updateDate}
         appointment={appointment}
         validateDay={validateDay}
+        setAppointments={setAppointments}
+        removeAppointmentById={removeAppointmentById}
         onToggleDay={onToggleDay}
         onChangeTime={onChangeTime}
         onChangeMonth={onChangeMonth}
@@ -71,10 +76,12 @@ JobContent.propTypes = {
   appointment: PropTypes.object.isRequired,
   handleOnChange: PropTypes.func.isRequired,
   validateDay: PropTypes.func.isRequired,
+  setAppointments: PropTypes.func.isRequired,
+  removeAppointmentById: PropTypes.func.isRequired,
   onChangeMonth: PropTypes.func.isRequired,
   onChangeClient: PropTypes.func.isRequired,
   onChangeBooking: PropTypes.func.isRequired,
-  onChangeProperty: PropTypes.func.isRequired
+  onChangeProperty: PropTypes.func.isRequired,
 };
 
 export default memo(JobContent);

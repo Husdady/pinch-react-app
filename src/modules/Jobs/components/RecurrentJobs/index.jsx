@@ -77,8 +77,7 @@ export default memo(RecurrentJobs, (prevProps, nextProps) => {
     prevProps.repeat === nextProps.repeat &&
     prevProps.timeId === nextProps.timeId &&
     prevProps.forMonthly === nextProps.forMonthly &&
-    JSON.stringify(prevProps.days) === JSON.stringify(nextProps.days) &&
-    JSON.stringify(prevProps.timeOptions) ===
-      JSON.stringify(nextProps.timeOptions)
+    prevProps.days === nextProps.days &&
+    prevProps.timeOptions === nextProps.timeOptions
   );
 });

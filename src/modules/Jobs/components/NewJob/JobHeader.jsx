@@ -1,9 +1,9 @@
 // Librarys
 import { memo } from "react";
 import PropTypes from "prop-types";
+import { LEFT_ARROW, RIGHT_ARROW } from "../../../../assets/data/constants";
 
 // Constants
-import { LEFT_ARROW, RIGHT_ARROW } from "./constants";
 
 function JobHeader({ active, onTriggerWidth }) {
   return (
