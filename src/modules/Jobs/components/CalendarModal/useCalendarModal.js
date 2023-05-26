@@ -129,10 +129,6 @@ export default function useCalendarModal({
     const totalCurrent = currentAppointments.length;
     const totalAppointments = appointmentsForm.length;
 
-    // Empty appointments form
-    // if (totalAppointments === 0) return;
-    console.log("[totalCurrent]", totalCurrent);
-    console.log("[totalAppointments]", totalAppointments);
     // Appointments form not removed
     if (totalAppointments >= totalCurrent) return;
 
@@ -141,13 +137,12 @@ export default function useCalendarModal({
       (item) => !appointmentsForm.some((el) => el.id === item.id)
     );
 
-    // if (removedItems.length === 0) return;
-
     // Update new appointments in the Calendar
     setValue("newAppointments", appointmentsForm);
 
     const schedule = watch("schedule"); // Get activeDay
 
+    // Define new schedule
     const newSchedule = schedule.reduce((acc, item) => {
       const itemAppoinments = item.appoinments.filter((item) =>
         removedItems.some((el) => el.id !== item.id)
@@ -155,25 +150,12 @@ export default function useCalendarModal({
 
       acc.push({
         ...item,
+        active: itemAppoinments.length > 0,
         appoinments: itemAppoinments,
       });
 
-      // return [
-      //   ...acc,
-      //   {
-      //     ...item,
-      //     appoinments: itemAppoinments,
-      //   },
-      // ];
       return acc;
     }, []);
-
-    console.log("[SCHEDULE]", newSchedule);
-
-    // Remove appointments from schedule
-    // newSchedule[index].appoinments = removedItems.filter((item) =>
-    //   removedItems.some((el) => el.id !== item.id)
-    // );
 
     // Update schedule
     setValue("schedule", newSchedule);
@@ -215,6 +197,9 @@ export default function useCalendarModal({
       scheduleData[index].appoinments = items.filter(
         (item) => item.id !== selectedAppointment
       );
+
+      // Update active day in Calendar
+      scheduleData[index].active = scheduleData[index].appoinments.length > 0
 
       setValue("schedule", scheduleData); // Update schedule
 
