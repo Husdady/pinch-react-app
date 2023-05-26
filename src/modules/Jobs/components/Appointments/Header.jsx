@@ -1,26 +1,124 @@
+// Librarys
+import { memo } from "react";
+import PropTypes from "prop-types";
+
 // Components
-import Select from "../../../../components/Select/index";
+import Button from "../../../../components/Button";
+import Select from "../../../../components/Select";
+import ModalConnectCalendar from "../ModalConnectCalendar";
+import ModalDisconnectCalendar from "../ModalDisconnectCalendar";
+
+// Hooks
+import useConnectCalendar from "./useConnectCalendar";
+
+// Utils
+import classnames from "../../../../utils/classnames";
 
 // Constants
-import { CALENDAR_ICON } from "../../../../assets/data/constants";
+import { filterAppointmentStatus } from "./constants";
+import {
+  CALENDAR_ICON,
+  SMALL_GOOGLE_CALENDAR_ICON,
+} from "../../../../assets/data/constants";
 
-export default function Header() {
+function AppointmentsHeader({
+  isFetching,
+  isSuccesfully,
+  filterActivated,
+  filterAppointmentsByStatus,
+  backupAppointments,
+}) {
+  const {
+    connected,
+    connecting,
+    disconnecting,
+    connectToGoogleCalendar,
+    disconnectToGoogleCalendar,
+    showConnectionCalendarModal,
+    hideConnectCalendarModal,
+    hideDisconnectCalendarModal,
+    showingConnectCalendarModal,
+    showingDisconnectCalendarModal,
+  } = useConnectCalendar();
+
   return (
     <section className="appointments-header d-flex">
       <div className="appointments-wrapper d-flex align-items-center px-4">
         <span className="text-uppercase">APPOINTMENTS</span>
-        <Select style={{ width: "40%" }} noSelectionLabel="All" options={[]} />
+
+        {isFetching && (
+          <div className="skeleton-animation appointments-filter-by-status"></div>
+        )}
+
+        {!isFetching && isSuccesfully && (
+          <Select
+            noSelectionLabel="All"
+            className="appointments-filter-by-status"
+            selectedValue={filterActivated}
+            options={filterAppointmentStatus}
+            onChange={filterAppointmentsByStatus}
+            arrayDeps={backupAppointments}
+          />
+        )}
       </div>
 
-      <button className="connect d-flex align-items-center justify-content-between px-3">
-        <span className="me-1">Connect</span>
+      <Button
+        type="button"
+        disabled={isFetching}
+        onClick={showConnectionCalendarModal}
+        title={
+          isFetching
+            ? "Check connection..."
+            : connected
+            ? "Connected with"
+            : "Connect"
+        }
+        className={classnames([
+          "connect d-flex align-items-center justify-content-between px-3 flex-row-reverse",
+          isFetching ? "checking-connection" : null,
+          connected ? "connected" : null,
+        ])}
+        icon={
+          !isFetching &&
+          isSuccesfully && (
+            <img
+              alt={connected ? "calendar-connected" : "calendar-disconnected"}
+              src={connected ? SMALL_GOOGLE_CALENDAR_ICON : CALENDAR_ICON}
+              className={classnames(["ms-1", connected ? "bg-white" : null])}
+            />
+          )
+        }
+      />
 
-        <img
-          alt="calendar"
-          className="object-fit-cover"
-          src={CALENDAR_ICON}
-        />
-      </button>
+      <ModalConnectCalendar
+        show={showingConnectCalendarModal}
+        onHideModal={hideConnectCalendarModal}
+        connectToGoogleCalendar={connectToGoogleCalendar}
+        connecting={connecting}
+      />
+
+      <ModalDisconnectCalendar
+        show={showingDisconnectCalendarModal}
+        onHideModal={hideDisconnectCalendarModal}
+        disconnectToGoogleCalendar={disconnectToGoogleCalendar}
+        disconnecting={disconnecting}
+      />
     </section>
   );
 }
+
+AppointmentsHeader.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  filterActivated: PropTypes.string.isRequired,
+  filterAppointmentsByStatus: PropTypes.func.isRequired,
+  backupAppointments: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default memo(AppointmentsHeader, (prevProps, nextProps) => {
+  return (
+    prevProps.isFetching === nextProps.isFetching &&
+    prevProps.isSuccesfully === nextProps.isSuccesfully &&
+    prevProps.filterActivated === nextProps.filterActivated &&
+    prevProps.backupAppointments === nextProps.backupAppointments
+  );
+});

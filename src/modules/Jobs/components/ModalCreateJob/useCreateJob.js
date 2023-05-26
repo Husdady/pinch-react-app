@@ -3,18 +3,15 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 
-// Utils
-import { parseAppointments } from "./utils";
-import postAppointments from "./postAppointments";
-
 // Constants
 import { DEFAULT_VALUES } from "./constants";
 
 /**
  * Hook for implements the logic of the CreateJob component
- * @returns
+ * @param {object} params Receive callbacks 'createJob' and 'onHideModal'
+ * @returns {object} Data
  */
-export default function useCreateJob({ appointments }) {
+export default function useCreateJob({ createJob, appointments, onHideModal }) {
   // Define form state
   const { watch, register, setValue, handleSubmit } = useForm({
     defaultValues: DEFAULT_VALUES,
@@ -32,31 +29,21 @@ export default function useCreateJob({ appointments }) {
   }, []);
 
   // Event 'submit' in the form
-  const submit = useCallback(
-    async (formState) => {
-      // Parse appointments
-      const parsedAppointments = parseAppointments({
-        appointments: appointments,
-        notifications: formState.notifications,
-        confirmation: formState.confirmation,
-        confirmationBy: formState.confirmationBy,
-      });
+  const onSubmit = useCallback(() => {
+    const callback = createJob({
+      appointments: appointments,
+      onHideModal: onHideModal,
+    });
 
-      // console.log('[NEW_ITEMS]', parsedAppointments)
+    console.log('[createJob]', createJob)
 
-      // Make request for create new job
-      const result = await postAppointments({ appointments: parsedAppointments })
-
-      console.log('[RESULT]', result)
-    },
-    [appointments]
-  );
+    handleSubmit(callback)();
+  }, []);
 
   return {
     watch: watch,
-    submit: submit,
     register: register,
-    handleSubmit: handleSubmit,
+    onSubmit: onSubmit,
     onToggleCheckboxOption: onToggleCheckboxOption,
     onChangeConfirmationBy: onChangeConfirmationBy,
   };

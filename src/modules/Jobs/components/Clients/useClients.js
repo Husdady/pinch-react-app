@@ -6,9 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import fetchClients from "./fetchClients";
 import isObject from "../../../../utils/isObject";
 
-// Constants
-import { MEMBER_ID } from "../../../../assets/data/constants";
-
 /**
  * Hook that get clients from the API
  * @param {onChangeClient} params Params
@@ -46,7 +43,6 @@ export default function useClients({ onChangeClient }) {
     let mounted = true; // Component mounted
 
     fetchClients({
-      memberId: MEMBER_ID,
       onInit: () => {
         setFetching(true);
       },

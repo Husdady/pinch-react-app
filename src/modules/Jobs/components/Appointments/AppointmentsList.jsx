@@ -1,14 +1,17 @@
+// Librarys
+import { memo } from "react";
+import PropTypes from "prop-types";
+
 // Components
 import Appointment from "./Appointment";
 
-// Constants
-import useAppointments from "./useAppointments";
+function AppointmentsList({ isError, isFetching, appointments }) {
+  if (isFetching) return <p>Loading...</p>;
+  if (isError) return <p>Error to show appointments</p>;
 
-export default function AppointmentsList() {
-  const { appointments, isError, isFetching } = useAppointments()
-
-  if (isFetching) return <p>Loading...</p>
-  if (isError) return <p>Error to show appointments</p>
+  if (appointments.length === 0) {
+    return <span>Appointments not found</span>;
+  }
 
   return (
     <div className="appointments-registered">
@@ -22,3 +25,17 @@ export default function AppointmentsList() {
     </div>
   );
 }
+
+AppointmentsList.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default memo(AppointmentsList, (prevProps, nextProps) => {
+  return (
+    prevProps.isError === nextProps.isError &&
+    prevProps.isFetching === nextProps.isFetching &&
+    prevProps.appointments === nextProps.appointments
+  );
+});

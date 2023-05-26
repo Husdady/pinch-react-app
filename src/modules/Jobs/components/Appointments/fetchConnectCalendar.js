@@ -7,14 +7,14 @@ import { API_KEY } from "../../../../assets/data/api"
 const apiProfile = new ApiProfile(API_KEY)
 
 /**
- * Fetch appointments from the API
- * @param {object} params Receive a 'memberId' and callbacks 
+ * Fetch google calendar for connect from the API
+ * @param {object} params Receive callbacks 
  * @returns {object} Object
  */
-export default async function fetchAppointments({ onInit, onFinish, onError, onFinally }) {
+export default async function fetchConnectCalendar({ onInit, onFinish, onError, onFinally }) {
   try {
     if (typeof onInit === 'function') onInit() // Execute 'onInit' callback
-    const result = await apiProfile.get({ url: '/appointments' })
+    const result = await apiProfile.get({ url: '/calendar' })
     if (typeof onFinish === 'function') onFinish(result) // Execute 'onFinish' callback
     return result
   } catch (error) {

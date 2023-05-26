@@ -1,0 +1,38 @@
+.disconnect-calendar-modal {
+  font-size: 12px;
+  line-height: 14.63px;
+}
+
+.disconnect-calendar-modal .message {
+  color: #4f4f4f;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 16px;
+  margin-bottom: 2rem;
+}
+
+.disconnect-calendar-modal .modal-content {
+  width: 268px;
+  height: 185px;
+}
+
+.disconnect-calendar-modal #btn-confirm-disconnect-calendar {
+  background: #ffffff;
+  border: 1px solid #bdbdbd;
+}
+
+.disconnect-calendar-modal #btn-cancel-disconnect-calendar {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #dc6bbc;
+}
+
+.disconnect-calendar-modal #btn-cancel-disconnect-calendar,
+.disconnect-calendar-modal #btn-confirm-disconnect-calendar {
+  width: 103px;
+  height: 30px;
+}

@@ -2,6 +2,14 @@
   height: 41px;
 }
 
+.appointments-header .appointments-filter-by-status {
+  width: 40%;
+}
+
+.appointments-header .appointments-filter-by-status.skeleton-animation {
+  height: 20px;
+}
+
 .appointments-header > .appointments-wrapper {
   background-color: #241d5d;
   width: 77%;
@@ -15,7 +23,8 @@
   color: #ffffff;
 }
 
-.appointments-header > .appointments-wrapper > .select {
+.appointments-header > .appointments-wrapper > .select,
+.appointments-header .appointments-filter-by-status.skeleton-animation {
   margin-left: 1rem;
 }
 
@@ -35,6 +44,17 @@
   background-color: #dc6bbc;
   color: #ffffff;
   min-width: 120px;
+}
+
+.appointments-header > .checking-connection {
+  width: 30%;
+  min-width: 150px;
+  justify-content: center !important;
+}
+
+.appointments-header > .connect.connected {
+  width: 30%;
+  min-width: 162px;
 }
 
 .appointments-content {

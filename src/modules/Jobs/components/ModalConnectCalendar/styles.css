@@ -1,0 +1,31 @@
+.connect-calendar-modal .modal-content {
+  width: 320px;
+  height: 250px;
+}
+
+.connect-calendar-modal .connect-calendar-title {
+  font-size: 12px;
+  line-height: 14.63px;
+  color: #dc6bbc;
+  margin-bottom: 1.7rem;
+}
+
+.connect-calendar-modal .google-calendar-title {
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 2.35rem;
+}
+
+.connect-calendar-modal #btn-connect-calendar {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #ffffff;
+  width: 96px;
+  height: 30px;
+  background-color: #dc6bbc !important;
+}

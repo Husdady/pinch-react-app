@@ -5,17 +5,19 @@ import PropTypes from "prop-types";
 // Components
 import Spinner from "./Spinner";
 
-function Button({ title, isLoading, ...props }) {
+function Button({ title, icon, isLoading, ...props }) {
   return (
     <button {...props} disabled={isLoading || props.disabled}>
       {isLoading && <Spinner />}
+      {icon}
       {!isLoading && <span>{title}</span>}
     </button>
   );
 }
 
 Button.propTypes = {
-  isLoading: PropTypes.func,
+  icon: PropTypes.node,
+  isLoading: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 

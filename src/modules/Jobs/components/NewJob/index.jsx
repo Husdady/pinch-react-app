@@ -1,3 +1,7 @@
+// Librarys
+import { memo } from "react";
+import PropTypes from 'prop-types'
+
 // Components
 import JobHeader from "./JobHeader";
 import JobContent from "./JobContent";
@@ -13,7 +17,7 @@ import classnames from "../../../../utils/classnames";
 // Styles
 import "./styles.css";
 
-export default function NewJob() {
+function NewJob({ createJob, isCreatingJob }) {
   const {
     ref,
     watch,
@@ -80,7 +84,9 @@ export default function NewJob() {
       </form>
 
       <ModalCreateJob
+        createJob={createJob}
         onHideModal={onHideModal}
+        isCreatingJob={isCreatingJob}
         show={watch("showCreateJobModal")}
         appointments={watch("appointments")}
         serviceType={watch("serviceType")}
@@ -89,3 +95,12 @@ export default function NewJob() {
     </>
   );
 }
+
+NewJob.propTypes = {
+  createJob: PropTypes.func.isRequired,
+  isCreatingJob: PropTypes.bool.isRequired
+}
+
+export default memo(NewJob, (prevProps, nextProps) => {
+  return prevProps.isCreatingJob === nextProps.isCreatingJob
+})

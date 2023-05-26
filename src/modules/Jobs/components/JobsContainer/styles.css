@@ -44,6 +44,12 @@
   }
 }
 
+@media screen and (min-width: 900px) {
+  .appointments {
+    min-width: 575px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .selected-appointment {
     width: 100%;

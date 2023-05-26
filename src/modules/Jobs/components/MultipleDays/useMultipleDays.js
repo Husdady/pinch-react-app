@@ -3,7 +3,6 @@ import { useState, useCallback, useEffect } from "react";
 
 // Utils
 import fetchCalendar from "./fetchCalendar";
-import { MEMBER_ID } from "../../../../assets/data/constants";
 
 /**
  * Hook for implements the logic of the MultipleDays component
@@ -26,7 +25,6 @@ export default function useMultipleDays() {
     let mounted = true; // Component mounted
 
     fetchCalendar({
-      memberId: MEMBER_ID,
       onInit: () => {
         setFetching(true);
       },

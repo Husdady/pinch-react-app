@@ -1,3 +1,4 @@
+// Services
 import ApiProfile from "../../../../services/ApiProfile";
 
 // Constants
@@ -6,11 +7,11 @@ import { API_KEY } from "../../../../assets/data/api";
 const apiProfile = new ApiProfile(API_KEY);
 
 /**
- * Fetch calendar from the API
- * @param {object} params Receive a 'memberId' and callbacks
+ * Post to '/calendar' for connect to the calendar
+ * @param {object} params Receive callbacks
  * @returns {object} Object
  */
-export default async function fetchCalendar({
+export default async function postConnectCalendar({
   onInit,
   onFinish,
   onError,
@@ -18,7 +19,16 @@ export default async function fetchCalendar({
 }) {
   try {
     if (typeof onInit === "function") onInit(); // Execute 'onInit' callback
-    const result = await apiProfile.get({ url: "/schedule" });
+
+    // Post to '/calendar' for connect to the Google Calendar
+    const result = await apiProfile.post({
+      url: "/calendar",
+      body: {
+        status: true,
+        calendarType: "google",
+      },
+    });
+
     if (typeof onFinish === "function") onFinish(result); // Execute 'onFinish' callback
     return result;
   } catch (error) {

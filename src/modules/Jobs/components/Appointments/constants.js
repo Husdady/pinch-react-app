@@ -13,3 +13,8 @@ export const appointmentStatus = [
   { value: "cancelled", label: "Canceled" },
   { value: "rebook", label: "In Progress" }
 ]
+
+export const filterAppointmentStatus = [
+  { value: "all", label: "All" },
+  ...appointmentStatus,
+]

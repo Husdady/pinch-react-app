@@ -1,5 +1,5 @@
 // Constants
-import { STATUS, PAYMENT_TYPE } from "./constants";
+import { STATUS, PAYMENT_TYPE } from "../ModalCreateJob/constants";
 
 /**
  * Parse appointments information
