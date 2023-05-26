@@ -59,7 +59,7 @@ export function calculateMonthDays({ month }) {
   const days = daysOfMonth.map((i) => {
     const year = today.getFullYear(); // Get current year
     const day = getDayName({ day: i, month: month }); // Get day of calendar
-    const jobDate = `${addZeroToNumber(i)}/${monthIndex}`; // Define the job date
+    const jobDate = `${monthIndex}/${addZeroToNumber(i)}`; // Define the job date
     const date = `${monthIndex}/${addZeroToNumber(i)}/${year}`; // Define complete date 24/05/2023
     const dateObject = new Date(year, Number(monthIndex) - 1, i + 1); // Get date object
 

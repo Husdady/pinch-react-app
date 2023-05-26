@@ -267,7 +267,6 @@ export default function useCalendarModal({
 
     if (option === null) return;
     setValue("timeLabel", option.label);
-    // setValue("timeLabel", option.label);
   });
 
   // Callback for add new appointment
@@ -329,7 +328,12 @@ export default function useCalendarModal({
     // Update new appointments
     setValue("newAppointments", [
       ...newAppointments,
-      { id: appointmentId, timeLabel: timeLabel, ...appointment },
+      {
+        ...appointment,
+        id: appointmentId,
+        timeLabel: timeLabel,
+        jobDate: activeDay.jobDate,
+      },
     ]);
   }, [watch(), appointment, appointments]);
 
