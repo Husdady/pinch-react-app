@@ -125,6 +125,28 @@
   margin-top: 0 !important;
 }
 
+.appointment .skeleton-animation.text {
+  /* width: 80%; */
+  height: 14px;
+  margin-right: 1rem;
+}
+
+.appointment .field-property.skeleton-animation.text  {
+  min-width: 105px;
+}
+
+.appointment .field-client.skeleton-animation.text  {
+  min-width: 132px;
+}
+
+.appointment .field-date.skeleton-animation.text  {
+  min-width: 85px;
+}
+
+.appointment .skeleton-animation.select {
+  height: 30px;
+}
+
 .field-date {
   min-width: 100px;
   max-width: 100px;

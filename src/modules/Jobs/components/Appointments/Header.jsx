@@ -74,9 +74,10 @@ function AppointmentsHeader({
             : "Connect"
         }
         className={classnames([
-          "connect d-flex align-items-center justify-content-between px-3 flex-row-reverse",
+          "connect d-flex align-items-center px-3 flex-row-reverse",
           isFetching ? "checking-connection" : null,
           connected ? "connected" : null,
+          !isSuccesfully ? "justify-content-center" : "justify-content-between",
         ])}
         icon={
           !isFetching &&

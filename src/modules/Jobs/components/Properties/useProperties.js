@@ -75,6 +75,7 @@ export default function useProperties({
         onError: (err) => {
           setError(err);
           setIsError(true);
+          setSuccesfully(false);
         },
         onFinish: (result) => {
           setSuccesfully(true);

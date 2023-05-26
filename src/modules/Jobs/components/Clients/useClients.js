@@ -52,6 +52,7 @@ export default function useClients({ onChangeClient }) {
       onError: (err) => {
         setError(err);
         setIsError(true);
+        setSuccesfully(false);
       },
       onFinish: (result) => {
         setSuccesfully(true);

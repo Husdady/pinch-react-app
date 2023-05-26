@@ -49,7 +49,10 @@ function MultipleDays({
       </div>
 
       {!isFetching && isSuccesfully && appointments.length > 0 && (
-        <AppointmentsScheduled appointments={appointments} />
+        <AppointmentsScheduled
+          appointments={appointments}
+          removeAppointmentById={removeAppointmentById}
+        />
       )}
 
       <CalendarModal

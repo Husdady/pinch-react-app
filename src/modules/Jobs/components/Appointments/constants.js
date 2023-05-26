@@ -1,4 +1,6 @@
 // Constants
+export const MAX_LOADING_ITEMS = 20
+
 export const fields = [
   { id: "0001", name: "Client", className: "field-client" },
   { id: "0002", name: "Property", className: "field-property" },

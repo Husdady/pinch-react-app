@@ -13,12 +13,7 @@ import "./styles.css";
 
 function ModalAppointmentCreated({ show, onHideModal }) {
   return (
-    <Modal
-      centered
-      className="appointment-created"
-      show={show}
-      onHide={onHideModal}
-    >
+    <Modal show={show} onHide={onHideModal} className="appointment-created">
       <img
         src={CALENDAR_CHECK_ICON}
         alt="calendar-check-icon"

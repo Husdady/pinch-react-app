@@ -46,6 +46,7 @@ export default function useJobs() {
         onError: (err) => {
           setError(err);
           setIsError(true);
+          setSuccesfully(false);
         },
         onFinish: () => {
           onHideModal();

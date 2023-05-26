@@ -63,6 +63,7 @@ export default function useAppointments({
         onError: (err) => {
           setError(err);
           setIsError(true);
+          setSuccesfully(false);
         },
         onFinish: (result) => {
           setSuccesfully(true);

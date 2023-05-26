@@ -96,6 +96,7 @@ export default function useConnectCalendar() {
       onError: (err) => {
         setError(err);
         setIsError(true);
+        setSuccesfully(false);
       },
       onFinish: (result) => {
         
