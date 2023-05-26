@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 // Hooks
 import useSelect from "./useSelect";
 
-// Constants
-import { CHEVRON_DOWN } from "./constants";
-
 // Utils
 import classnames from "../../utils/classnames";
+
+// Constants
+import { CHEVRON_DOWN } from "../../assets/data/constants";
 
 // Styles
 import "./styles.css";

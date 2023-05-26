@@ -84,7 +84,7 @@ export default function useProperties({
             // Parse properties
             const apiProperties = result.data.map((item) => ({
               value: item._id,
-              label: item.propertyAddress,
+              label: item.propertyName,
             }));
 
             setOptions(apiProperties); // Update options

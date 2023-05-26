@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 // Utils
 import isObject from "../../../../utils/isObject";
 import fetchConnectCalendar from "./fetchConnectCalendar";
-import postConnectCalendar from "./postDisconnectCalendar";
+import postConnectCalendar from "./postConnectCalendar";
 import postDisconnectCalendar from "./postDisconnectCalendar";
 
 /**
@@ -99,10 +99,9 @@ export default function useConnectCalendar() {
         setSuccesfully(false);
       },
       onFinish: (result) => {
-        
         if (mounted && isObject(result)) {
-          setConnected(true);
           setSuccesfully(true);
+          setConnected(result.status);
         }
       },
     });

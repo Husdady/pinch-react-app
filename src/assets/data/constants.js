@@ -6,6 +6,7 @@ export const RIGHT_ARROW = "https://i.imgur.com/oPf0hob.png";
 export const PINK_PLUS_ICON = "https://i.imgur.com/S4wMe1e.png";
 export const CHEVRON_LEFT = "https://imgur.com/fhFqk13.png";
 export const CHEVRON_RIGHT = "https://imgur.com/iA86LS3.png";
+export const CHEVRON_DOWN = "https://i.imgur.com/H3ekX0Z.png";
 export const CLOSE_CIRCLE_ICON = "https://imgur.com/EcjuQAO.png";
 export const SMALL_GOOGLE_CALENDAR_ICON = "https://imgur.com/ZS9CHXW.png";
 export const BIG_GOOGLE_CALENDAR_ICON = "https://i.imgur.com/DGlKqB4.png";
