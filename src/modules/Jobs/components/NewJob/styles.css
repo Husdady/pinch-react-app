@@ -1,15 +1,22 @@
 .new-job {
-  border-left: 1px solid #BDBDBD;
-  border-right: 1px solid #BDBDBD;
-  border-bottom: 1px solid #BDBDBD;
+  border-left: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
 }
 
 .new-job > .job-header {
   font-weight: 500;
-  color: #F5F5F5;
+  color: #f5f5f5;
   font-size: 12px;
   line-height: 14.63px;
-  background-color: #2F80ED;
+  background-color: #2f80ed;
+}
+
+.new-job > .job-header .arrow-handler-width {
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
 }
 
 .new-job > .job-wrapper {
@@ -26,13 +33,13 @@
   font-size: 12px;
   line-height: 15px;
   text-align: center;
-  border-top: 1px solid #BDBDBD;
-  background-color: #F5F5F5;
+  border-top: 1px solid #bdbdbd;
+  background-color: #f5f5f5;
 }
 
 .new-job > .job-wrapper .job-footer #generate-job {
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
-  color: #FFFFFF;
-  background-color: #DC6BBC;;
+  color: #ffffff;
+  background-color: #dc6bbc;
 }

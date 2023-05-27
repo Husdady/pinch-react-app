@@ -61,11 +61,11 @@ function ModalCreateJob({
 }
 
 ModalCreateJob.propTypes = {
+  customerName: PropTypes.string,
   show: PropTypes.bool.isRequired,
   createJob: PropTypes.func.isRequired,
   isCreatingJob: PropTypes.bool.isRequired,
   serviceType: PropTypes.string.isRequired,
-  customerName: PropTypes.string.isRequired,
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
   onHideModal: PropTypes.func.isRequired,
   clearAppointments: PropTypes.func.isRequired,

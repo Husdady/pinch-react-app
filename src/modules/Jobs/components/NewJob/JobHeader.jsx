@@ -17,6 +17,7 @@ function JobHeader({ active, onTriggerWidth }) {
         onClick={onTriggerWidth}
         src={active ? RIGHT_ARROW_JOBS_FORM_ICON : LEFT_ARROW_JOBS_FORM_ICON}
         alt="arrow-trigger"
+        className="arrow-handler-width bg-white"
         role="button"
       />
     </div>

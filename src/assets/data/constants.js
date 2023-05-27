@@ -1,78 +1,78 @@
 // Constants
 export const ACTIVE_JOB_PHOTOS_ICON =
-  "https://static.wixstatic.com/media/ddd33e_9bc455551789414da21b84a961be55f6~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_91e828bf0ea7467a8e5710e6493f6118.svg";
 
 export const ACTIVE_CHECKLIST_ICON =
-  "https://static.wixstatic.com/media/ddd33e_a001fc0a5bb94a98946a03634b3e8aec~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_3e2626aa5c4d480ea1c7706ff08fa24d.svg";
 
 export const ACTIVE_SMALL_PHONE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_d10ed410cd70427fa06e96c207f7968a~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_5a4636ba7b634fdc993649e926e79237.svg";
 
 export const ACTIVE_PHONE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_2bbd37088a3b4be2bec9c4abff3b94db~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_3834beaaa33d4659b1da582e005bd558.svg";
 
 export const CALENDAR_ICON =
-  "https://static.wixstatic.com/media/ddd33e_326cddb8187643eabce1be8c0d2df11d~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_f19d1baf8507441f80ff2bafbcef603b.svg";
 
 export const APP_LOGO =
-  "https://static.wixstatic.com/media/ddd33e_392207fbcfd2484aace905a857978578~mv2.png";
+  "https://static.wixstatic.com/shapes/5050fb_6899735b3c714e94a22b4a03e3f5d96d.svg";
 
 export const CHECK_CALENDAR_ICON =
-  "https://static.wixstatic.com/media/ddd33e_4adec33d8ce64e3785bd89379ebe9d01~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_5eab930705414fc1b72b9faca6f66b7e.svg";
 
 export const ACTIVE_SMS_ICON =
-  "https://static.wixstatic.com/media/ddd33e_64bb416ba44c46c2934c88407525b327~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_d61277fc33604440b5527e69556b753d.svg";
 
 export const CHEVRON_DOWN =
-  "https://static.wixstatic.com/media/ddd33e_17578481a6d041918cd9326a19dea106~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_322ba836e01947d79832be49fad7f7f8.svg";
 
 export const CHEVRON_LEFT =
-  "https://static.wixstatic.com/media/ddd33e_e3a30aee7e1a47508fa9fb2e00513550~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_52d3005da7aa46e2bde1fa128bf9d9a1.svg";
 
 export const INACTIVE_CHECKLIST_ICON =
-  "https://static.wixstatic.com/media/ddd33e_f70ecacdf003477190ec058fb380840d~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_dd6480547cc943a4a670b7323192e2dd.svg";
 
 export const CHEVRON_RIGHT =
-  "https://static.wixstatic.com/media/ddd33e_d2e00f4f8f0e4562b4aabb2e9983549f~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_a946ff85689c427faf9cb0ff674c2377.svg";
 
 export const TIMES_CIRCLE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_f602932d89a7447195564813cf2c97b8~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_9b7d264b4147423196f329f40c0e1d3d.svg";
 
 export const GOOGLE_CALENDAR_ICON =
-  "https://static.wixstatic.com/media/ddd33e_3377044e7ca741ffac5b0fd93bf6e5a4~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_609f7e7eeb8147a48eaf110a54cf202f.svg";
 
 export const INACTIVE_JOB_PHOTOS =
-  "https://static.wixstatic.com/media/ddd33e_7b7c1eecf78b41b0b74fa1bd4a95c55a~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_423ef20b29ca41bfacd56b61fac063f6.svg";
 
 export const LEFT_ARROW_JOBS_FORM_ICON =
-  "https://static.wixstatic.com/media/ddd33e_c19e1a25b3344318b6b322b873214fc5~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_37827a656d744e019e756131d4c63f73.svg";
 
 export const INACTIVE_SMS_ICON =
-  "https://static.wixstatic.com/media/ddd33e_560e3fa9321247f59c3479f68bcb1e53~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_d3258b7e33924b45aacb98f9c3ef710d.svg";
 
 export const INACTIVE_PHONE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_a2ffd495f2074d14ac85067e9b0e4efe~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_61d95259c2224d2896e8e8272cd1fea5.svg";
 
 export const SMALL_GOOGLE_CALENDAR_ICON =
-  "https://static.wixstatic.com/media/ddd33e_0b0c3de04e4c4ccba3927a6c83afcbb4~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_609f7e7eeb8147a48eaf110a54cf202f.svg";
 
 export const INFO_CIRCLE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_73c39f9a038c4f35b80a7d82bb24fdfc~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_097d12d6fd064fe39d7d54614b47bec7.svg";
 
 export const PINK_PLUS_ICON =
-  "https://static.wixstatic.com/media/ddd33e_5beaabd9f9c146e3bf63156542a19f90~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_2ee66bc5cdd540eeb55da16eda1c9ef2.svg";
 
 export const SMALL_PHONE_ICON =
-  "https://static.wixstatic.com/media/ddd33e_545af790c1ac4202af426ae5a5eb8b1d~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_60ec3ffb62f74845aab0fbcc2ad128d9.svg";
 
 export const TIMES_ICON =
-  "https://static.wixstatic.com/media/ddd33e_1b2d2491413a4eca8be9cabc58d064b1~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_8aa0c786ec1b4d41a64883bd86af68ee.svg";
 
 export const RIGHT_ARROW_JOBS_FORM_ICON =
-  "https://static.wixstatic.com/media/ddd33e_c7a01ab7ee14490fa497a9584dddeb58~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_b1bef3f98de749a9b445fc27ec880aea.svg";
 
 export const USER_ICON =
-  "https://static.wixstatic.com/media/ddd33e_0ccc75b74c22415da792e07e5510609d~mv2.png";
+  "https://static.wixstatic.com/shapes/ddd33e_86879727cd2d46cbbd855be1f3473b22.svg";
 
 export const TOKEN =
   "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiJzZXNzaW9uSWQtNzk4ZGUxYTItMWI4NC00MzI5LTllODgtOGViYzBhMDc1YzJlIiwiaWF0IjoxNjg0OTcwMjk5LCJleHAiOjE3MDIyNTAyOTl9.SgCeEIW_4OIsiiFPfrKqaM5Nh-8dmM-7uDIV47S9zT9xGhaB_LPhicgT9ZwHrEVwFyGkYsRjzl_guQEP6jAxQKC6ae032sC3wnCO17omIwabAp8pjsjTmInxDPwlGzWA_owV_IlPgLjxYKMwxARnINUIG4oXHgqejs54jze2avgWP0MbtdqZ_72fyR2A-d-CGarRV3Q8N2YaNnSYFdgNU6JxI4puPBb9KpbMs7xMZUdnESDehXP0RvqtSCcJrZ5bgOjbLzbRFAXPPRntgut_VMOqy3l77IOP1DSb9tn8eApUdT_bS2dTUgeRJLulHzCaPyUcTPT_mOMAUz8WadkMdQ";

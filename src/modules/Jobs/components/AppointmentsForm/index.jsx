@@ -3,13 +3,22 @@ import { memo } from "react";
 import PropTypes from "prop-types";
 
 // Components
-import Appointments from "../Appointments";
-import SelectedAppointment from "../SelectedAppointment";
+import Appointments from "./Appointments";
+import SelectedAppointment from "./SelectedAppointment";
 
-function AppointmentsForm({ reloadAppointments, setReloadAppointments }) {
+function AppointmentsForm({
+  clients,
+  clientId,
+  onChangeClient,
+  reloadAppointments,
+  setReloadAppointments,
+}) {
   return (
     <>
       <Appointments
+        clients={clients}
+        clientId={clientId}
+        onChangeClient={onChangeClient}
         reloadAppointments={reloadAppointments}
         setReloadAppointments={setReloadAppointments}
       />
@@ -20,10 +29,17 @@ function AppointmentsForm({ reloadAppointments, setReloadAppointments }) {
 }
 
 AppointmentsForm.propTypes = {
+  clientId: PropTypes.string.isRequired,
   reloadAppointments: PropTypes.bool.isRequired,
+  clients: PropTypes.arrayOf(PropTypes.object).isRequired,
   setReloadAppointments: PropTypes.func.isRequired,
+  onChangeClient: PropTypes.func.isRequired,
 };
 
 export default memo(AppointmentsForm, (prevProps, nextProps) => {
-  return prevProps.reloadAppointments === nextProps.reloadAppointments;
+  return (
+    prevProps.clients === nextProps.clients &&
+    prevProps.clientId === nextProps.clientId &&
+    prevProps.reloadAppointments === nextProps.reloadAppointments
+  );
 });

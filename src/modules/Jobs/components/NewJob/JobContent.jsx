@@ -3,10 +3,10 @@ import { memo } from "react";
 import PropTypes from "prop-types";
 
 // Components
-import Clients from "../Clients";
-import Booking from "../Booking";
-import Services from "../Services";
-import Properties from "../Properties";
+import Clients from "./Clients";
+import Booking from "./Booking";
+import Services from "./Services";
+import Properties from "./Properties";
 
 function JobContent({
   watch,
@@ -14,6 +14,7 @@ function JobContent({
   updateDate,
   onToggleDay,
   appointment,
+  clientsData,
   handleOnChange,
   validateDay,
   setAppointments,
@@ -22,14 +23,13 @@ function JobContent({
   removeAppointmentById,
   onChangeTime,
   onChangeMonth,
-  onChangeClient,
   onChangeBooking,
   onChangeService,
   onChangeProperty,
 }) {
   return (
     <div className="job-content px-4 py-2">
-      <Clients clientId={watch("clientId")} onChangeClient={onChangeClient} />
+      <Clients clientId={watch("clientId")} clientsData={clientsData} />
 
       <Properties
         clientId={watch("clientId")}
@@ -83,7 +83,6 @@ JobContent.propTypes = {
   setAppointments: PropTypes.func.isRequired,
   removeAppointmentById: PropTypes.func.isRequired,
   onChangeMonth: PropTypes.func.isRequired,
-  onChangeClient: PropTypes.func.isRequired,
   onChangeBooking: PropTypes.func.isRequired,
   onChangeProperty: PropTypes.func.isRequired,
 };

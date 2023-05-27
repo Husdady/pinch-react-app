@@ -59,16 +59,17 @@ export default class ApiProfile {
   }
 
   /**
-   * 'POST' Request for update resource to the API
+   * 'PUT' Request for update resource to the API
    * @param {object} params Fetch params
    * @returns {Promise<Response>} // API Response
    */
   async put(params) {
-    const { url, headers, ...paramsObject } = params; // Get url and headers from params
+    const { url, body, headers, ...paramsObject } = params; // Get url and headers from params
 
     // Fetch to the API for make a response
     const data = await fetch(this.apiUrl + url || "", {
       method: "PUT",
+      body: isObject(body) ? JSON.stringify(body) : JSON.stringify({}),
       headers: {
         ...headers,
         ...this.headerApiKey,

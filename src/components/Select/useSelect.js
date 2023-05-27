@@ -13,6 +13,7 @@ export default function useSelect({
   onChange,
   arrayDeps,
   selectedValue,
+  noSelectValues,
   noSelectionLabel,
 }) {
   const [value, setValue] = useState(selectedValue);
@@ -22,7 +23,10 @@ export default function useSelect({
   const hideOptions = useCallback(() => setVisibleOptions(false), []);
 
   // Callback for show/hide options
-  const triggerOptions = useCallback(() =>  setVisibleOptions((state) => !state), []);
+  const triggerOptions = useCallback(
+    () => setVisibleOptions((state) => !state),
+    []
+  );
 
   // Callback 'change' when pick different value
   const handleOnChange = useCallback(
@@ -30,7 +34,13 @@ export default function useSelect({
       setVisibleOptions(false); // Hide options
       if (!("value" in option)) return; // Value not exists in option
       if (value === option.value) return; // Same value selected
+
       if (typeof onChange === "function") onChange(option); // Execute callback
+
+      // Value not selectable
+      const valueNoSelectable = noSelectValues.includes(option.value);
+      if (valueNoSelectable) return; // Stop function
+
       setValue(option.value); // Update current value
     },
     [value, arrayDeps]
@@ -63,13 +73,13 @@ export default function useSelect({
 
     // Update selected value if component is mounted
     if (mounted && value !== selectedValue) {
-      setValue(selectedValue) // Update value
+      setValue(selectedValue); // Update value
     }
 
     return () => {
       mounted = false;
-    }
-  }, [selectedValue])
+    };
+  }, [selectedValue]);
 
   return {
     ref: ref,

@@ -8,9 +8,6 @@ import JobContent from "./JobContent";
 import JobFooter from "./JobFooter";
 import ModalCreateJob from "../ModalCreateJob";
 
-// Hooks
-import useNewJob from "./useNewJob";
-
 // Utils
 import classnames from "../../../../utils/classnames";
 
@@ -22,6 +19,8 @@ function NewJob({
   isCreatingJob,
   reloadSchedule,
   setReloadSchedule,
+  newJobForm,
+  clientsData
 }) {
   const {
     ref,
@@ -40,13 +39,12 @@ function NewJob({
     onHideModal,
     onChangeTime,
     onChangeMonth,
-    onChangeClient,
     onChangeService,
     onChangeBooking,
     onChangeProperty,
     clearAppointments,
     isDisabledSubmitButton,
-  } = useNewJob();
+  } = newJobForm;
 
   return (
     <>
@@ -73,6 +71,7 @@ function NewJob({
             validateDay={validateDay}
             onToggleDay={onToggleDay}
             handleOnChange={handleOnChange}
+            clientsData={clientsData}
             updateDate={updateDate}
             appointment={appointment}
             setAppointments={setAppointments}
@@ -81,7 +80,6 @@ function NewJob({
             removeAppointmentById={removeAppointmentById}
             onChangeTime={onChangeTime}
             onChangeMonth={onChangeMonth}
-            onChangeClient={onChangeClient}
             onChangeService={onChangeService}
             onChangeBooking={onChangeBooking}
             onChangeProperty={onChangeProperty}
@@ -108,8 +106,15 @@ function NewJob({
 NewJob.propTypes = {
   createJob: PropTypes.func.isRequired,
   isCreatingJob: PropTypes.bool.isRequired,
+  reloadSchedule: PropTypes.bool.isRequired,
+  newJobForm: PropTypes.object.isRequired,
+  setReloadSchedule: PropTypes.func.isRequired,
 };
 
 export default memo(NewJob, (prevProps, nextProps) => {
-  return prevProps.isCreatingJob === nextProps.isCreatingJob;
+  return (
+    prevProps.newJobForm === nextProps.newJobForm &&
+    prevProps.clientsData === nextProps.clientsData &&
+    prevProps.isCreatingJob === nextProps.isCreatingJob
+  );
 });

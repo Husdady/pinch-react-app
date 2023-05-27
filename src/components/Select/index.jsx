@@ -23,6 +23,7 @@ function Select({
   isLoading,
   arrayDeps,
   selectedValue,
+  noSelectValues = [],
   noSelectionLabel = "Select",
 }) {
   const {
@@ -38,6 +39,7 @@ function Select({
     onChange: onChange,
     arrayDeps: arrayDeps,
     selectedValue: selectedValue,
+    noSelectValues: noSelectValues,
     noSelectionLabel: noSelectionLabel,
   });
 
@@ -117,6 +119,7 @@ Select.propTypes = {
   className: PropTypes.string,
   selectedValue: PropTypes.string,
   noSelectionLabel: PropTypes.string,
+  noSelectValues: PropTypes.arrayOf(PropTypes.string),
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

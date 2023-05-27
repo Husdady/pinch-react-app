@@ -5,6 +5,8 @@ import ModalAppointmentCreated from "../ModalAppointmentCreated";
 
 // Hooks
 import useJobs from "./useJobs";
+import useNewJob from "./useNewJob";
+import useClients from "../NewJob/Clients/useClients";
 
 // Styles
 import "./styles.css";
@@ -21,6 +23,13 @@ export default function JobsContainer() {
     hideAppointmentCreatedModal,
   } = useJobs();
 
+  const newJobForm = useNewJob({
+    reloadSchedule: reloadSchedule,
+    setReloadSchedule: setReloadSchedule,
+  });
+
+  const clientsData = useClients({ onChangeClient: newJobForm.onChangeClient });
+
   return (
     <section className="jobs-container d-flex flex-wrap">
       <NewJob
@@ -28,9 +37,14 @@ export default function JobsContainer() {
         isCreatingJob={isFetching}
         reloadSchedule={reloadSchedule}
         setReloadSchedule={setReloadSchedule}
+        newJobForm={newJobForm}
+        clientsData={clientsData}
       />
 
       <AppointmentsForm
+        clients={clientsData.clients}
+        clientId={newJobForm.watch("clientId")}
+        onChangeClient={newJobForm.onChangeClient}
         reloadAppointments={reloadAppointments}
         setReloadAppointments={setReloadAppointments}
       />

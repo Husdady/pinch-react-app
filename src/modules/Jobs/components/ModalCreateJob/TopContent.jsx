@@ -2,7 +2,7 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 
-function TopContent({ serviceType, customerName }) {
+function TopContent({ serviceType, customerName = 'Client Name' }) {
   return (
     <div className="pt-2 top-content text-center">
       <b className="d-block mb-4">CREATE JOB</b>
@@ -17,8 +17,8 @@ function TopContent({ serviceType, customerName }) {
 }
 
 TopContent.propTypes = {
+  customerName: PropTypes.string,
   serviceType: PropTypes.string.isRequired,
-  customerName: PropTypes.string.isRequired,
 };
 
 export default memo(TopContent, (prevProps, nextProps) => {

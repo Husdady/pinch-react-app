@@ -7,9 +7,8 @@ import { parseAppointments } from "./utils";
 import postAppointments from "./postAppointments";
 
 /**
- * Hook that get clients from the API
- * @param {onChangeClient} params Params
- * @returns {object} Params
+ * Hook for implements the logic in the JobsContainer component
+ * @returns {object} Data
  */
 export default function useJobs() {
   const [isFetching, setFetching] = useState(false);
