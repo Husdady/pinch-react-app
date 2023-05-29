@@ -42,7 +42,7 @@ export default function useCreateJob({
     });
 
     handleSubmit(callback)();
-  }, []);
+  }, [appointments]);
 
   return {
     watch: watch,

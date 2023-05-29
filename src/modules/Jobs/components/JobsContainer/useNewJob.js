@@ -30,6 +30,7 @@ import {
   DEFAULT_FIRST_HOUR,
   DEFAULT_TOTAL_MONTHS,
 } from "../NewJob/constants";
+import checkIfAreEqualArray from "../../../../utils/checkIfAreEqualArray";
 
 /**
  * Hook that implemenets the logic of the NewJob component
@@ -186,6 +187,39 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
     return jobTime;
   }, []);
 
+  // Pick current hour in hour range
+  const pickCurrentHour = useCallback(
+    ({ jobTime, jobDate, dateTime, timeOptions }) => {
+      // console.log({ jobTime, jobDate, dateTime });
+      if (!Array.isArray(timeOptions)) return;
+      if (typeof jobTime !== "string") return;
+      if (typeof jobDate !== "string") return;
+      if (typeof dateTime !== "string") return;
+
+      // Get time option
+      const timeOption = timeOptions.find((item) =>
+        validateHourRange(item.label)
+      );
+
+      // Time option found
+      if (typeof timeOption !== "undefined") {
+        const label = timeOption.label;
+        const splitHours = label?.split(" - ");
+
+        jobTime = Array.isArray(splitHours)
+          ? splitHours[0]
+          : DEFAULT_FIRST_HOUR;
+
+        dateTime = `${jobDate}\n${jobTime}`;
+
+        setValue("jobTime", jobTime); // Update field 'timeId'
+        setValue("timeId", timeOption.value); // Update field 'timeId'
+        setValue("dateTime", dateTime); // Update field 'dateTime'
+      }
+    },
+    []
+  );
+
   // Callback 'change' for update Client
   const onChangeClient = useCallback(
     ({ clientId, customerName }) => {
@@ -239,35 +273,28 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
       const day = watch("day"); // Get day
       const month = watch("month"); // Get month
       const appointments = watch("appointments"); // Get appointments
+      const monthIndex = getMonthIndex(month); // Get month index
 
       // Define job date
-      const jobDate = getMonthIndex(month) + "/" + addZeroToNumber(day);
+      const jobDate = monthIndex + "/" + addZeroToNumber(day);
       setValue("jobDate", jobDate); // Update job date
 
       // Define time options
-      const timeOptions = createTimeOptions(jobDurationTime);
+      const timeOptions = createTimeOptions({
+        day: day,
+        time: jobDurationTime,
+        month: Number(monthIndex),
+      });
+
       setValue("timeOptions", timeOptions); // Update field 'timeOptions'
 
-      // Get time option
-      const timeOption = timeOptions.find((item) =>
-        validateHourRange(item.label)
-      );
-
-      // Time option found
-      if (typeof timeOption !== "undefined") {
-        const label = timeOption.label;
-        const splitHours = label?.split(" - ");
-
-        jobTime = Array.isArray(splitHours)
-          ? splitHours[0]
-          : DEFAULT_FIRST_HOUR;
-
-        dateTime = `${jobDate}\n${jobTime}`;
-
-        setValue("jobTime", jobTime); // Update field 'timeId'
-        setValue("timeId", timeOption.value); // Update field 'timeId'
-        setValue("dateTime", dateTime); // Update field 'dateTime'
-      }
+      // Pick current hour
+      pickCurrentHour({
+        jobTime: jobTime,
+        jobDate: jobDate,
+        dateTime: dateTime,
+        timeOptions: timeOptions,
+      });
 
       // Define property structure
       const property = {
@@ -306,11 +333,18 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
       setValue("jobDurationTime", jobDurationTime); // Update field 'jobDurationTime'
       setValue("jobCost", jobCost); // Update field 'jobCost'
 
-      const booking = watch("booking"); // Get booking
-      const appointments = watch("appointments"); // Get appointments
+      const { day, month, booking, appointments } = watch(); // Get form data
+
+      // Get month index
+      const monthIndex = getMonthIndex(month);
 
       // Define time options
-      const timeOptions = createTimeOptions(jobDurationTime);
+      const timeOptions = createTimeOptions({
+        day: day,
+        time: jobDurationTime,
+        month: Number(monthIndex),
+      });
+
       setValue("timeOptions", timeOptions); // Update field 'timeOptions'
 
       // Get time option
@@ -350,7 +384,7 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
         }))
       );
     },
-    [watch("booking"), watch("appointments")]
+    [watch()]
   );
 
   // Callback 'click' for toggle days
@@ -378,9 +412,10 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
   const onChangeMonth = useCallback(
     (option) => {
       if (!("value" in option)) return; // 'Value' field not exists in option
+
       const month = option.value; // Get month
-      const day = watch("day"); // Get day in number
-      const appointments = watch("appointments"); // Get appointments
+      const { day, jobTime, timeOptions, appointments, jobDurationTime } =
+        watch(); // Get form data
 
       // Day is greater than max day month
       if (day >= getMaxDayOfMonth(month)) {
@@ -392,10 +427,36 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
         setValue("day", getCurrentDay());
       }
 
-      setValue("month", month); // Update field
+      setValue("month", month); // Update field 'month'
+
+      const monthIndex = getMonthIndex(month); // Get month index
+
+      // Define time options
+      const newTimeOptions = createTimeOptions({
+        day: day,
+        time: jobDurationTime,
+        month: Number(monthIndex),
+      });
+
+      console.log(JSON.stringify(timeOptions, null, 2));
+
+      console.log(JSON.stringify(newTimeOptions, null, 2));
+
+      // Update time options if exists options
+      if (JSON.stringify(timeOptions) !== JSON.stringify(newTimeOptions)) {
+        setValue("timeOptions", newTimeOptions); // Update field 'timeOptions'
+      }
 
       // Update dates
       const { jobDate, dateTime } = updateDate({ day: day, month: month });
+
+      // Pick current hour
+      pickCurrentHour({
+        jobTime: jobTime,
+        jobDate: jobDate,
+        dateTime: dateTime,
+        timeOptions: timeOptions,
+      });
 
       // Update field 'appointments'
       setValue(
@@ -636,9 +697,9 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
   // Callback 'change' for update the day of One Time
   const validateDay = useCallback(
     (e) => {
-      const month = watch("month"); // Get month
-      const appointments = watch("appointments"); // Get appointments
       const day = Number(e.target.value); // Get day in number
+      const { month, jobTime, timeOptions, appointments, jobDurationTime } =
+        watch(); // Get form data
 
       // Validate current day
       if (month === getCurrentMonth() && day < getCurrentDay()) {
@@ -653,8 +714,31 @@ export default function useNewJob({ reloadSchedule, setReloadSchedule }) {
       // Update day
       setValue("day", day);
 
+      const monthIndex = getMonthIndex(month); // Get month index
+
+      // Define time options
+      const newTimeOptions = createTimeOptions({
+        day: day,
+        time: jobDurationTime,
+        month: Number(monthIndex),
+      });
+
+      // Update time options if exists options
+      if (JSON.stringify(timeOptions) !== JSON.stringify(newTimeOptions)) {
+        // console.log("[CHANGED_TIME_OPTIONS]");
+        setValue("timeOptions", newTimeOptions); // Update field 'timeOptions'
+      }
+
       // Update dates
       const { jobDate, dateTime } = updateDate({ day: day, month: month });
+
+      // Pick current hour
+      pickCurrentHour({
+        jobTime: jobTime,
+        jobDate: jobDate,
+        dateTime: dateTime,
+        timeOptions: timeOptions,
+      });
 
       // Update field 'appointments'
       setValue(

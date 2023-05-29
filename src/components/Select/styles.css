@@ -24,7 +24,7 @@
   border-color: #bdbdbd !important;
 }
 
-.select-options > ul > li {
+.select-options > .options-wrapper > .option-item {
   background-color: #f8f8f8;
   border-left: 1px solid #bdbdbd;
   border-right: 1px solid #bdbdbd;
@@ -36,12 +36,18 @@
   color: #333333;
 }
 
-.select-options > ul > li:last-of-type {
+.select-options > .options-wrapper > .option-item:last-of-type {
   border-bottom: none;
 }
 
-.select-options > ul > li.active,
-.select-options > ul > li:hover {
+.select-options > .options-wrapper > .option-item.disabled {
+  cursor: not-allowed;
+  background-color: #e0e0e0 !important;
+  opacity: 0.6;
+}
+
+.select-options > .options-wrapper > .option-item.active,
+.select-options > .options-wrapper > .option-item:hover {
   background-color: #e0e0e0;
 }
 

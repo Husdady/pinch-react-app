@@ -68,7 +68,7 @@ function MultipleDays({
         />
       )}
 
-      <CalendarModal
+      {!isFetching && <CalendarModal
         show={show}
         onHide={hideModal}
         timeId={timeId}
@@ -80,7 +80,7 @@ function MultipleDays({
         setAppointments={setAppointments}
         removeAppointmentById={removeAppointmentById}
         updateDate={updateDate}
-      />
+      />}
     </Fragment>
   );
 }

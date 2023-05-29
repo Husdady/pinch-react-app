@@ -76,14 +76,15 @@ function Select({
         Array.isArray(options) &&
         options.length > 0 && (
           <div className="bg-white select-options position-absolute w-100">
-            <ul className="list-unstyled mb-0 user-select-none">
+            <ul className="list-unstyled mb-0 user-select-none options-wrapper">
               {options.map((option, i) => (
                 <li
                   key={option.value || i}
                   role="button"
                   onClick={() => handleOnChange(option)}
                   className={classnames([
-                    "p-2",
+                    "p-2 option-item",
+                    option.disabled ? "disabled" : null,
                     value === option.value ? "active" : null,
                   ])}
                 >

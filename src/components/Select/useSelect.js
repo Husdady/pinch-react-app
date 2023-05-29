@@ -20,7 +20,12 @@ export default function useSelect({
   const [isVisibleOptions, setVisibleOptions] = useState(false);
 
   // Callback for hide options
-  const hideOptions = useCallback(() => setVisibleOptions(false), []);
+  const hideOptions = useCallback((e) => {
+    if (e && e.target.disabled) return; // Stop callback
+    if (e && e.target.classList.contains("disabled")) return; // Stop callback
+
+    setVisibleOptions(false); // Hide options
+  }, []);
 
   // Callback for show/hide options
   const triggerOptions = useCallback(
@@ -31,6 +36,7 @@ export default function useSelect({
   // Callback 'change' when pick different value
   const handleOnChange = useCallback(
     (option) => {
+      if (option.disabled) return; // Stop function if option its disabled
       setVisibleOptions(false); // Hide options
       if (!("value" in option)) return; // Value not exists in option
       if (value === option.value) return; // Same value selected
@@ -49,7 +55,6 @@ export default function useSelect({
   // Define label
   const label = useMemo(() => {
     if (typeof options === "undefined") return noSelectionLabel;
-    // if (typeof selectedValue === "undefined") return noSelectionLabel;
 
     // Find default option
     const item = options.find(

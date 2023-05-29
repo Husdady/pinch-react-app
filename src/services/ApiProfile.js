@@ -25,7 +25,7 @@ export default class ApiProfile {
    */
   async get(params) {
     const { url, headers, ...paramsObject } = params; // Get url from params
-    console.log("[GET_DATA]");
+
     // Define fetch params
     const fetchParams = {
       ...paramsObject,

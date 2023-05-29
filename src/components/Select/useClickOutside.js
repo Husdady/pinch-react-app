@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from "react";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -11,19 +11,25 @@ export default function useClickOutside({ isOpen, callback }) {
   const ref = useRef(null);
 
   // Callback that executes when is outside of the ref
-  const handleClickOutside = useCallback(e => {
-    if (isOpen && ref !== null && !ref.current.contains(e.target)) {
-      if (typeof callback === 'function') callback(); // Execute callback
-    }
-  }, [isOpen]);
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (isOpen && ref !== null && !ref.current.contains(e.target)) {
+        if (e && e.target.disabled) return; // Stop callback
+        if (e && e.target.classList.contains("disabled")) return; // Stop callback
+
+        if (typeof callback === "function") callback(); // Execute callback
+      }
+    },
+    [isOpen]
+  );
 
   useEffect(() => {
     // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
