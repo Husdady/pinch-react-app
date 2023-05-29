@@ -9,11 +9,11 @@ if (!fileExists) {
   exit(0);
 }
 const  indexContent = fs.readFileSync(fileTocheck);
-const styleName = string_between_strings(`<link href="`, `" rel="stylesheet">`, String(indexContent));
+const styleName = string_between_strings(`<link href="/static`, `" rel="stylesheet">`, String(indexContent));
 const jsName = string_between_strings(`<script defer="defer" src="`, `"></script>`, String(indexContent));
-console.log(styleName);
+console.log(`/statis${styleName}`);
 console.log(jsName);
-const stylesContent = fs.readFileSync(`./build${styleName}`);
+const stylesContent = fs.readFileSync(`./build/static${styleName}`);
 const jsContent = fs.readFileSync(`./build${jsName}`);
 
 const data = `<!doctype html>
@@ -26,6 +26,8 @@ const data = `<!doctype html>
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="/logo192.png" />
   <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <title>React App</title>
   <style>
   ${String(stylesContent)}
