@@ -35,9 +35,29 @@ export default function useJobs() {
           confirmationBy: formState.confirmationBy,
         });
 
+        console.log("[ITEMS]", appointments);
+
         // Make request for create new job
         await postAppointments({
-          appointments: parsedAppointments,
+          appointments: [
+            {
+              serviceType: "Deep Cleaning",
+              clientId: "abd4aa68-b44c-4e2b-b1b3-53765055556b",
+              jobTime: "9:00 AM",
+              customerName: "Geidy  lopez",
+              jobDurationTime: 30,
+              jobDate: "06/04",
+              paymentType: "cash",
+              dateTime: "06/04\n9:00 AM",
+              propertyId: "084a810e-6cdc-49f9-872b-cea5b94ff0a5",
+              confirmationBy: "sms",
+              status: "pending",
+              jobCost: 130,
+              propertyName: "casa lopez",
+              notifications: true,
+              confirmation: true,
+            },
+          ],
           onInit: () => {
             setFetching(true);
           },

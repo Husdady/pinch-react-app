@@ -24,17 +24,14 @@ export default function useProfile() {
 
   // Callback for get profiles
   const getProfiles = React.useCallback(async () => {
-    try {
-      const data = await apiProfile.get({ url: "/pinchCorsTest" });
+    console.log('[PROFILES]')
+    const data = await apiProfile.get({ url: "/pinchCorsTest" });
 
-      // Cors response not exists in data
-      if (!("corsResponse" in data)) return;
+    // Cors response not exists in data
+    if (!("corsResponse" in data)) return;
 
-      console.log("[Getting Profile.....]", data);
-      setProfile(data);
-    } catch (error) {
-      console.log("[Bad Getting Profile.....]", error);
-    }
+    console.log("[Getting Profile.....]", data);
+    setProfile(data);
   }, []);
 
   React.useEffect(() => {
