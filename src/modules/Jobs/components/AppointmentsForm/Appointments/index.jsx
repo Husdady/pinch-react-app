@@ -49,6 +49,7 @@ function Appointments({
       <Content
         isError={isError}
         isFetching={isFetching}
+        isSuccesfully={isSuccesfully}
         appointments={appointments}
         currentClientId={clientId}
         updateAppointmentStatus={updateAppointmentStatus}

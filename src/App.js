@@ -1,12 +1,14 @@
 import './styles.css';
 
 // Components
-import AppContent from './components/AppContent/index';
+import Profile from './components/Profile';
+// import AppContent from './components/AppContent/index';
 
 export default function App() {
   return (
     <div className="app">
-      <AppContent />
+      {/* <AppContent /> */}
+      <Profile />
     </div>
   );
 }

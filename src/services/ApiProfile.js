@@ -24,7 +24,10 @@ export default class ApiProfile {
     const data = await fetch(this.apiUrl + url || "", {
       ...paramsObject,
       method: "GET",
-      headers: this.headerApiKey,
+      headers: {
+        ...this.headerApiKey,
+        origin: "http://localhost:3000"
+      },
     });
 
     const dataToJson = await data.json(); // Convert data to json

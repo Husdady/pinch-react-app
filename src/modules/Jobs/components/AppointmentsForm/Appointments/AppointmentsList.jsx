@@ -12,13 +12,14 @@ import classnames from "../../../../../utils/classnames";
 function AppointmentsList({
   isError,
   isFetching,
+  isSuccesfully,
   appointments,
   currentClientId,
   updateAppointmentStatus,
 }) {
-  if (isError) return <p>Error to show appointments</p>;
+  if (!isFetching && isError) return <p>Error to show appointments</p>;
 
-  if (!isFetching && appointments.length === 0) {
+  if (!isFetching && isSuccesfully && appointments.length === 0) {
     return <span>Appointments not found</span>;
   }
 
@@ -51,6 +52,7 @@ function AppointmentsList({
 AppointmentsList.propTypes = {
   isError: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isSuccesfully: PropTypes.bool.isRequired,
   currentClientId: PropTypes.string.isRequired,
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateAppointmentStatus: PropTypes.func.isRequired,
@@ -60,6 +62,7 @@ export default memo(AppointmentsList, (prevProps, nextProps) => {
   return (
     prevProps.isError === nextProps.isError &&
     prevProps.isFetching === nextProps.isFetching &&
+    prevProps.isSuccesfully === nextProps.isSuccesfully &&
     prevProps.appointments === nextProps.appointments &&
     prevProps.currentClientId === nextProps.currentClientId
   );
