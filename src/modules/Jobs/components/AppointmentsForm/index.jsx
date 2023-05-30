@@ -6,7 +6,11 @@ import PropTypes from "prop-types";
 import Appointments from "./Appointments";
 import SelectedAppointment from "./SelectedAppointment";
 
+// Services
+import ApiProfile from "../../../../services/ApiProfile";
+
 function AppointmentsForm({
+  api,
   clients,
   clientId,
   onChangeClient,
@@ -16,6 +20,7 @@ function AppointmentsForm({
   return (
     <>
       <Appointments
+        api={api}
         clients={clients}
         clientId={clientId}
         onChangeClient={onChangeClient}
@@ -29,6 +34,7 @@ function AppointmentsForm({
 }
 
 AppointmentsForm.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   clientId: PropTypes.string.isRequired,
   reloadAppointments: PropTypes.bool.isRequired,
   clients: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -9,6 +9,9 @@ import AppointmentsScheduled from "./AppointmentsScheduled";
 // Hooks
 import useMultipleDays from "./useMultipleDays";
 
+// Services
+import ApiProfile from "../../../../../../services/ApiProfile";
+
 // Constants
 import { CALENDAR_ICON } from "../../../../../../assets/data/constants";
 
@@ -16,6 +19,7 @@ import { CALENDAR_ICON } from "../../../../../../assets/data/constants";
 import "./styles.css";
 
 function MultipleDays({
+  api,
   timeId,
   timeOptions,
   appointment,
@@ -37,6 +41,7 @@ function MultipleDays({
     isSuccesfully,
     validAppointments,
   } = useMultipleDays({
+    api: api,
     appointments: appointments,
     reloadSchedule: reloadSchedule,
     setReloadSchedule: setReloadSchedule,
@@ -90,6 +95,7 @@ function MultipleDays({
 }
 
 MultipleDays.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   timeId: PropTypes.string.isRequired,
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,

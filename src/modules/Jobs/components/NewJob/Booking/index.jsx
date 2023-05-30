@@ -8,6 +8,9 @@ import MultipleDays from "./MultipleDays";
 import RecurrentJobs from "./RecurrentJobs";
 import Select from "../../../../../components/Select";
 
+// Services
+import ApiProfile from "../../../../../services/ApiProfile";
+
 // Constants
 import { bookingOptions } from "./options";
 
@@ -15,6 +18,7 @@ import { bookingOptions } from "./options";
 import "./styles.css";
 
 function Booking({
+  api,
   day,
   days,
   month,
@@ -64,6 +68,7 @@ function Booking({
 
       {booking === "multiple-days" && (
         <MultipleDays
+          api={api}
           timeId={timeId}
           timeOptions={timeOptions}
           onChangeTime={onChangeTime}
@@ -95,6 +100,7 @@ function Booking({
 }
 
 Booking.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   repeat: PropTypes.string.isRequired,
   timeId: PropTypes.string.isRequired,
   forMonthly: PropTypes.string.isRequired,

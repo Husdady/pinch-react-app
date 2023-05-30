@@ -10,7 +10,7 @@ import postAppointments from "./postAppointments";
  * Hook for implements the logic in the JobsContainer component
  * @returns {object} Data
  */
-export default function useJobs() {
+export default function useJobs({ api }) {
   const [isFetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
@@ -37,6 +37,7 @@ export default function useJobs() {
 
         // Make request for create new job
         await postAppointments({
+          api: api,
           appointments: parsedAppointments,
           onInit: () => {
             setFetching(true);

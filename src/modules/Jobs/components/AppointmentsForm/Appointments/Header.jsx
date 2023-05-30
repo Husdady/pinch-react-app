@@ -11,6 +11,9 @@ import ModalDisconnectCalendar from "../../ModalDisconnectCalendar";
 // Hooks
 import useConnectCalendar from "./useConnectCalendar";
 
+// Services
+import ApiProfile from "../../../../../services/ApiProfile";
+
 // Utils
 import classnames from "../../../../../utils/classnames";
 
@@ -22,6 +25,7 @@ import {
 } from "../../../../../assets/data/constants";
 
 function AppointmentsHeader({
+  api,
   isFetching,
   isSuccesfully,
   filterActivated,
@@ -39,7 +43,7 @@ function AppointmentsHeader({
     hideDisconnectCalendarModal,
     showingConnectCalendarModal,
     showingDisconnectCalendarModal,
-  } = useConnectCalendar();
+  } = useConnectCalendar({ api: api });
 
   return (
     <section className="appointments-header d-flex">
@@ -109,6 +113,7 @@ function AppointmentsHeader({
 }
 
 AppointmentsHeader.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   isFetching: PropTypes.bool.isRequired,
   filterActivated: PropTypes.string.isRequired,
   filterAppointmentsByStatus: PropTypes.func.isRequired,

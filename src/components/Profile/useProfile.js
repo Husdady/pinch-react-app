@@ -9,8 +9,7 @@ import ApiProfile from "../../services/ApiProfile";
 import isObject from "../../utils/isObject";
 
 // Constants
-import { APPLICATION_ID, CALLER_ID } from "./constants";
-import { API_KEY, WIX_APP_URL } from "../../assets/data/api";
+import { API_KEY, WIX_APP_URL, CALLER_ID, APPLICATION_ID } from "../../assets/data/api";
 
 const apiProfile = new ApiProfile(API_KEY);
 

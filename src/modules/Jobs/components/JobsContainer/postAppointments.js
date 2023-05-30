@@ -1,17 +1,10 @@
-// Services
-import ApiProfile from "../../../../services/ApiProfile";
-
-// Constants
-import { API_KEY } from "../../../../assets/data/api";
-
-const apiProfile = new ApiProfile(API_KEY);
-
 /**
  * Post request fori add new appointments
  * @param {object} params Receive a 'memberId' and callbacks
  * @returns {object} Object
  */
 export default async function postAppointments({
+  api,
   onInit,
   onSuccesfully,
   onError,
@@ -21,7 +14,7 @@ export default async function postAppointments({
   try {
     if (typeof onInit === "function") onInit(); // Execute 'onInit' callback
 
-    const result = await apiProfile.post({
+    const result = await api.post({
       url: `/appointments`,
       body: { appointments: appointments },
     });

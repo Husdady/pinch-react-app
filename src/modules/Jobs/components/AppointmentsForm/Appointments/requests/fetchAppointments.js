@@ -1,25 +1,18 @@
-// Services
-import ApiProfile from "../../../../../../services/ApiProfile";
-
-// Constants
-import { API_KEY } from "../../../../../../assets/data/api";
-
-const apiProfile = new ApiProfile(API_KEY);
-
 /**
  * Fetch appointments from the API
  * @param {object} params Receive a 'memberId' and callbacks
  * @returns {object} Object
  */
 export default async function fetchAppointments({
+  api,
   onInit,
-  onSuccesfully,
   onError,
   onFinally,
+  onSuccesfully,
 }) {
   try {
     if (typeof onInit === "function") onInit(); // Execute 'onInit' callback
-    const result = await apiProfile.get({ url: "/appointments" });
+    const result = await api.get({ url: "/appointments" });
     if (typeof onSuccesfully === "function") onSuccesfully(result); // Execute 'onSuccesfully' callback
     return result;
   } catch (error) {

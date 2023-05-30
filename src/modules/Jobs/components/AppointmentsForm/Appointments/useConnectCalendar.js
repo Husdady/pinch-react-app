@@ -12,7 +12,7 @@ import postDisconnectCalendar from "./requests/postDisconnectCalendar";
  * Hook for connect with the Google Calendar
  * @returns {object} Data
  */
-export default function useConnectCalendar() {
+export default function useConnectCalendar({ api }) {
   const [connected, setConnected] = useState(false);
   const [isFetching, setFetching] = useState(false);
   const [connecting, setConnecting] = useState(false);
@@ -46,6 +46,7 @@ export default function useConnectCalendar() {
   // Callback for connect to Google Calendar
   const connectToGoogleCalendar = useCallback(async () => {
     await postConnectCalendar({
+      api: api,
       onInit: () => {
         setConnecting(true);
       },
@@ -66,6 +67,7 @@ export default function useConnectCalendar() {
   // Callback for disconnect from Google Calendar
   const disconnectToGoogleCalendar = useCallback(async () => {
     await postDisconnectCalendar({
+      api: api,
       onInit: () => {
         setDisonnecting(true);
       },
@@ -87,6 +89,7 @@ export default function useConnectCalendar() {
     let mounted = true; // Component mounted
 
     fetchConnectCalendar({
+      api: api,
       onInit: () => {
         setFetching(true);
       },

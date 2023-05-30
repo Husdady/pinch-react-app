@@ -9,10 +9,14 @@ import Content from "./Content";
 // Hooks
 import useAppointments from "./useAppointments";
 
+// Services
+import ApiProfile from "../../../../../services/ApiProfile";
+
 // Styles
 import "./styles.css";
 
 function Appointments({
+  api,
   clients,
   clientId,
   onChangeClient,
@@ -29,6 +33,7 @@ function Appointments({
     filterAppointmentsByStatus,
     updateAppointmentStatus,
   } = useAppointments({
+    api: api,
     clients: clients,
     clientId: clientId,
     onChangeClient: onChangeClient,
@@ -39,6 +44,7 @@ function Appointments({
   return (
     <section className="appointments">
       <Header
+        api={api}
         isFetching={isFetching}
         isSuccesfully={isSuccesfully}
         filterActivated={filterActivated}
@@ -47,6 +53,7 @@ function Appointments({
       />
 
       <Content
+        api={api}
         isError={isError}
         isFetching={isFetching}
         isSuccesfully={isSuccesfully}
@@ -59,6 +66,7 @@ function Appointments({
 }
 
 Appointments.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   clientId: PropTypes.string.isRequired,
   reloadAppointments: PropTypes.bool.isRequired,
   clients: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -1,27 +1,20 @@
-// Services
-import ApiProfile from "../../../../../../services/ApiProfile";
-
-// Constants
-import { API_KEY } from "../../../../../../assets/data/api";
-
-const apiProfile = new ApiProfile(API_KEY);
-
 /**
  * Post to '/calendar' for connect to the calendar
  * @param {object} params Receive callbacks
  * @returns {object} Object
  */
 export default async function postConnectCalendar({
+  api,
   onInit,
-  onSuccesfully,
   onError,
   onFinally,
+  onSuccesfully,
 }) {
   try {
     if (typeof onInit === "function") onInit(); // Execute 'onInit' callback
 
     // Post to '/calendar' for connect to the Google Calendar
-    const result = await apiProfile.post({
+    const result = await api.post({
       url: "/calendar",
       body: {
         status: true,

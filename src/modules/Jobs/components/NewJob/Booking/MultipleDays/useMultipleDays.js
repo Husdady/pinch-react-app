@@ -9,6 +9,7 @@ import fetchCalendar from "./fetchCalendar";
  * Hook for implements the logic of the MultipleDays component
  */
 export default function useMultipleDays({
+  api,
   appointments,
   reloadSchedule,
   setReloadSchedule,
@@ -39,6 +40,7 @@ export default function useMultipleDays({
 
     if (reloadSchedule) {
       fetchCalendar({
+        api: api,
         onInit: () => {
           setFetching(true);
         },
@@ -47,7 +49,6 @@ export default function useMultipleDays({
           setReloadSchedule(false);
         },
         onError: (err) => {
-          console.log('[ERROR_MULTIPLE_DAYS]', err)
           setError(err);
           setIsError(true);
           setSuccesfully(false);

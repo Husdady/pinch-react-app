@@ -8,6 +8,9 @@ import JobContent from "./JobContent";
 import JobFooter from "./JobFooter";
 import ModalCreateJob from "../ModalCreateJob";
 
+// Services
+import ApiProfile from "../../../../services/ApiProfile";
+
 // Utils
 import classnames from "../../../../utils/classnames";
 
@@ -15,12 +18,13 @@ import classnames from "../../../../utils/classnames";
 import "./styles.css";
 
 function NewJob({
+  api,
   createJob,
   isCreatingJob,
   reloadSchedule,
   setReloadSchedule,
   newJobForm,
-  clientsData
+  clientsData,
 }) {
   const {
     ref,
@@ -67,6 +71,7 @@ function NewJob({
           ])}
         >
           <JobContent
+            api={api}
             watch={watch}
             register={register}
             validateDay={validateDay}
@@ -106,6 +111,7 @@ function NewJob({
 }
 
 NewJob.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   createJob: PropTypes.func.isRequired,
   isCreatingJob: PropTypes.bool.isRequired,
   reloadSchedule: PropTypes.bool.isRequired,

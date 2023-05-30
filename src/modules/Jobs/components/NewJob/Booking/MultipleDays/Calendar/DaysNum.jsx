@@ -21,11 +21,13 @@ function CalendarDaysNum({ daysNum, schedule, activeDay, handleSelectDay }) {
         <li
           key={i}
           className="day-num-item"
-          role={day === null ? "listitem" : "button"}
-          onClick={() => handleSelectDay(day)}
+          // role={day === null || day.blocked ? "listitem" : "button"}
+          // onClick={() => handleSelectDay(day)}
         >
           {day !== null && (
             <b
+              role={day === null || day.blocked ? "listitem" : "button"}
+              onClick={() => handleSelectDay(day)}
               className={classnames([
                 day.blocked ? "blocked" : null,
                 isActive(day) ? "active" : null,

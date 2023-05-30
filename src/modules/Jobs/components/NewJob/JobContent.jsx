@@ -8,7 +8,11 @@ import Booking from "./Booking";
 import Services from "./Services";
 import Properties from "./Properties";
 
+// Services
+import ApiProfile from "../../../../services/ApiProfile";
+
 function JobContent({
+  api,
   watch,
   register,
   updateDate,
@@ -33,6 +37,7 @@ function JobContent({
       <Clients clientId={watch("clientId")} clientsData={clientsData} />
 
       <Properties
+        api={api}
         clientId={watch("clientId")}
         propertyId={watch("propertyId")}
         onChangeProperty={onChangeProperty}
@@ -46,6 +51,7 @@ function JobContent({
       />
 
       <Booking
+        api={api}
         day={watch("day")}
         days={watch("days")}
         month={watch("month")}
@@ -75,6 +81,7 @@ function JobContent({
 }
 
 JobContent.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   watch: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   updateDate: PropTypes.func.isRequired,

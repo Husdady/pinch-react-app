@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Hooks
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Utils
 import fetchClients from "./fetchClients";
@@ -11,7 +11,7 @@ import isObject from "../../../../../utils/isObject";
  * @param {onChangeClient} params Params
  * @returns {object} Params
  */
-export default function useClients({ onChangeClient }) {
+export default function useClients({ api, onChangeClient }) {
   const [clients, setClients] = useState([]);
   const [options, setOptions] = useState([]);
   const [isFetching, setFetching] = useState(false);
@@ -43,6 +43,7 @@ export default function useClients({ onChangeClient }) {
     let mounted = true; // Component mounted
 
     fetchClients({
+      api: api,
       onInit: () => {
         setFetching(true);
       },

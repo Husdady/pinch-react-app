@@ -15,6 +15,7 @@ import { statusOptions, filterAppointmentStatus } from "./constants";
  * @returns {object} Data
  */
 export default function useAppointments({
+  api,
   clients,
   clientId,
   onChangeClient,
@@ -109,6 +110,7 @@ export default function useAppointments({
         }
 
         putAppointmentsStatus({
+          api: api,
           status: status,
           appointmentId: appointmentId,
           onInit: () => {
@@ -150,6 +152,7 @@ export default function useAppointments({
 
     if (reloadAppointments) {
       fetchAppointments({
+        api: api,
         onInit: () => {
           setFetching(true);
         },

@@ -8,6 +8,9 @@ import Select from "../../../../../components/Select";
 // Hooks
 import useProperties from "./useProperties";
 
+// Services
+import ApiProfile from "../../../../../services/ApiProfile";
+
 function Properties(props) {
   const { options, isFetching, properties, handleOnChange, totalRooms } =
     useProperties(props);
@@ -29,6 +32,7 @@ function Properties(props) {
 }
 
 Properties.propTypes = {
+  api: PropTypes.instanceOf(ApiProfile).isRequired,
   clientId: PropTypes.string.isRequired,
   propertyId: PropTypes.string.isRequired,
   onChangeProperty: PropTypes.func.isRequired

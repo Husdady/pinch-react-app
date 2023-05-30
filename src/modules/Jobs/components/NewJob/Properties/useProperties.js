@@ -7,7 +7,13 @@ import fetchproperties from "./fetchProperties";
 import isObject from "../../../../../utils/isObject";
 import generateUniqueId from "../../../../../utils/generateUniqueId";
 
+/**
+ * Hook for get properties
+ * @param {object} params Receive data for get properties
+ * @returns {object} Data
+ */
 export default function useProperties({
+  api,
   clientId,
   propertyId,
   onChangeProperty,
@@ -65,6 +71,7 @@ export default function useProperties({
 
     if (clientId !== "") {
       fetchproperties({
+        api: api,
         clientId: clientId,
         onInit: () => {
           setFetching(true);
