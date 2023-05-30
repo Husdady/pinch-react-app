@@ -2,9 +2,31 @@
 import getCurrentDate from "../../../../utils/getCurrentDate";
 import generateUniqueId from "../../../../utils/generateUniqueId";
 import getHoursAndMinutes from "../../../../utils/getHoursAndMinutes";
+import addZeroToNumber from "../../../../utils/addZeroToNumber";
 
 export const TOTAL_MIN_DAY = 1440; // Define max minutes
 export const DIFF_MINUTES_INIT_HOUR = 30; // Define diff of minutes for the init hour
+
+/**
+ * Compare hours and minutes of the range time with the current hours and time
+ * @param {object} params Receive a 'current', 'initTime' and 'endTime object
+ * @returns {boolean} Boolean
+ */
+export function compareHoursAndMinutes({ current, endTime }) {
+  // Parse minutes
+  const parsedMinutes =
+    endTime.minutes === 0 ? "00" : addZeroToNumber(endTime.minutes);
+
+  // Define combined values for end time
+  const endTimeCombined = Number(String(endTime.hour) + parsedMinutes);
+
+  // Define combined values for current time
+  const currentTimeCombined = Number(
+    String(current.hour) + String(current.minutes)
+  );
+
+  return currentTimeCombined > endTimeCombined;
+}
 
 /**
  * Define a options for job time. Example: 00:30 AM - 01:00 AM
@@ -72,25 +94,23 @@ export function createTimeOptions({ time, day, month }) {
 
     mins += DIFF_MINUTES_INIT_HOUR; // Increase mins
 
-    const dateTime = getHoursAndMinutes(initHour);
-
-    // console.log({ DAY: day, CURRENT_DAY: currentDay });
+    const endTime = getHoursAndMinutes(end); // Get hours and minutes of end time
+    const initTime = getHoursAndMinutes(init); // Get hours and minutes of init time
 
     // Its Current day
     if (currentMonth === month && currentDay === day) {
-      // console.log({
-      //   'dateTime.HOUR': dateTime.hour,
-      //   'CURRENT_HOUR': currentHours,
-      //   'CURRENT_MINUTES': currentMinutes,
-      //   'dateTime.MINUTES': dateTime.minutes,
-      // });
-      // Define flag for validate if the current time (hours and minutes) are less than for time option
-      const isLessThanCurrentTime =
-        dateTime.hour <= currentHours && currentMinutes > dateTime.minutes;
-
       // Hours and minutes are less than current time
-      if (isLessThanCurrentTime) {
-        disabled = true;
+      if (initTime.hour <= currentHours) {
+        // Get flag for validate previous times
+        const isLessThanCurrentHoursAndMinutes = compareHoursAndMinutes({
+          endTime: endTime,
+          current: { hour: currentHours, minutes: currentMinutes },
+        });
+
+        // Check if range time is less than to current time
+        if (isLessThanCurrentHoursAndMinutes) {
+          disabled = true;
+        }
       }
     }
 

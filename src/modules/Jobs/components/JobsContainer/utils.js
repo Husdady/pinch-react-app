@@ -1,4 +1,5 @@
 // Constants
+import isObject from "../../../../utils/isObject";
 import { STATUS, PAYMENT_TYPE } from "../ModalCreateJob/constants";
 
 /**
@@ -28,5 +29,29 @@ export function parseAppointments({
     propertyName: appointment.propertyName,
     notifications: notifications,
     confirmation: confirmation,
+  }));
+}
+
+/**
+ * Compare two time options
+ * @param {Array} timeOptions Current time options
+ * @param {Array} newTimeOptions New time options
+ * @returns {boolean} Boolean
+ */
+export function compareTimeOptions(timeOptions, newTimeOptions) {
+  if (!Array.isArray(timeOptions)) return false; // Stop function
+  if (!Array.isArray(newTimeOptions)) return false; // Stop function
+
+  // Not equal time options
+  if (timeOptions.length !== newTimeOptions.length) return false;
+
+  return !(timeOptions.every((option, index) => {
+    const newOption = newTimeOptions[index];
+
+    if (isObject(option) && isObject(newOption)) {
+      return option.disabled === newOption.disabled;
+    }
+
+    return false;
   }));
 }

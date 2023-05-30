@@ -15,6 +15,7 @@ export default function useSelect({
   selectedValue,
   noSelectValues,
   noSelectionLabel,
+  activeAutoScrollbar,
 }) {
   const [value, setValue] = useState(selectedValue);
   const [isVisibleOptions, setVisibleOptions] = useState(false);
@@ -73,6 +74,23 @@ export default function useSelect({
     isOpen: isVisibleOptions,
   });
 
+  // Callback for scroll to active option
+  const scrollToSelectedValue = useCallback(() => {
+    if (ref === null || !isVisibleOptions || !activeAutoScrollbar) return; // Stop function
+
+    const selectContainer = ref.current; // Get container
+
+    // Get actived option
+    const activedOption = selectContainer.querySelector(
+      ".select-options > .options-wrapper > .option-item.active"
+    );
+
+    if (activedOption === null) return; // Stop function
+
+    // Scroll to actived option
+    activedOption.scrollIntoView();
+  }, [ref, value, isVisibleOptions]);
+
   useEffect(() => {
     let mounted = true; // Component mounted
 
@@ -85,6 +103,18 @@ export default function useSelect({
       mounted = false;
     };
   }, [selectedValue]);
+
+  useEffect(() => {
+    let mounted = true; // Component mounted
+
+    if (mounted) {
+      scrollToSelectedValue(); // Scroll to active option
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [ref, value, isVisibleOptions]);
 
   return {
     ref: ref,

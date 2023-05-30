@@ -25,6 +25,7 @@ function Select({
   selectedValue,
   noSelectValues = [],
   noSelectionLabel = "Select",
+  activeAutoScrollbar = false,
 }) {
   const {
     ref,
@@ -41,6 +42,7 @@ function Select({
     selectedValue: selectedValue,
     noSelectValues: noSelectValues,
     noSelectionLabel: noSelectionLabel,
+    activeAutoScrollbar: activeAutoScrollbar,
   });
 
   return (
@@ -84,8 +86,10 @@ function Select({
                   onClick={() => handleOnChange(option)}
                   className={classnames([
                     "p-2 option-item",
-                    option.disabled ? "disabled" : null,
                     value === option.value ? "active" : null,
+                    value !== option.value && option.disabled
+                      ? "disabled"
+                      : null,
                   ])}
                 >
                   {option.label}

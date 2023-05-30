@@ -15,6 +15,7 @@ function Time({ style, options, selectedTime, onChangeTime }) {
       onChange={onChangeTime}
       selectedValue={selectedTime}
       className="schedule"
+      activeAutoScrollbar
     />
   );
 }
