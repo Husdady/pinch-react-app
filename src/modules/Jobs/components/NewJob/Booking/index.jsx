@@ -27,6 +27,7 @@ function Booking({
   register,
   appointment,
   updateDate,
+  updateDayAndMonth,
   setAppointments,
   reloadSchedule,
   setReloadSchedule,
@@ -67,6 +68,7 @@ function Booking({
           timeOptions={timeOptions}
           onChangeTime={onChangeTime}
           updateDate={updateDate}
+          updateDayAndMonth={updateDayAndMonth}
           appointment={appointment}
           appointments={appointments}
           setAppointments={setAppointments}
@@ -105,6 +107,7 @@ Booking.propTypes = {
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   day: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   updateDate: PropTypes.func.isRequired,
+  updateDayAndMonth: PropTypes.func.isRequired,
   setAppointments: PropTypes.func.isRequired,
   removeAppointmentById: PropTypes.func.isRequired,
   onToggleDay: PropTypes.func.isRequired,

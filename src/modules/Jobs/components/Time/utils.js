@@ -13,16 +13,20 @@ export const DIFF_MINUTES_INIT_HOUR = 30; // Define diff of minutes for the init
  * @returns {boolean} Boolean
  */
 export function compareHoursAndMinutes({ current, endTime }) {
-  // Parse minutes
-  const parsedMinutes =
+  // Parse end minutes
+  const parsedEndMinutes =
     endTime.minutes === 0 ? "00" : addZeroToNumber(endTime.minutes);
 
+  // Parse current minutes
+  const parsedCurrentMinutes =
+    current.minutes === 0 ? "00" : addZeroToNumber(current.minutes);
+
   // Define combined values for end time
-  const endTimeCombined = Number(String(endTime.hour) + parsedMinutes);
+  const endTimeCombined = Number(String(endTime.hour) + parsedEndMinutes);
 
   // Define combined values for current time
   const currentTimeCombined = Number(
-    String(current.hour) + String(current.minutes)
+    String(current.hour) + parsedCurrentMinutes
   );
 
   return currentTimeCombined > endTimeCombined;

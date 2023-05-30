@@ -12,6 +12,7 @@ function JobContent({
   watch,
   register,
   updateDate,
+  updateDayAndMonth,
   onToggleDay,
   appointment,
   clientsData,
@@ -56,6 +57,7 @@ function JobContent({
         appointments={watch("appointments")}
         register={register}
         updateDate={updateDate}
+        updateDayAndMonth={updateDayAndMonth}
         appointment={appointment}
         validateDay={validateDay}
         setAppointments={setAppointments}
@@ -76,6 +78,7 @@ JobContent.propTypes = {
   watch: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   updateDate: PropTypes.func.isRequired,
+  updateDayAndMonth: PropTypes.func.isRequired,
   onToggleDay: PropTypes.func.isRequired,
   appointment: PropTypes.object.isRequired,
   handleOnChange: PropTypes.func.isRequired,

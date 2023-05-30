@@ -22,6 +22,7 @@ export default function useCalendarModal({
   appointment,
   appointmentsForm,
   updateDate,
+  updateDayAndMonth,
   onHideModal,
   onChangeTime,
   setAppointments,
@@ -112,6 +113,7 @@ export default function useCalendarModal({
       if (day === null) return;
       setValue("activeDay", day); // Update activeDay
       updateDate({ day: day.index, month: day.month }); // Update dates
+      updateDayAndMonth({ day: day.index, month: day.month }) // Update day and month
     },
     [appointments, watch("selectedAppointment")]
   );

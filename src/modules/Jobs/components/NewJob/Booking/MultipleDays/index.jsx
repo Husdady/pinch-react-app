@@ -21,6 +21,7 @@ function MultipleDays({
   appointment,
   appointments,
   updateDate,
+  updateDayAndMonth,
   onChangeTime,
   setAppointments,
   reloadSchedule,
@@ -68,19 +69,22 @@ function MultipleDays({
         />
       )}
 
-      {!isFetching && <CalendarModal
-        show={show}
-        onHide={hideModal}
-        timeId={timeId}
-        schedule={schedule}
-        appointment={appointment}
-        timeOptions={timeOptions}
-        appointmentsForm={appointments}
-        onChangeTime={onChangeTime}
-        setAppointments={setAppointments}
-        removeAppointmentById={removeAppointmentById}
-        updateDate={updateDate}
-      />}
+      {!isFetching && (
+        <CalendarModal
+          show={show}
+          onHide={hideModal}
+          timeId={timeId}
+          schedule={schedule}
+          appointment={appointment}
+          timeOptions={timeOptions}
+          appointmentsForm={appointments}
+          onChangeTime={onChangeTime}
+          setAppointments={setAppointments}
+          removeAppointmentById={removeAppointmentById}
+          updateDayAndMonth={updateDayAndMonth}
+          updateDate={updateDate}
+        />
+      )}
     </Fragment>
   );
 }
@@ -91,6 +95,7 @@ MultipleDays.propTypes = {
   appointments: PropTypes.arrayOf(PropTypes.object).isRequired,
   appointment: PropTypes.object.isRequired,
   updateDate: PropTypes.func.isRequired,
+  updateDayAndMonth: PropTypes.func.isRequired,
   setAppointments: PropTypes.func.isRequired,
   removeAppointmentById: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,

@@ -8,6 +8,7 @@ import Calendar from "../Calendar/index";
 import AppointmentsList from "./AppointmentsList";
 import Modal from "../../../../../../../components/Modal";
 
+// Hooks
 import useCalendarModal from "./useCalendarModal";
 
 // Constants
@@ -26,6 +27,7 @@ function CalendarModal({
   appointment,
   appointmentsForm,
   updateDate,
+  updateDayAndMonth,
   onChangeTime,
   setAppointments,
   removeAppointmentById,
@@ -50,6 +52,7 @@ function CalendarModal({
     appointment: appointment,
     appointmentsForm: appointmentsForm,
     updateDate: updateDate,
+    updateDayAndMonth: updateDayAndMonth,
     onHideModal: onHide,
     onChangeTime: onChangeTime,
     setAppointments: setAppointments,
@@ -122,6 +125,7 @@ CalendarModal.propTypes = {
   timeOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   appointmentsForm: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateDate: PropTypes.func.isRequired,
+  updateDayAndMonth: PropTypes.func.isRequired,
   onChangeTime: PropTypes.func.isRequired,
   setAppointments: PropTypes.func.isRequired,
   removeAppointmentById: PropTypes.func.isRequired,

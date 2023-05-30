@@ -28,6 +28,7 @@ function NewJob({
     submit,
     register,
     updateDate,
+    updateDayAndMonth,
     appointment,
     handleSubmit,
     onTriggerWidth,
@@ -73,6 +74,7 @@ function NewJob({
             handleOnChange={handleOnChange}
             clientsData={clientsData}
             updateDate={updateDate}
+            updateDayAndMonth={updateDayAndMonth}
             appointment={appointment}
             setAppointments={setAppointments}
             reloadSchedule={reloadSchedule}
