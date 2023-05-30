@@ -61,6 +61,7 @@ export default function JobsContainer({ api }) {
         onChangeClient={newJobForm.onChangeClient}
         reloadAppointments={reloadAppointments}
         setReloadAppointments={setReloadAppointments}
+        setReloadSchedule={setReloadSchedule}
       />
 
       <ModalAppointmentCreated

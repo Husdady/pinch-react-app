@@ -21,6 +21,7 @@ export default function useAppointments({
   onChangeClient,
   reloadAppointments,
   setReloadAppointments,
+  setReloadSchedule,
 }) {
   const [isFetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
@@ -118,6 +119,7 @@ export default function useAppointments({
           },
           onFinally: () => {
             setFetching(false);
+            setReloadSchedule(true); // Reload schedule
           },
           onError: (err) => {
             setError(err);

@@ -22,6 +22,7 @@ function Appointments({
   onChangeClient,
   reloadAppointments,
   setReloadAppointments,
+  setReloadSchedule,
 }) {
   const {
     isError,
@@ -39,6 +40,7 @@ function Appointments({
     onChangeClient: onChangeClient,
     reloadAppointments: reloadAppointments,
     setReloadAppointments: setReloadAppointments,
+    setReloadSchedule: setReloadSchedule,
   });
 
   return (
@@ -72,6 +74,7 @@ Appointments.propTypes = {
   clients: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChangeClient: PropTypes.func.isRequired,
   setReloadAppointments: PropTypes.func.isRequired,
+  setReloadSchedule: PropTypes.func.isRequired,
 };
 
 export default memo(Appointments, (prevProps, nextProps) => {

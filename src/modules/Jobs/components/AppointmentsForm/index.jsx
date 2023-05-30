@@ -16,6 +16,7 @@ function AppointmentsForm({
   onChangeClient,
   reloadAppointments,
   setReloadAppointments,
+  setReloadSchedule,
 }) {
   return (
     <>
@@ -26,6 +27,7 @@ function AppointmentsForm({
         onChangeClient={onChangeClient}
         reloadAppointments={reloadAppointments}
         setReloadAppointments={setReloadAppointments}
+        setReloadSchedule={setReloadSchedule}
       />
 
       <SelectedAppointment />
@@ -39,6 +41,7 @@ AppointmentsForm.propTypes = {
   reloadAppointments: PropTypes.bool.isRequired,
   clients: PropTypes.arrayOf(PropTypes.object).isRequired,
   setReloadAppointments: PropTypes.func.isRequired,
+  setReloadSchedule: PropTypes.func.isRequired,
   onChangeClient: PropTypes.func.isRequired,
 };
 
