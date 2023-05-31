@@ -3,7 +3,7 @@
 import Profile from "./components/Profile";
 
 // Hooks
-import useWix from "./hooks/useWix";
+// import useWix from "./hooks/useWix";
 
 // Styles
 import "./styles.css";
