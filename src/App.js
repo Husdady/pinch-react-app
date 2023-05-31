@@ -9,11 +9,11 @@ import useWix from "./hooks/useWix";
 import "./styles.css";
 
 export default function App() {
-  const { wixResponse } = useWix();
+  // const { wixResponse } = useWix();
 
-  if (typeof wixResponse.token !== "string") {
-    return <span>Loading</span>;
-  }
+  // if (typeof wixResponse.token !== "string") {
+  //   return <span>Loading</span>;
+  // }
 
   return (
     <div className="app">
