@@ -1,5 +1,5 @@
 // Components
-import AppContent from "./components/AppContent";
+// import AppContent from "./components/AppContent";
 import Profile from "./components/Profile";
 
 // Hooks
@@ -9,7 +9,7 @@ import useWix from "./hooks/useWix";
 import "./styles.css";
 
 export default function App() {
-  const { apiProfile, wixResponse } = useWix();
+  const { wixResponse } = useWix();
 
   if (typeof wixResponse.token !== "string") {
     return <span>Loading</span>;

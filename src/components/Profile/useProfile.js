@@ -4,16 +4,16 @@ import React from "react";
 import axios from "axios";
 
 // Services
-import ApiProfile from "../../services/ApiProfile";
+// import ApiProfile from "../../services/ApiProfile";
 
 // Utils
 import isObject from "../../utils/isObject";
 
 // Constants
-import { SEND_DATA_TO_WIX } from "../../hooks/useWix/constants";
-import { TOKEN, WIX_APP_URL, CALLER_ID, DEV_URL } from "../../assets/data/api";
+// import { SEND_DATA_TO_WIX } from "../../hooks/useWix/constants";
+import { TOKEN, CALLER_ID } from "../../assets/data/api";
 
-const apiProfile = new ApiProfile(TOKEN);
+// const apiProfile = new ApiProfile(TOKEN);
 
 /**
  * Hook that implemenents the requests of the Profile component
