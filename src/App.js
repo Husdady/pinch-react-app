@@ -1,5 +1,6 @@
 // Components
 import AppContent from "./components/AppContent";
+import Profile from "./components/Profile";
 
 // Hooks
 import useWix from "./hooks/useWix";
@@ -16,7 +17,8 @@ export default function App() {
 
   return (
     <div className="app">
-      <AppContent api={apiProfile} wixResponse={wixResponse} />
+      <Profile />
+      {/* <AppContent api={apiProfile} wixResponse={wixResponse} /> */}
     </div>
   );
 }

@@ -2,25 +2,31 @@
 import isObject from "../utils/isObject";
 
 // Constants
-import { WIX_APP_URL } from "../assets/data/api";
+import { FETCH_ERRORS } from "./errors";
+import { TOKEN, WIX_APP_URL } from "../assets/data/api";
 import {
   BAD_PARAMS,
   API_KEY_FIELD,
   INVALID_TOKEN,
   HEADERS_IS_NOT_AN_OBJECT,
   PROPERTY_METHOD_UNNECESSARY,
+  DEFAULT_LIMIT_FOR_GET_REQUESTS,
+  DEFAULT_LIMIT_FOR_POST_REQUESTS,
+  DEFAULT_LIMIT_FOR_PUT_REQUESTS,
+  DEFAULT_LIMIT_FOR_DELETE_REQUESTS,
 } from "./constants";
+
+const { FAILED_TO_FETCH } = FETCH_ERRORS;
 
 export default class ApiProfile {
   constructor(token) {
-    this.limitGetRequest = 3;
-    this.limitPostRequest = 3;
-    this.limitPutRequest = 3;
-    this.limitDeleteRequest = 3;
     this.apiUrl = WIX_APP_URL; // Url of the API
     this.origin = window.location.origin; // Get origin
+    this.limitGetRequest = DEFAULT_LIMIT_FOR_GET_REQUESTS;
+    this.limitPostRequest = DEFAULT_LIMIT_FOR_POST_REQUESTS;
+    this.limitPutRequest = DEFAULT_LIMIT_FOR_PUT_REQUESTS;
+    this.limitDeleteRequest = DEFAULT_LIMIT_FOR_DELETE_REQUESTS;
     this.headerApiKey = { [API_KEY_FIELD]: token || "" }; // Define header for the apiKey
-    this.fetchError = { name: "TypeError", message: "Failed to fetch" };
   }
 
   /**
@@ -37,15 +43,14 @@ export default class ApiProfile {
     // Validate params
     if (!this.validateParams(params)) return;
 
-    const { url, headers, ...paramsObject } = params; // Get url from params
+    const { url } = params; // Get url from params
 
     // Define fetch params
     const fetchParams = {
-      ...paramsObject,
       method: "GET",
       headers: {
-        ...this.headerApiKey,
-        origin: this.origin,
+        [API_KEY_FIELD]: TOKEN,
+        origin: this.origin
       },
     };
 
@@ -56,17 +61,23 @@ export default class ApiProfile {
       return dataToJson; // Return API response
     } catch (error) {
       // Show error in console
-      console.error("[GET_ERROR]", error);
+      // console.error("[GET_ERROR]", error);
 
       // Cors error
       if (
         this.limitGetRequest > 0 &&
-        error.name === this.fetchError.name &&
-        error.message === this.fetchError.message
+        error.name === FAILED_TO_FETCH.name &&
+        error.message === FAILED_TO_FETCH.message
       ) {
         this.limitGetRequest = this.limitGetRequest - 1;
-        console.clear(); // Clear console
+        // console.clear(); // Clear console
+        console.log('[BUG]')
         return this.get(params); // Make again the request
+      }
+
+      // Reset limit of the 'GET' requests
+      if (this.limitGetRequest === 0) {
+        this.limitGetRequest = DEFAULT_LIMIT_FOR_GET_REQUESTS;
       }
 
       return { error: error };
@@ -87,11 +98,10 @@ export default class ApiProfile {
     // Validate params
     if (!this.validateParams(params)) return;
 
-    const { url, body, headers, ...paramsObject } = params; // Get url and headers from params
+    const { url, body, headers } = params; // Get url and headers from params
 
     // Define params
     const fetchParams = {
-      ...paramsObject,
       method: "POST",
       body: isObject(body) ? JSON.stringify(body) : JSON.stringify({}),
       headers: {
@@ -114,12 +124,17 @@ export default class ApiProfile {
       // Cors error
       if (
         this.limitPostRequest > 0 &&
-        error.name === this.fetchError.name &&
-        error.message === this.fetchError.message
+        error.name === FAILED_TO_FETCH.name &&
+        error.message === FAILED_TO_FETCH.message
       ) {
         this.limitPostRequest = this.limitPostRequest - 1;
         console.clear(); // Clear console
         return this.post(params); // Make again the request
+      }
+
+      // Reset limit of the 'POST' requests
+      if (this.limitPostRequest === 0) {
+        this.limitPostRequest = DEFAULT_LIMIT_FOR_POST_REQUESTS;
       }
 
       return { error: error };
@@ -166,12 +181,17 @@ export default class ApiProfile {
       // Cors error
       if (
         this.limitPutRequest > 0 &&
-        error.name === this.fetchError.name &&
-        error.message === this.fetchError.message
+        error.name === FAILED_TO_FETCH.name &&
+        error.message === FAILED_TO_FETCH.message
       ) {
         this.limitPutRequest = this.limitPutRequest - 1;
         console.clear(); // Clear console
         return this.put(params); // Make again the request
+      }
+
+      // Reset limit of the 'PUT' requests
+      if (this.limitPutRequest === 0) {
+        this.limitPutRequest = DEFAULT_LIMIT_FOR_PUT_REQUESTS;
       }
 
       return { error: error };
@@ -214,12 +234,17 @@ export default class ApiProfile {
       // Cors error
       if (
         this.limitDeleteRequest > 0 &&
-        error.name === this.fetchError.name &&
-        error.message === this.fetchError.message
+        error.name === FAILED_TO_FETCH.name &&
+        error.message === FAILED_TO_FETCH.message
       ) {
         this.limitDeleteRequest = this.limitDeleteRequest - 1;
         console.clear(); // Clear console
         return this.delete(params); // Make again the request
+      }
+
+      // Reset limit of the 'DELETE' requests
+      if (this.limitDeleteRequest === 0) {
+        this.limitDeleteRequest = DEFAULT_LIMIT_FOR_DELETE_REQUESTS;
       }
 
       return { error: error };

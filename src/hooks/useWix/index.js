@@ -31,9 +31,7 @@ export default function useWix() {
     // Update default wix response
     if (
       typeof ev.data === "undefined" ||
-      (isObject(ev.data) &&
-        "data" in ev.data &&
-        typeof ev.data.data === "undefined")
+      (isObject(ev.data) && "data" in ev.data)
     ) {
       return setWixResponse(DEFAULT_WIX_RESPONSE);
     }
@@ -55,8 +53,8 @@ export default function useWix() {
 
   // This hook is listening an event that came from the Iframe
   useEffect(() => {
+    // Make post message to Wix application when the origin its not equal to localhost:3000
     if (window.location.origin !== DEV_URL) {
-      // Make post message to Wix application
       window.parent.postMessage(SEND_DATA_TO_WIX, WIX_APP_URL);
     }
 

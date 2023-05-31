@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Librarys
 import React from "react";
+import axios from "axios";
 
 // Services
 import ApiProfile from "../../services/ApiProfile";
@@ -9,9 +10,10 @@ import ApiProfile from "../../services/ApiProfile";
 import isObject from "../../utils/isObject";
 
 // Constants
-import { API_KEY, WIX_APP_URL, CALLER_ID, APPLICATION_ID } from "../../assets/data/api";
+import { SEND_DATA_TO_WIX } from "../../hooks/useWix/constants";
+import { TOKEN, WIX_APP_URL, CALLER_ID, DEV_URL } from "../../assets/data/api";
 
-const apiProfile = new ApiProfile(API_KEY);
+const apiProfile = new ApiProfile(TOKEN);
 
 /**
  * Hook that implemenents the requests of the Profile component
@@ -21,25 +23,52 @@ export default function useProfile() {
   const [message, setMessage] = React.useState("");
   const [profile, setProfile] = React.useState([]);
 
+  // // Callback for get profiles
+  // const getProfiles = React.useCallback(async () => {
+  //   console.log('[PROFILES]')
+  //   const data = await apiProfile.get({ url: "/pinchCorsTest" });
+
+  //   // Cors response not exists in data
+  //   if (!("corsResponse" in data)) return;
+
+  //   console.log("[Getting Profile.....]", data);
+  //   setProfile(data);
+  // }, []);
+
   // Callback for get profiles
   const getProfiles = React.useCallback(async () => {
-    console.log('[PROFILES]')
-    const data = await apiProfile.get({ url: "/pinchCorsTest" });
+    try {
+      console.log("[PROFILES]");
+      const data = await axios.get(
+        "https://dev6345.editorx.io/react-test/_functions/pinchCorsTest",
+        {
+          // origin: window.location.origin,
+          headers: {
+            "pro-pinch-api-key": TOKEN,
+          },
+        }
+      );
 
-    // Cors response not exists in data
-    if (!("corsResponse" in data)) return;
+      // Cors response not exists in data
+      // if (!("corsResponse" in data)) return;
 
-    console.log("[Getting Profile.....]", data);
-    setProfile(data);
+      console.log("[Getting Profile.....]", data);
+      setProfile(data);
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
   }, []);
 
   React.useEffect(() => {
-    window.addEventListener("load", getProfiles);
+    console.log("[GET_PROFILES]");
+    let mounted = true;
+
+    if (mounted) getProfiles();
 
     return () => {
-      window.removeEventListener("load", getProfiles);
+      mounted = false;
     };
-  }, [profile]);
+  }, []);
 
   // This hook is listening an event that came from the Iframe
   React.useEffect(() => {
@@ -56,15 +85,10 @@ export default function useProfile() {
       setMessage(ev.data);
     };
 
-    // Define message to send
-    const messageToSend = {
-      applicationId: APPLICATION_ID,
-    };
-
-    console.log("[MESSAGE_TO_SEND]", messageToSend);
-
-    // Post message
-    window.parent.postMessage(messageToSend, WIX_APP_URL);
+    // Make post message to Wix application when the origin its not equal to localhost:3000
+    // if (window.location.origin !== DEV_URL) {
+    //   window.parent.postMessage(SEND_DATA_TO_WIX, WIX_APP_URL);
+    // }
 
     window.addEventListener("message", handler);
 
