@@ -9,8 +9,8 @@ import ApiProfile from "../../services/ApiProfile";
 import isObject from "../../utils/isObject";
 
 // Constants
-import { DEFAULT_WIX_RESPONSE, SEND_DATA_TO_WIX } from "./constants";
-import { TOKEN, DEV_URL, CALLER_ID, WIX_APP_URL } from "../../assets/data/api";
+import { DEFAULT_WIX_RESPONSE } from "./constants";
+import { TOKEN, CALLER_ID } from "../../assets/data/api";
 
 // Define default API profile instance
 export const defaultApiProfileInstance = new ApiProfile(TOKEN);
